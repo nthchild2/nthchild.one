@@ -1,26 +1,13 @@
-import { InlineCode } from "@/once-ui/components";
-
 const person = {
-  firstName: "Selene",
-  lastName: "Yu",
+  firstName: "Carlos",
+  lastName: "Cortes",
   get name() {
     return `${this.firstName} ${this.lastName}`;
   },
-  role: "Design Engineer",
+  role: "Software Engineer",
   avatar: "/images/avatar.jpg",
-  location: "Asia/Jakarta", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: ["English", "Bahasa"], // optional: Leave the array empty if you don't want to display languages
-};
-
-const newsletter = {
-  display: true,
-  title: <>Subscribe to {person.firstName}'s Newsletter</>,
-  description: (
-    <>
-      I occasionally write about design, technology, and share thoughts on the intersection of
-      creativity and engineering.
-    </>
-  ),
+  location: "America/Mexico_City", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
+  languages: ["English", "Spanish"], // optional: Leave the array empty if you don't want to display languages
 };
 
 const social = [
@@ -29,22 +16,17 @@ const social = [
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/once-ui-system/nextjs-starter",
+    link: "https://github.com/nthchild1",
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/company/once-ui/",
-  },
-  {
-    name: "X",
-    icon: "x",
-    link: "",
+    link: "https://www.linkedin.com/in/nthchild1",
   },
   {
     name: "Email",
     icon: "email",
-    link: "mailto:example@gmail.com",
+    link: "mailto:nthchild1@gmail.com",
   },
 ];
 
@@ -52,11 +34,11 @@ const home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Design engineer and builder</>,
+  headline: <>Software Engineer</>,
   subline: (
     <>
-      I'm Selene, a design engineer at <InlineCode>FLY</InlineCode>, where I craft intuitive
-      <br /> user experiences. After hours, I build my own projects.
+      I'm Carlos, a Senior Software Engineer crafting scalable mobile and web
+      experiences. I specialize in mobile app development
     </>
   ),
 };
@@ -74,16 +56,18 @@ const about = {
   },
   calendar: {
     display: true,
-    link: "https://cal.com",
+    link: "https://calendar.app.google/5k2gNrEZK8haq1nK9",
   },
   intro: {
     display: true,
     title: "Introduction",
     description: (
       <>
-        Selene is a Jakarta-based design engineer with a passion for transforming complex challenges
-        into simple, elegant design solutions. Her work spans digital interfaces, interactive
-        experiences, and the convergence of design and technology.
+        Carlos is a Mexico City-based Senior Software Engineer specializing in
+        React Native and JavaScript frameworks. He builds scalable,
+        high-performance applications across fintech and e-commerce, leading
+        teams and optimizing user experiences with a focus on maintainability
+        and innovation.
       </>
     ),
   },
@@ -92,23 +76,36 @@ const about = {
     title: "Work Experience",
     experiences: [
       {
-        company: "FLY",
+        company: "The Nerdery — myPurina",
         timeframe: "2022 - Present",
-        role: "Senior Design Engineer",
+        role: "Senior Software Engineer",
         achievements: [
           <>
-            Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user
-            engagement and 30% faster load times.
+            {" "}
+            Spearheaded the development of key features for myPurina, including
+            Pet Profiles, Pet Food Finder, Feeding Guide, and the Rewards
+            Program.{" "}
           </>,
           <>
-            Spearheaded the integration of AI tools into design workflows, enabling designers to
-            iterate 50% faster.
+            {" "}
+            Integrated third-party services such as AWS Cognito, Appsflyer,
+            Google Analytics, Firebase, LaunchDarkly, Braze, and Segment.{" "}
+          </>,
+          <>
+            {" "}
+            Set up Jest and Detox for testing, integrating them with Bitbucket
+            pipelines for automated tests and coverage reports.{" "}
           </>,
         ],
         images: [
-          // optional: leave the array empty if you don't want to display images
           {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/work/nerdery/mypurina-001.png",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },
+          {
+            src: "/images/work/nerdery/mypurina-003.png",
             alt: "Once UI Project",
             width: 16,
             height: 9,
@@ -116,44 +113,150 @@ const about = {
         ],
       },
       {
-        company: "Creativ3",
-        timeframe: "2018 - 2022",
-        role: "Lead Designer",
+        company: "Encora — Dreambox Learning",
+        timeframe: "2021 - 2022",
+        role: "Software Engineer",
         achievements: [
           <>
-            Developed a design system that unified the brand across multiple platforms, improving
-            design consistency by 40%.
+            {" "}
+            Implemented the replay feature in Dreambox's educational game suite,
+            allowing teachers to track student gameplay and identify learning
+            challenges.{" "}
           </>,
           <>
-            Led a cross-functional team to launch a new product line, contributing to a 15% increase
-            in overall company revenue.
+            {" "}
+            Utilized TypeScript and CreateJS to develop lessons running on
+            Dreambox's in-house game engine.{" "}
           </>,
         ],
-        images: [],
+        images: [
+          {
+            src: "/images/work/encora/dreambox-001.png",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },
+          {
+            src: "/images/work/encora/dreambox-002.png",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },
+        ],
+      },
+      {
+        company: "PagaTodo — ObtenMas",
+        timeframe: "2021",
+        role: "Mobile Software Engineer",
+        achievements: [
+          <>
+            {" "}
+            Contributed to the development of a digital wallet app for financial
+            services, supporting bill payments, money transfers, and mobile
+            top-ups.{" "}
+          </>,
+          <>
+            {" "}
+            Built the app using React Native and TypeScript with Redux for state
+            management.{" "}
+          </>,
+          <>
+            {" "}
+            Transformed Figma designs into a functional application in
+            collaboration with UX and design teams.{" "}
+          </>,
+        ],
+        images: [
+          {
+            src: "/images/work/pagatodo/obtenmas-001.png",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },
+          {
+            src: "/images/work/pagatodo/obtenmas-002.png",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },
+        ],
+      },
+      {
+        company: "PALO IT — YoFio",
+        timeframe: "2020",
+        role: "Software Engineer",
+        achievements: [
+          <>
+            {" "}
+            Developed mobile applications for a fintech startup providing credit
+            solutions.{" "}
+          </>,
+          <>
+            {" "}
+            Used React Native with Redux for state management and integrated
+            native modules in Java and Kotlin.{" "}
+          </>,
+          <>
+            {" "}
+            Contributed to a machine learning algorithm that generated credit
+            scores based on user activity.{" "}
+          </>,
+        ],
+        images: [
+          {
+            src: "/images/work/paloit/yofio-001.png",
+            alt: "Once UI Project",
+            width: 16,
+            height: 9,
+          },
+        ],
+      },
+      {
+        company: "Precision QA — Frik-in",
+        timeframe: "2019 - 2020",
+        role: "Full Stack Software Engineer",
+        achievements: [
+          <>
+            {" "}
+            Built and maintained a multimedia app cataloging events and
+            locations for the Mexican geek community.{" "}
+          </>,
+          <>
+            {" "}
+            Developed front-end and back-end features using React, PHP, and
+            WordPress’ REST API.{" "}
+          </>,
+        ],
+        images: [
+          {
+            src: "/images/work/presicionqa/frikin-001.png",
+            alt: "Once UI Project",
+            width: 73 / 3,
+            height: 48 / 3,
+          },
+        ],
       },
     ],
   },
   studies: {
     display: true, // set to false to hide this section
-    title: "Studies",
+    title: "Education",
     institutions: [
       {
-        name: "University of Jakarta",
-        description: <>Studied software engineering.</>,
-      },
-      {
-        name: "Build the Future",
-        description: <>Studied online marketing and personal branding.</>,
+        name: "National Autonomous University of Mexico",
+        description: <>Computer Engineering – Software Engineering</>,
       },
     ],
   },
   technical: {
-    display: true, // set to false to hide this section
+    display: false, // set to false to hide this section
     title: "Technical skills",
     skills: [
       {
         title: "Figma",
-        description: <>Able to prototype in Figma with Once UI with unnatural speed.</>,
+        description: (
+          <>Able to prototype in Figma with Once UI with unnatural speed.</>
+        ),
         // optional: leave the array empty if you don't want to display images
         images: [
           {
@@ -172,7 +275,9 @@ const about = {
       },
       {
         title: "Next.js",
-        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
+        description: (
+          <>Building next gen apps with Next.js + Once UI + Supabase.</>
+        ),
         // optional: leave the array empty if you don't want to display images
         images: [
           {
@@ -187,14 +292,6 @@ const about = {
   },
 };
 
-const blog = {
-  label: "Blog",
-  title: "Writing about design and tech...",
-  description: `Read what ${person.name} has been up to recently`,
-  // Create new blog posts by adding a new .mdx file to app/blog/posts
-  // All posts will be listed on the /blog route
-};
-
 const work = {
   label: "Work",
   title: "My projects",
@@ -203,83 +300,4 @@ const work = {
   // All projects will be listed on the /home and /work routes
 };
 
-const gallery = {
-  label: "Gallery",
-  title: "My photo gallery",
-  description: `A photo collection by ${person.name}`,
-  // Images from https://pexels.com
-  images: [
-    {
-      src: "/images/gallery/img-01.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/img-02.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/img-03.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/img-04.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/img-05.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/img-06.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/img-07.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/img-08.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/img-09.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/img-10.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/img-11.jpg",
-      alt: "image",
-      orientation: "vertical",
-    },
-    {
-      src: "/images/gallery/img-12.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/img-13.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-    {
-      src: "/images/gallery/img-14.jpg",
-      alt: "image",
-      orientation: "horizontal",
-    },
-  ],
-};
-
-export { person, social, newsletter, home, about, blog, work, gallery };
+export { person, social, home, about, work };

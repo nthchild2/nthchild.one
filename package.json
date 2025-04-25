@@ -37,6 +37,8 @@
     "@types/react-dom": "^18",
     "postcss-custom-media": "^10.0.7",
     "postcss-flexbugs-fixes": "^5.0.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "prettier": "^3.5.1",
+    "eslint": "^9.20.1"
   }
 }
