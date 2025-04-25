@@ -8,13 +8,4 @@ export {
   mailchimp,
   baseURL,
 } from "@/app/resources/config";
-export {
-  person,
-  social,
-  newsletter,
-  home,
-  about,
-  blog,
-  work,
-  gallery,
-} from "@/app/resources/content";
+export { person, social, home, about, work } from "@/app/resources/content";
