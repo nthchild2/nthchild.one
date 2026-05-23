@@ -1,129 +1,191 @@
+import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CustomMDX } from "@/components/mdx";
-import { getPosts } from "@/app/utils/utils";
-import { AvatarGroup, Button, Column, Flex, Heading, SmartImage, Text } from "@/once-ui/components";
-import { baseURL } from "@/app/resources";
-import { person } from "@/app/resources/content";
-import { formatDate } from "@/app/utils/formatDate";
-import ScrollToHash from "@/components/ScrollToHash";
+import { projects } from "@/data/projects";
+import type { Metadata } from "next";
 
-interface WorkParams {
-  params: {
-    slug: string;
-  };
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateStaticParams() {
+  return projects.map((project) => ({ slug: project.slug }));
 }
 
-export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const posts = getPosts(["src", "app", "work", "projects"]);
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
-}
-
-export function generateMetadata({ params: { slug } }: WorkParams) {
-  let post = getPosts(["src", "app", "work", "projects"]).find((post) => post.slug === slug);
-
-  if (!post) {
-    return;
-  }
-
-  let {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    images,
-    image,
-    team,
-  } = post.metadata;
-  let ogImage = image ? `https://${baseURL}${image}` : `https://${baseURL}/og?title=${title}`;
-
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
+  if (!project) return {};
   return {
-    title,
-    description,
-    images,
-    team,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      publishedTime,
-      url: `https://${baseURL}/work/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
+    title: `${project.company} — ${project.role} | Carlos Cortes`,
+    description: project.summary,
   };
 }
 
-export default function Project({ params }: WorkParams) {
-  let post = getPosts(["src", "app", "work", "projects"]).find((post) => post.slug === params.slug);
+export default async function ProjectPage({ params }: Props) {
+  const { slug } = await params;
+  const projectIndex = projects.findIndex((p) => p.slug === slug);
+  if (projectIndex === -1) notFound();
 
-  if (!post) {
-    notFound();
-  }
-
-  const avatars =
-    post.metadata.team?.map((person) => ({
-      src: person.avatar,
-    })) || [];
+  const project = projects[projectIndex];
+  const prevProject = projectIndex > 0 ? projects[projectIndex - 1] : null;
+  const nextProject =
+    projectIndex < projects.length - 1 ? projects[projectIndex + 1] : null;
 
   return (
-    <Column as="section" maxWidth="m" horizontal="center" gap="l">
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified: post.metadata.publishedAt,
-            description: post.metadata.summary,
-            image: post.metadata.image
-              ? `https://${baseURL}${post.metadata.image}`
-              : `https://${baseURL}/og?title=${post.metadata.title}`,
-            url: `https://${baseURL}/work/${post.slug}`,
-            author: {
-              "@type": "Person",
-              name: person.name,
-            },
-          }),
-        }}
-      />
-      <Column maxWidth="xs" gap="16">
-        <Button href="/work" variant="tertiary" weight="default" size="s" prefixIcon="chevronLeft">
-          Projects
-        </Button>
-        <Heading variant="display-strong-s">{post.metadata.title}</Heading>
-      </Column>
-      {post.metadata.images.length > 0 && (
-        <SmartImage
-          priority
-          aspectRatio="16 / 9"
-          radius="m"
-          alt="image"
-          src={post.metadata.images[0]}
-        />
-      )}
-      <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
-        <Flex gap="12" marginBottom="24" vertical="center">
-          {post.metadata.team && <AvatarGroup reverse avatars={avatars} size="m" />}
-          <Text variant="body-default-s" onBackground="neutral-weak">
-            {formatDate(post.metadata.publishedAt)}
-          </Text>
-        </Flex>
-        <CustomMDX source={post.content} />
-      </Column>
-      <ScrollToHash />
-    </Column>
+    <main className="max-w-4xl mx-auto px-6 py-16 sm:py-24">
+      {/* Back link */}
+      <Link
+        href="/"
+        className="section-fade inline-flex items-center gap-2 text-sm text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] transition-colors mb-12 group"
+      >
+        <svg
+          className="w-4 h-4 transition-transform group-hover:-translate-x-0.5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+          />
+        </svg>
+        Back to home
+      </Link>
+
+      {/* Header */}
+      <header className="section-fade mb-12">
+        <p className="text-xs text-[hsl(var(--muted-foreground))] uppercase tracking-wide mb-3">
+          {project.period} &middot; {project.location}
+        </p>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-3">
+          {project.company}
+        </h1>
+        <p className="text-lg gradient-text-static font-medium mb-6">
+          {project.role}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-3 py-1.5 text-sm rounded-lg glass-card text-[hsl(var(--foreground))]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </header>
+
+      {/* Hero image */}
+      <section className="section-fade mb-16">
+        <div
+          className={`relative ${project.aspect === "portrait" ? "aspect-[3/4] max-w-md mx-auto" : "aspect-[16/10]"} rounded-2xl bg-gradient-to-br ${project.gradient} overflow-hidden glass-card`}
+        >
+          <div className="absolute inset-6 sm:inset-10">
+            <Image
+              src={project.image}
+              alt={`${project.company} project`}
+              fill
+              className="object-contain drop-shadow-2xl"
+              priority
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Overview */}
+      <section className="section-fade mb-16">
+        <h2 className="section-heading mb-4">Overview</h2>
+        <p className="text-lg leading-relaxed text-[hsl(var(--foreground))]">
+          {project.summary}
+        </p>
+      </section>
+
+      {/* Key Contributions */}
+      <section className="section-fade mb-16">
+        <h2 className="section-heading mb-6">Key Contributions</h2>
+        <ul className="space-y-4">
+          {project.highlights.map((highlight, i) => (
+            <li key={i} className="flex gap-3 group">
+              <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 shrink-0 group-hover:shadow-glow-sm transition-shadow" />
+              <span className="text-[hsl(var(--foreground))] leading-relaxed">
+                {highlight}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Navigation */}
+      <nav className="section-fade pt-12">
+        <div className="gradient-divider mb-8" />
+        <div className="grid grid-cols-2 gap-4">
+          {prevProject ? (
+            <Link
+              href={`/work/${prevProject.slug}`}
+              className="group p-5 rounded-xl glass-card gradient-border hover:-translate-y-0.5 transition-all duration-300"
+            >
+              <p className="text-xs text-[hsl(var(--muted-foreground))] mb-1 flex items-center gap-1">
+                <svg
+                  className="w-3 h-3 transition-transform group-hover:-translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                  />
+                </svg>
+                Previous
+              </p>
+              <p className="font-display font-semibold group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                {prevProject.company}
+              </p>
+              <p className="text-xs text-[hsl(var(--muted-foreground))]">
+                {prevProject.role}
+              </p>
+            </Link>
+          ) : (
+            <div />
+          )}
+          {nextProject ? (
+            <Link
+              href={`/work/${nextProject.slug}`}
+              className="group p-5 rounded-xl glass-card gradient-border hover:-translate-y-0.5 transition-all duration-300 text-right"
+            >
+              <p className="text-xs text-[hsl(var(--muted-foreground))] mb-1 flex items-center justify-end gap-1">
+                Next
+                <svg
+                  className="w-3 h-3 transition-transform group-hover:translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                  />
+                </svg>
+              </p>
+              <p className="font-display font-semibold group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                {nextProject.company}
+              </p>
+              <p className="text-xs text-[hsl(var(--muted-foreground))]">
+                {nextProject.role}
+              </p>
+            </Link>
+          ) : (
+            <div />
+          )}
+        </div>
+      </nav>
+    </main>
   );
 }
