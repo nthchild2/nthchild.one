@@ -64,6 +64,13 @@
   ::selection {
     background-color: hsl(var(--accent-1) / 0.25);
   }
+
+  /* Focus ring for keyboard navigation */
+  :focus-visible {
+    outline: 2px solid hsl(var(--accent-1));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 }
 
 /* ─── DESIGN SYSTEM COMPONENTS ─── */

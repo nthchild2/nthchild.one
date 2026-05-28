@@ -12,17 +12,10 @@ export default function Home() {
     <main className="max-w-4xl mx-auto px-6 py-16 sm:py-24">
       {/* ── Hero ── */}
       <section className="section-fade mb-20">
-        <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-2">
-          Carlos Cortes
-        </h1>
-        <p className="text-lg sm:text-xl gradient-text-static font-semibold mb-8">
-          Senior Software Engineer
-        </p>
-
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight mb-6 text-balance max-w-3xl">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight mb-6 text-balance max-w-3xl">
           Shipping mobile products{" "}
           <span className="gradient-text">from zero to scale.</span>
-        </h2>
+        </h1>
 
         <p className="text-lg lg:text-xl text-[hsl(var(--muted-foreground))] mb-8 max-w-2xl leading-relaxed">
           Senior mobile engineer with 7+ years specializing in React Native and
@@ -67,7 +60,7 @@ export default function Home() {
           {highlights.map((stat) => (
             <div
               key={stat.label}
-              className="glass-card text-center p-5 lg:p-6 rounded-xl group hover:shadow-lg transition-all duration-300"
+              className="glass-card text-center p-5 lg:p-6 rounded-xl group hover:shadow-glow-sm hover:scale-[1.02] transition-all duration-300"
             >
               <div className="text-3xl sm:text-4xl font-display font-bold gradient-text-static">
                 {stat.value}
@@ -109,10 +102,16 @@ export default function Home() {
             <Link
               href={`/work/${job.slug}`}
               key={`${job.company}-${i}`}
-              className="group flex items-start gap-4 py-5 border-b border-[hsl(var(--border))] last:border-b-0 transition-colors hover:bg-[hsl(var(--muted)/0.3)] -mx-4 px-4 rounded-lg"
+              className="group flex items-start gap-4 py-5 border-b border-[hsl(var(--border))] last:border-b-0 -mx-4 px-4 rounded-lg transition-all duration-200 hover:bg-[hsl(var(--muted)/0.5)] hover:border-transparent"
             >
               {/* Timeline dot */}
-              <div className="mt-2 w-2 h-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 shrink-0 group-hover:shadow-glow-sm transition-shadow" />
+              <div className="relative mt-2 shrink-0">
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 group-hover:shadow-glow-sm transition-shadow" />
+                {/* Connecting line */}
+                {i < projects.length - 1 && (
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-px h-[calc(100%+1.25rem)] bg-[hsl(var(--border))] group-hover:bg-emerald-500/20 transition-colors" />
+                )}
+              </div>
 
               {/* Content */}
               <div className="flex-1 min-w-0">
@@ -124,7 +123,7 @@ export default function Home() {
                     {job.period}
                   </span>
                 </div>
-                <p className="text-sm gradient-text-static font-medium mb-2">
+                <p className="text-sm text-emerald-600 dark:text-emerald-400 font-medium mb-2">
                   {job.role}
                 </p>
                 <p className="text-sm text-[hsl(var(--muted-foreground))] leading-relaxed line-clamp-2">
@@ -134,11 +133,11 @@ export default function Home() {
 
               {/* Arrow */}
               <svg
-                className="w-4 h-4 mt-1.5 text-[hsl(var(--muted-foreground))] group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-all shrink-0 group-hover:translate-x-0.5"
+                className="w-4 h-4 mt-1.5 text-[hsl(var(--muted-foreground))] opacity-0 group-hover:opacity-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-all shrink-0 -translate-x-1 group-hover:translate-x-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                strokeWidth={1.5}
+                strokeWidth={2}
               >
                 <path
                   strokeLinecap="round"
@@ -158,19 +157,19 @@ export default function Home() {
           <p className="text-sm text-[hsl(var(--muted-foreground))]">
             &copy; {new Date().getFullYear()} Carlos Cortes
           </p>
-          <div className="flex gap-3">
+          <div className="flex gap-1">
             {socialLinks.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors"
+                className="p-2.5 rounded-lg text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors"
                 aria-label={item.name}
               >
                 {item.name === "GitHub" && (
                   <svg
-                    className="w-4 h-4"
+                    className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -179,7 +178,7 @@ export default function Home() {
                 )}
                 {item.name === "LinkedIn" && (
                   <svg
-                    className="w-4 h-4"
+                    className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -188,7 +187,7 @@ export default function Home() {
                 )}
                 {item.name === "Email" && (
                   <svg
-                    className="w-4 h-4"
+                    className="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

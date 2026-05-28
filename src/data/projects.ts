@@ -226,5 +226,5 @@ export const socialLinks = [
 /** Navigation items */
 export const navItems = [
   { label: "Home", href: "/" },
-  { label: "Work", href: "/#experience" },
+  { label: "Experience", href: "/#experience" },
 ];
