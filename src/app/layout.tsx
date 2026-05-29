@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import ThemeProvider from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
-import BackgroundEffects from "@/components/BackgroundEffects";
 import "./globals.css";
 
 const inter = Inter({
@@ -68,9 +67,8 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen grain-overlay">
+      <body className="min-h-screen bg-[hsl(var(--background))]">
         <ThemeProvider>
-          <BackgroundEffects />
           <Navbar />
           <div className="pt-16">{children}</div>
         </ThemeProvider>

@@ -3,8 +3,8 @@ import { projects, socialLinks } from "@/data/projects";
 
 const highlights = [
   { value: "7+", label: "Years of Experience" },
-  { value: "3", label: "Greenfield Products Shipped" },
-  { value: "3", label: "Industries" },
+  { value: "3", label: "Greenfield Products" },
+  { value: "1M+", label: "Users Reached" },
 ];
 
 export default function Home() {
@@ -12,12 +12,17 @@ export default function Home() {
     <main className="max-w-4xl mx-auto px-6 py-16 sm:py-24">
       {/* ── Hero ── */}
       <section className="section-fade mb-20">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm font-medium mb-6">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          Available for new projects
+        </div>
+
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight mb-6 text-balance max-w-3xl">
           Shipping mobile products{" "}
           <span className="gradient-text">from zero to scale.</span>
         </h1>
 
-        <p className="text-lg lg:text-xl text-[hsl(var(--muted-foreground))] mb-8 max-w-2xl leading-relaxed">
+        <p className="text-lg lg:text-xl text-[hsl(var(--muted-foreground))] mb-10 max-w-2xl leading-relaxed">
           Senior mobile engineer with 7+ years specializing in React Native and
           TypeScript. I architect, build, and ship cross-platform products across
           fintech, education, and consumer platforms.
@@ -28,10 +33,10 @@ export default function Home() {
             href="https://calendar.app.google/5k2gNrEZK8haq1nK9"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-shimmer inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-lg text-sm font-medium transition-all shadow-glow-sm hover:shadow-glow-md"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-colors"
           >
             <svg
-              className="w-4 h-4 relative z-10"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -43,11 +48,11 @@ export default function Home() {
                 d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
               />
             </svg>
-            <span className="relative z-10">Schedule a call</span>
+            Schedule a call
           </a>
           <a
             href="mailto:nthchild1@gmail.com"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all glass-card hover:shadow-lg"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors border border-[hsl(var(--border))] hover:bg-[hsl(var(--muted))] text-[hsl(var(--foreground))]"
           >
             Get in touch
           </a>
@@ -55,14 +60,14 @@ export default function Home() {
       </section>
 
       {/* ── Highlights ── */}
-      <section className="section-fade mb-16">
+      <section className="section-fade mb-20">
         <div className="grid grid-cols-3 gap-4">
           {highlights.map((stat) => (
             <div
               key={stat.label}
-              className="glass-card text-center p-5 lg:p-6 rounded-xl group hover:shadow-glow-sm hover:scale-[1.02] transition-all duration-300"
+              className="card text-center p-5 lg:p-6 rounded-xl hover:border-emerald-500/40 transition-colors"
             >
-              <div className="text-3xl sm:text-4xl font-display font-bold gradient-text-static">
+              <div className="text-3xl sm:text-4xl font-display font-bold text-emerald-600 dark:text-emerald-400">
                 {stat.value}
               </div>
               <div className="text-xs sm:text-sm text-[hsl(var(--muted-foreground))] mt-1">
@@ -75,8 +80,8 @@ export default function Home() {
 
       {/* ── About ── */}
       <section className="section-fade mb-20">
-        <h3 className="section-heading mb-8">About</h3>
-        <div className="glass-card rounded-2xl p-6 lg:p-8 space-y-3">
+        <h3 className="section-heading mb-6">About</h3>
+        <div className="card rounded-2xl p-6 lg:p-8 space-y-4">
           <p className="text-[hsl(var(--foreground))] leading-relaxed">
             I&apos;m a software engineer based in Mexico City with a passion
             for building polished, performant mobile experiences. Over the
@@ -96,30 +101,24 @@ export default function Home() {
 
       {/* ── Experience ── */}
       <section id="experience" className="section-fade mb-20 scroll-mt-24">
-        <h3 className="section-heading mb-8">Experience</h3>
-        <div className="space-y-0">
+        <h3 className="section-heading mb-6">Experience</h3>
+        <div className="card rounded-2xl divide-y divide-[hsl(var(--border))]">
           {projects.map((job, i) => (
             <Link
               href={`/work/${job.slug}`}
               key={`${job.company}-${i}`}
-              className="group flex items-start gap-4 py-5 border-b border-[hsl(var(--border))] last:border-b-0 -mx-4 px-4 rounded-lg transition-all duration-200 hover:bg-[hsl(var(--muted)/0.5)] hover:border-transparent"
+              className="group flex items-start gap-4 p-5 lg:p-6 first:rounded-t-2xl last:rounded-b-2xl transition-colors hover:bg-[hsl(var(--muted))]"
             >
-              {/* Timeline dot */}
-              <div className="relative mt-2 shrink-0">
-                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 group-hover:shadow-glow-sm transition-shadow" />
-                {/* Connecting line */}
-                {i < projects.length - 1 && (
-                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-px h-[calc(100%+1.25rem)] bg-[hsl(var(--border))] group-hover:bg-emerald-500/20 transition-colors" />
-                )}
-              </div>
+              {/* Accent dot */}
+              <div className="mt-2 w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0" />
 
               {/* Content */}
               <div className="flex-1 min-w-0">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
-                  <h4 className="font-display font-semibold group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                  <h4 className="font-display font-semibold text-[hsl(var(--foreground))] group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                     {job.company}
                   </h4>
-                  <span className="text-xs text-[hsl(var(--muted-foreground))] shrink-0">
+                  <span className="text-xs text-[hsl(var(--muted-foreground))] shrink-0 font-medium">
                     {job.period}
                   </span>
                 </div>

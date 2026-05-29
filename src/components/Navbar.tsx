@@ -22,10 +22,8 @@ function ThemeToggle() {
       title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
       {!mounted ? (
-        /* Placeholder to prevent layout shift */
         <div className="w-5 h-5" />
       ) : theme === "light" ? (
-        /* Sun icon — currently light, click for dark */
         <svg
           className="w-5 h-5"
           fill="none"
@@ -40,7 +38,6 @@ function ThemeToggle() {
           />
         </svg>
       ) : (
-        /* Moon icon — currently dark, click for light */
         <svg
           className="w-5 h-5"
           fill="none"
@@ -72,16 +69,16 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "glass-card border-b border-[hsl(var(--glass-border))]"
+          ? "bg-[hsl(var(--background))] border-b border-[hsl(var(--border))] shadow-sm"
           : "bg-transparent border-b border-transparent"
       }`}
     >
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white text-xs font-bold shadow-glow-sm group-hover:shadow-glow-md transition-shadow">
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <span className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white text-xs font-bold group-hover:bg-emerald-500 transition-colors">
             CC
           </span>
           <span className="font-display font-semibold text-sm hidden sm:inline text-[hsl(var(--foreground))]">
@@ -100,7 +97,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
                     ? "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10"
                     : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))]"

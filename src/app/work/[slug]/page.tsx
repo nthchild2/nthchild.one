@@ -57,20 +57,20 @@ export default async function ProjectPage({ params }: Props) {
 
       {/* Header */}
       <header className="section-fade mb-12">
-        <p className="text-xs text-[hsl(var(--muted-foreground))] uppercase tracking-wide mb-3">
+        <p className="text-xs text-[hsl(var(--muted-foreground))] uppercase tracking-widest mb-3 font-medium">
           {project.period} &middot; {project.location}
         </p>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight mb-3">
           {project.company}
         </h1>
-        <p className="text-lg gradient-text-static font-medium mb-6">
+        <p className="text-lg text-emerald-600 dark:text-emerald-400 font-medium mb-6">
           {project.role}
         </p>
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1.5 text-sm rounded-lg glass-card text-[hsl(var(--foreground))]"
+              className="px-3 py-1.5 text-sm rounded-lg bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] font-medium"
             >
               {tag}
             </span>
@@ -81,7 +81,7 @@ export default async function ProjectPage({ params }: Props) {
       {/* Hero image */}
       <section className="section-fade mb-16">
         <div
-          className={`relative ${project.aspect === "portrait" ? "aspect-[3/4] max-w-md mx-auto" : "aspect-[16/10]"} rounded-2xl bg-gradient-to-br ${project.gradient} overflow-hidden glass-card`}
+          className={`relative ${project.aspect === "portrait" ? "aspect-[3/4] max-w-md mx-auto" : "aspect-[16/10]"} rounded-2xl bg-gradient-to-br ${project.gradient} overflow-hidden card`}
         >
           <div className="absolute inset-6 sm:inset-10">
             <Image
@@ -108,8 +108,8 @@ export default async function ProjectPage({ params }: Props) {
         <h2 className="section-heading mb-6">Key Contributions</h2>
         <ul className="space-y-4">
           {project.highlights.map((highlight, i) => (
-            <li key={i} className="flex gap-3 group">
-              <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 shrink-0 group-hover:shadow-glow-sm transition-shadow" />
+            <li key={i} className="flex gap-3">
+              <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
               <span className="text-[hsl(var(--foreground))] leading-relaxed">
                 {highlight}
               </span>
@@ -125,7 +125,7 @@ export default async function ProjectPage({ params }: Props) {
           {prevProject ? (
             <Link
               href={`/work/${prevProject.slug}`}
-              className="group p-5 rounded-xl glass-card gradient-border hover:-translate-y-0.5 transition-all duration-300"
+              className="group p-5 rounded-xl card hover:border-emerald-500/40 transition-all duration-200"
             >
               <p className="text-xs text-[hsl(var(--muted-foreground))] mb-1 flex items-center gap-1">
                 <svg
@@ -156,7 +156,7 @@ export default async function ProjectPage({ params }: Props) {
           {nextProject ? (
             <Link
               href={`/work/${nextProject.slug}`}
-              className="group p-5 rounded-xl glass-card gradient-border hover:-translate-y-0.5 transition-all duration-300 text-right"
+              className="group p-5 rounded-xl card hover:border-emerald-500/40 transition-all duration-200 text-right"
             >
               <p className="text-xs text-[hsl(var(--muted-foreground))] mb-1 flex items-center justify-end gap-1">
                 Next
