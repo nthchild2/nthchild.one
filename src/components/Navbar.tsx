@@ -116,7 +116,7 @@ export default function Navbar() {
 
           {/* Social icons */}
           <a
-            href="https://github.com/nthchild1"
+            href="https://github.com/nthchild2"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2.5 rounded-lg text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors"

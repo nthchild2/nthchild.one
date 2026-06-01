@@ -211,7 +211,7 @@ export const education = [
 export const socialLinks = [
   {
     name: "GitHub",
-    href: "https://github.com/nthchild1",
+    href: "https://github.com/nthchild2",
   },
   {
     name: "LinkedIn",
