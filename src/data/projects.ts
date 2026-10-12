@@ -1,3 +1,9 @@
+export type ProjectLink = {
+  kind: "ios" | "android" | "web";
+  label: string;
+  href: string;
+};
+
 export type Project = {
   slug: string;
   company: string;
@@ -10,6 +16,7 @@ export type Project = {
   gradient: string;
   aspect: "portrait" | "landscape";
   tags: string[];
+  links?: ProjectLink[];
 };
 
 export type SkillCategory = {
@@ -47,6 +54,18 @@ export const projects: Project[] = [
       "Kotlin",
       "AIDLC",
     ],
+    links: [
+      {
+        kind: "ios",
+        label: "App Store",
+        href: "https://apps.apple.com/us/app/mypurina-pet-rewards-care/id1658539065",
+      },
+      {
+        kind: "android",
+        label: "Google Play",
+        href: "https://play.google.com/store/apps/details?id=com.nestle.us.purina.fellowshipapp",
+      },
+    ],
   },
   {
     slug: "nestle-purina-contract",
@@ -67,6 +86,18 @@ export const projects: Project[] = [
     gradient: "from-red-500/20 to-orange-500/20",
     aspect: "landscape",
     tags: ["React Native", "AWS Cognito", "Firebase", "Expo EAS", "i18n"],
+    links: [
+      {
+        kind: "ios",
+        label: "App Store",
+        href: "https://apps.apple.com/us/app/mypurina-pet-rewards-care/id1658539065",
+      },
+      {
+        kind: "android",
+        label: "Google Play",
+        href: "https://play.google.com/store/apps/details?id=com.nestle.us.purina.fellowshipapp",
+      },
+    ],
   },
   {
     slug: "goodlook",
@@ -85,6 +116,13 @@ export const projects: Project[] = [
     gradient: "from-sky-500/20 to-cyan-500/20",
     aspect: "landscape",
     tags: ["React Native", "React", "Redux", "Tech Lead"],
+    links: [
+      {
+        kind: "web",
+        label: "goodlookcorp.com",
+        href: "https://goodlookcorp.com/",
+      },
+    ],
   },
   {
     slug: "dreambox-learning",
@@ -103,6 +141,9 @@ export const projects: Project[] = [
     gradient: "from-green-500/20 to-emerald-500/20",
     aspect: "landscape",
     tags: ["TypeScript", "CreateJS", "Game Engine", "OOP"],
+    links: [
+      { kind: "web", label: "dreambox.com", href: "https://www.dreambox.com/" },
+    ],
   },
   {
     slug: "banco-pagatodo",
@@ -120,6 +161,13 @@ export const projects: Project[] = [
     gradient: "from-blue-500/20 to-indigo-500/20",
     aspect: "portrait",
     tags: ["React Native", "Redux", "TypeScript"],
+    links: [
+      {
+        kind: "ios",
+        label: "App Store",
+        href: "https://apps.apple.com/mx/app/id1527432051",
+      },
+    ],
   },
   {
     slug: "yofio",
@@ -158,6 +206,13 @@ export const projects: Project[] = [
     gradient: "from-fuchsia-500/20 to-pink-500/20",
     aspect: "portrait",
     tags: ["React Native", "Next.js", "WordPress", "PHP", "Redux", "Firebase"],
+    links: [
+      {
+        kind: "android",
+        label: "Google Play",
+        href: "https://play.google.com/store/apps/details?id=com.frik_in",
+      },
+    ],
   },
   {
     slug: "radar-magazine",
@@ -203,7 +258,13 @@ export const skillCategories: SkillCategory[] = [
   {
     category: "Backend",
     color: "emerald",
-    items: ["PHP (WordPress REST API)", "Node", "NestJS", "Supabase", "Firestore"],
+    items: [
+      "PHP (WordPress REST API)",
+      "Node",
+      "NestJS",
+      "Supabase",
+      "Firestore",
+    ],
   },
   {
     category: "CI/CD & Release",

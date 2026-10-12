@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
+import ProjectLinks from "@/components/ProjectLinks";
 import type { Metadata } from "next";
 
 type Props = {
@@ -76,14 +77,15 @@ export default async function ProjectPage({ params }: Props) {
             </span>
           ))}
         </div>
+        {project.links && <ProjectLinks links={project.links} />}
       </header>
 
       {/* Hero image */}
-      <section className="section-fade mb-16">
-        <div
-          className={`relative ${project.aspect === "portrait" ? "aspect-[3/4] max-w-md mx-auto" : "aspect-[16/10]"} rounded-2xl bg-gradient-to-br ${project.gradient} overflow-hidden card`}
-        >
-          {project.image && (
+      {project.image && (
+        <section className="section-fade mb-16">
+          <div
+            className={`relative ${project.aspect === "portrait" ? "aspect-[3/4] max-w-md mx-auto" : "aspect-[16/10]"} rounded-2xl bg-gradient-to-br ${project.gradient} overflow-hidden card`}
+          >
             <div className="absolute inset-6 sm:inset-10">
               <Image
                 src={project.image}
@@ -93,9 +95,9 @@ export default async function ProjectPage({ params }: Props) {
                 priority
               />
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* Overview */}
       <section className="section-fade mb-16">
