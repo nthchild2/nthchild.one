@@ -5,7 +5,7 @@ import { projects, socialLinks } from "@/data/projects";
 const highlights = [
   { value: "9+", label: "Years of Experience" },
   { value: "3", label: "Greenfield Products" },
-  { value: "6M+", label: "Students on DreamBox" },
+  { value: "4M+", label: "Users Reached" },
 ];
 
 export default function Home() {
