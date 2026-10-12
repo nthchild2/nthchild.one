@@ -4,6 +4,13 @@ export type ProjectLink = {
   href: string;
 };
 
+export type GalleryImage = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+};
+
 export type Project = {
   slug: string;
   company: string;
@@ -12,9 +19,8 @@ export type Project = {
   location: string;
   summary: string;
   highlights: string[];
-  image?: string;
+  gallery?: GalleryImage[];
   gradient: string;
-  aspect: "portrait" | "landscape";
   tags: string[];
   links?: ProjectLink[];
 };
@@ -42,9 +48,33 @@ export const projects: Project[] = [
       "Pioneered the adoption of AI-assisted development tools, including GitHub Copilot and Figma MCP, and participated in the pilot rollout of the company's agentic AI-driven software development lifecycle (AIDLC) framework.",
       "Integrated Axe Dev Tools (Axe Mobile Analyzer and Axe Dev Tools Linter) to deliver a WCAG 2.2 compliant experience for screen reader users.",
     ],
-    image: "/images/work/nerdery/mypurina-screens.webp",
+    gallery: [
+      {
+        src: "/images/work/nerdery/mypurina-002.png",
+        width: 1020,
+        height: 1813,
+        alt: "myPurina screenshot 2",
+      },
+      {
+        src: "/images/work/nerdery/mypurina-appstore-2.jpg",
+        width: 600,
+        height: 1298,
+        alt: "myPurina screenshot 4",
+      },
+      {
+        src: "/images/work/nerdery/mypurina-appstore-3.jpg",
+        width: 600,
+        height: 1298,
+        alt: "myPurina screenshot 5",
+      },
+      {
+        src: "/images/work/nerdery/mypurina-appstore-4.jpg",
+        width: 600,
+        height: 1298,
+        alt: "myPurina screenshot 6",
+      },
+    ],
     gradient: "from-red-500/20 to-orange-500/20",
-    aspect: "landscape",
     tags: [
       "React Native",
       "TypeScript",
@@ -82,9 +112,33 @@ export const projects: Project[] = [
       "Set up core infrastructure including environment configuration (dotenv), React Navigation, internationalization (i18n), and build/release pipelines using Expo EAS.",
       "Extensive collaboration with stakeholders and designers using Jira and Figma agile workflows.",
     ],
-    image: "/images/work/nerdery/mypurina-screens.webp",
+    gallery: [
+      {
+        src: "/images/work/nerdery/mypurina-002.png",
+        width: 1020,
+        height: 1813,
+        alt: "myPurina screenshot 2",
+      },
+      {
+        src: "/images/work/nerdery/mypurina-appstore-2.jpg",
+        width: 600,
+        height: 1298,
+        alt: "myPurina screenshot 4",
+      },
+      {
+        src: "/images/work/nerdery/mypurina-appstore-3.jpg",
+        width: 600,
+        height: 1298,
+        alt: "myPurina screenshot 5",
+      },
+      {
+        src: "/images/work/nerdery/mypurina-appstore-4.jpg",
+        width: 600,
+        height: 1298,
+        alt: "myPurina screenshot 6",
+      },
+    ],
     gradient: "from-red-500/20 to-orange-500/20",
-    aspect: "landscape",
     tags: ["React Native", "AWS Cognito", "Firebase", "Expo EAS", "i18n"],
     links: [
       {
@@ -114,7 +168,6 @@ export const projects: Project[] = [
       "Mentored junior developers through architecture discussions, code reviews, and day-to-day technical guidance, enabling them to independently deliver production features.",
     ],
     gradient: "from-sky-500/20 to-cyan-500/20",
-    aspect: "landscape",
     tags: ["React Native", "React", "Redux", "Tech Lead"],
     links: [
       {
@@ -137,9 +190,21 @@ export const projects: Project[] = [
       "Built a replay system that helped educators review student sessions and identify learning challenges through gameplay analysis.",
       "Built features using TypeScript and a custom in-house game engine built on CreateJS.",
     ],
-    image: "/images/work/encora/dreambox-002.png",
+    gallery: [
+      {
+        src: "/images/work/encora/dreambox-002.png",
+        width: 2016,
+        height: 1520,
+        alt: "DreamBox Math screenshot 1",
+      },
+      {
+        src: "/images/work/encora/dreambox-001.png",
+        width: 981,
+        height: 644,
+        alt: "DreamBox Math screenshot 2",
+      },
+    ],
     gradient: "from-green-500/20 to-emerald-500/20",
-    aspect: "landscape",
     tags: ["TypeScript", "CreateJS", "Game Engine", "OOP"],
     links: [
       { kind: "web", label: "dreambox.com", href: "https://www.dreambox.com/" },
@@ -157,15 +222,38 @@ export const projects: Project[] = [
       "Contributed to the greenfield development of Obtén Más, Banco PagaTodo's digital wallet, building React Native features with TypeScript and Redux for account management, balance visualization, and financial transactions.",
       "Collaborated closely with design, QA, backend, and product teams in an Agile environment, contributing to sprint planning and delivering reliable, user-focused mobile features.",
     ],
-    image: "/images/work/pagatodo/obtenmas-appstore-1.png",
+    gallery: [
+      {
+        src: "/images/work/pagatodo/obtenmas-appstore-1.png",
+        width: 600,
+        height: 1067,
+        alt: "Obtén Más screenshot 1",
+      },
+      {
+        src: "/images/work/pagatodo/obtenmas-appstore-2.png",
+        width: 600,
+        height: 1067,
+        alt: "Obtén Más screenshot 4",
+      },
+      {
+        src: "/images/work/pagatodo/obtenmas-appstore-3.png",
+        width: 600,
+        height: 1067,
+        alt: "Obtén Más screenshot 5",
+      },
+    ],
     gradient: "from-blue-500/20 to-indigo-500/20",
-    aspect: "portrait",
     tags: ["React Native", "Redux", "TypeScript"],
     links: [
       {
         kind: "ios",
         label: "App Store",
         href: "https://apps.apple.com/mx/app/id1527432051",
+      },
+      {
+        kind: "android",
+        label: "Google Play",
+        href: "https://play.google.com/store/apps/details?id=com.pagatodomobile.obtenmas",
       },
     ],
   },
@@ -184,9 +272,15 @@ export const projects: Project[] = [
       "Supported the backend developer in building and maintaining NestJS services, contributing to REST API endpoints, request validation, and business logic for lending and account management features.",
       "Owned QA coordination, release preparation, and production deployments, managing submissions through App Store Connect and Google Play Console in a fast-paced startup environment.",
     ],
-    image: "/images/work/paloit/yofio-001.png",
+    gallery: [
+      {
+        src: "/images/work/paloit/yofio-001.png",
+        width: 1024,
+        height: 1024,
+        alt: "YoFio screenshot 1",
+      },
+    ],
     gradient: "from-violet-500/20 to-purple-500/20",
-    aspect: "landscape",
     tags: ["React Native", "Java", "Kotlin", "NestJS", "Firebase"],
   },
   {
@@ -202,9 +296,33 @@ export const projects: Project[] = [
       "Worked across the full stack, developing the React Native mobile app, the React/Next.js web application, and a headless WordPress CMS with REST APIs powering both clients.",
       "Integrated backend services using PHP, Firebase, and HTTP APIs while applying Redux and client-server architecture principles to build a cohesive, scalable product ecosystem.",
     ],
-    image: "/images/work/presicionqa/frikin-creadores.webp",
+    gallery: [
+      {
+        src: "/images/work/presicionqa/frikin-creadores.webp",
+        width: 1080,
+        height: 2178,
+        alt: "Frik-in screenshot 1",
+      },
+      {
+        src: "/images/work/presicionqa/frikin-appstore-1.jpg",
+        width: 600,
+        height: 1067,
+        alt: "Frik-in screenshot 2",
+      },
+      {
+        src: "/images/work/presicionqa/frikin-appstore-2.jpg",
+        width: 600,
+        height: 1067,
+        alt: "Frik-in screenshot 3",
+      },
+      {
+        src: "/images/work/presicionqa/frikin-appstore-3.jpg",
+        width: 600,
+        height: 1067,
+        alt: "Frik-in screenshot 4",
+      },
+    ],
     gradient: "from-fuchsia-500/20 to-pink-500/20",
-    aspect: "portrait",
     tags: ["React Native", "Next.js", "WordPress", "PHP", "Redux", "Firebase"],
     links: [
       {
@@ -226,7 +344,6 @@ export const projects: Project[] = [
       "Co-founded a digital media outlet, leading the end-to-end technical implementation of a WordPress platform, including infrastructure, site customization, SEO optimization, and publishing workflows in collaboration with a team of editors and writers.",
     ],
     gradient: "from-slate-500/20 to-zinc-500/20",
-    aspect: "landscape",
     tags: ["WordPress", "SEO", "Infrastructure"],
   },
 ];

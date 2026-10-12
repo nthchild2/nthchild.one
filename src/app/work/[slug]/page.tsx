@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
+import ImageCarousel from "@/components/ImageCarousel";
 import ProjectLinks from "@/components/ProjectLinks";
 import type { Metadata } from "next";
 
@@ -80,22 +80,14 @@ export default async function ProjectPage({ params }: Props) {
         {project.links && <ProjectLinks links={project.links} />}
       </header>
 
-      {/* Hero image */}
-      {project.image && (
+      {/* Screenshots */}
+      {project.gallery && (
         <section className="section-fade mb-16">
-          <div
-            className={`relative ${project.aspect === "portrait" ? "aspect-[3/4] max-w-md mx-auto" : "aspect-[16/10]"} rounded-2xl bg-gradient-to-br ${project.gradient} overflow-hidden card`}
-          >
-            <div className="absolute inset-6 sm:inset-10">
-              <Image
-                src={project.image}
-                alt={`${project.company} project`}
-                fill
-                className="object-contain drop-shadow-2xl"
-                priority
-              />
-            </div>
-          </div>
+          <ImageCarousel
+            images={project.gallery}
+            gradient={project.gradient}
+            label={project.company}
+          />
         </section>
       )}
 
