@@ -35,18 +35,23 @@ export const projects: Project[] = [
   {
     slug: "nestle-purina",
     company: "Nestlé Purina",
-    role: "Senior Software Engineer",
-    period: "Apr 2024 — Present",
+    role: "Software Engineer → Senior Software Engineer",
+    period: "Jun 2022 — Present",
     location: "Remote · Mexico City",
     summary:
-      "Leading mobile development on myPurina as the app scaled from a small engineering team to a large cross-functional organization and past 4 million users.",
+      "Joined myPurina as a contractor to help define its architecture, then moved into a full-time Senior Engineer role in April 2024, leading mobile work as the app grew from a small team to a large cross-functional organization and past 4 million users.",
     highlights: [
+      "Partnered closely with the Tech Lead to define application architecture, state management, and foundational engineering patterns.",
+      "Set up core infrastructure including environment configuration (dotenv), React Navigation, internationalization (i18n), and build/release pipelines using Expo EAS.",
+      "Implemented authentication and identity management using AWS Cognito.",
+      "Integrated Firebase (remote config, Crashlytics) and Google Analytics (GTM) services for analytics and platform tooling.",
       "Contributed to the greenfield development and subsequent growth of the myPurina mobile application, helping scale the platform from a small engineering team to a large cross-functional organization supporting over 4 million users.",
       "Introduced and maintained automated testing strategies, including unit testing with Jest and React Native Testing Library, running on Bitbucket pipelines and subsequently on GitHub Actions, improving release reliability.",
       "Led a major React Native upgrade (0.76 → 0.81), addressing breaking changes and ensuring production stability.",
       "Migrated and modernized native modules, including Java → Kotlin (Android) and Objective-C → Swift (iOS).",
       "Pioneered the adoption of AI-assisted development tools, including GitHub Copilot and Figma MCP, and participated in the pilot rollout of the company's agentic AI-driven software development lifecycle (AIDLC) framework.",
       "Integrated Axe Dev Tools (Axe Mobile Analyzer and Axe Dev Tools Linter) to deliver a WCAG 2.2 compliant experience for screen reader users.",
+      "Worked extensively with stakeholders and designers using Jira and Figma agile workflows.",
     ],
     gallery: [
       {
@@ -78,68 +83,13 @@ export const projects: Project[] = [
     tags: [
       "React Native",
       "TypeScript",
+      "Expo EAS",
+      "AWS Cognito",
       "Jest",
-      "GitHub Actions",
       "Swift",
       "Kotlin",
       "AIDLC",
     ],
-    links: [
-      {
-        kind: "ios",
-        label: "App Store",
-        href: "https://apps.apple.com/us/app/mypurina-pet-rewards-care/id1658539065",
-      },
-      {
-        kind: "android",
-        label: "Google Play",
-        href: "https://play.google.com/store/apps/details?id=com.nestle.us.purina.fellowshipapp",
-      },
-    ],
-  },
-  {
-    slug: "nestle-purina-contract",
-    company: "Nestlé Purina",
-    role: "Software Engineer (contract)",
-    period: "Jun 2022 — Mar 2024",
-    location: "Remote · Mexico City",
-    summary:
-      "Joined myPurina as a contractor to help define the architecture and ship the foundations of the app, working alongside the Tech Lead.",
-    highlights: [
-      "Partnered closely with the Tech Lead to define application architecture, state management, and foundational engineering patterns.",
-      "Implemented authentication and identity management using AWS Cognito.",
-      "Integrated Firebase (remote config, Crashlytics) and Google Analytics (GTM) services for analytics and platform tooling.",
-      "Set up core infrastructure including environment configuration (dotenv), React Navigation, internationalization (i18n), and build/release pipelines using Expo EAS.",
-      "Extensive collaboration with stakeholders and designers using Jira and Figma agile workflows.",
-    ],
-    gallery: [
-      {
-        src: "/images/work/nerdery/mypurina-002.png",
-        width: 1020,
-        height: 1813,
-        alt: "myPurina screenshot 2",
-      },
-      {
-        src: "/images/work/nerdery/mypurina-appstore-2.jpg",
-        width: 600,
-        height: 1298,
-        alt: "myPurina screenshot 4",
-      },
-      {
-        src: "/images/work/nerdery/mypurina-appstore-3.jpg",
-        width: 600,
-        height: 1298,
-        alt: "myPurina screenshot 5",
-      },
-      {
-        src: "/images/work/nerdery/mypurina-appstore-4.jpg",
-        width: 600,
-        height: 1298,
-        alt: "myPurina screenshot 6",
-      },
-    ],
-    gradient: "from-red-500/20 to-orange-500/20",
-    tags: ["React Native", "AWS Cognito", "Firebase", "Expo EAS", "i18n"],
     links: [
       {
         kind: "ios",
