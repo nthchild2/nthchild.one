@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { projects, socialLinks } from "@/data/projects";
 
@@ -12,6 +13,14 @@ export default function Home() {
     <main className="max-w-4xl mx-auto px-6 py-16 sm:py-24">
       {/* ── Hero ── */}
       <section className="section-fade mb-20">
+        <Image
+          src="/images/carlos.jpg"
+          alt="Carlos Cortes"
+          width={112}
+          height={112}
+          priority
+          className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border border-[hsl(var(--border))] mb-6"
+        />
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-sm font-medium mb-6">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           Available for new projects

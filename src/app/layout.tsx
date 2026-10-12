@@ -26,9 +26,11 @@ export const metadata: Metadata = {
     url: "https://nthchild.one",
     siteName: "Carlos Cortes",
     type: "website",
+    images: [{ url: "/images/carlos.jpg", width: 800, height: 800 }],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
+    images: ["/images/carlos.jpg"],
     title: "Carlos Cortes — Senior Software Engineer",
   },
   robots: { index: true, follow: true },
