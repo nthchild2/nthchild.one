@@ -83,15 +83,17 @@ export default async function ProjectPage({ params }: Props) {
         <div
           className={`relative ${project.aspect === "portrait" ? "aspect-[3/4] max-w-md mx-auto" : "aspect-[16/10]"} rounded-2xl bg-gradient-to-br ${project.gradient} overflow-hidden card`}
         >
-          <div className="absolute inset-6 sm:inset-10">
-            <Image
-              src={project.image}
-              alt={`${project.company} project`}
-              fill
-              className="object-contain drop-shadow-2xl"
-              priority
-            />
-          </div>
+          {project.image && (
+            <div className="absolute inset-6 sm:inset-10">
+              <Image
+                src={project.image}
+                alt={`${project.company} project`}
+                fill
+                className="object-contain drop-shadow-2xl"
+                priority
+              />
+            </div>
+          )}
         </div>
       </section>
 

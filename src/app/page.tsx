@@ -2,9 +2,9 @@ import Link from "next/link";
 import { projects, socialLinks } from "@/data/projects";
 
 const highlights = [
-  { value: "7+", label: "Years of Experience" },
+  { value: "9+", label: "Years of Experience" },
   { value: "3", label: "Greenfield Products" },
-  { value: "1M+", label: "Users Reached" },
+  { value: "4M+", label: "Users Reached" },
 ];
 
 export default function Home() {
@@ -23,8 +23,8 @@ export default function Home() {
         </h1>
 
         <p className="text-lg lg:text-xl text-[hsl(var(--muted-foreground))] mb-10 max-w-2xl leading-relaxed">
-          Senior mobile engineer with 7+ years specializing in React Native and
-          TypeScript. I architect, build, and ship cross-platform products across
+          Senior React Native engineer with 9+ years specializing in TypeScript and
+          mobile architecture. I architect, build, and ship cross-platform products across
           fintech, education, and consumer platforms.
         </p>
 
@@ -85,9 +85,9 @@ export default function Home() {
           <p className="text-[hsl(var(--foreground))] leading-relaxed">
             I&apos;m a software engineer based in Mexico City with a passion
             for building polished, performant mobile experiences. Over the
-            past 7+ years, I&apos;ve shipped products across fintech,
+            past 9+ years, I&apos;ve shipped products across fintech,
             education, and consumer platforms — from greenfield apps to
-            scaling existing products past a million users.
+            scaling existing products past 4 million users.
           </p>
           <p className="text-[hsl(var(--muted-foreground))] leading-relaxed text-sm">
             My core expertise is in React Native and TypeScript, but

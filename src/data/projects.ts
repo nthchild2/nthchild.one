@@ -6,7 +6,7 @@ export type Project = {
   location: string;
   summary: string;
   highlights: string[];
-  image: string;
+  image?: string;
   gradient: string;
   aspect: "portrait" | "landscape";
   tags: string[];
@@ -21,26 +21,19 @@ export type SkillCategory = {
 export const projects: Project[] = [
   {
     slug: "nestle-purina",
-    company: "Nestle Purina",
-    role: "Software Engineer → Senior Software Engineer",
-    period: "Jun 2022 — Present",
+    company: "Nestlé Purina",
+    role: "Senior Software Engineer",
+    period: "Apr 2024 — Present",
     location: "Remote · Mexico City",
     summary:
-      "Building myPurina from the ground up — joined as a contractor to define the architecture and ship the MVP, then promoted to Senior Engineer to lead mobile development as the app scaled past 1 million users.",
+      "Leading mobile development on myPurina as the app scaled from a small engineering team to a large cross-functional organization and past 4 million users.",
     highlights: [
-      "Contributed to the greenfield development of the myPurina mobile application, a core product within Purina's New Business Model initiative, designed as a long-term consumer ecosystem.",
-      "Partnered closely with the Tech Lead to define application architecture, state management, and foundational engineering patterns for a React Native codebase.",
-      "Built MVP versions of core user-facing features including Pet Profile, Pet Food Finder, and Feeding Guide, enabling early product validation.",
-      "Designed and implemented the first version of the app's design system, enabling consistent UI and scalable feature development.",
-      "Set up core infrastructure including environment configuration, React Navigation, internationalization (i18n-js), and build/release pipelines using Expo EAS.",
-      "Implemented authentication and identity management using AWS Cognito and configured Apollo GraphQL Client for data-driven features.",
-      "Played a key role in the evolution of myPurina from a small engineering team to a large, cross-functional organization with dedicated QA, backend, design, and product teams.",
-      "Introduced and maintained automated testing strategies, including unit testing with Jest and ts-jest and end-to-end testing with Detox, improving release reliability.",
+      "Contributed to the greenfield development and subsequent growth of the myPurina mobile application, helping scale the platform from a small engineering team to a large cross-functional organization supporting over 4 million users.",
+      "Introduced and maintained automated testing strategies, including unit testing with Jest and React Native Testing Library, running on Bitbucket pipelines and subsequently on GitHub Actions, improving release reliability.",
       "Led a major React Native upgrade (0.76 → 0.81), addressing breaking changes and ensuring production stability.",
       "Migrated and modernized native modules, including Java → Kotlin (Android) and Objective-C → Swift (iOS).",
-      "Supported the growth phase of myPurina as it surpassed 1 million users, reaching tens of thousands of daily active users.",
-      "Integrated with Axe Dev Tools like Axe Mobile Analyzer and Axe Dev Tools Linter to deliver a WCAG 2.5 compliant experience for screen reader users.",
-      "Pioneered the integration of AI tools into the development cycle such as GitHub Copilot and Figma MCP.",
+      "Pioneered the adoption of AI-assisted development tools, including GitHub Copilot and Figma MCP, and participated in the pilot rollout of the company's agentic AI-driven software development lifecycle (AIDLC) framework.",
+      "Integrated Axe Dev Tools (Axe Mobile Analyzer and Axe Dev Tools Linter) to deliver a WCAG 2.2 compliant experience for screen reader users.",
     ],
     image: "/images/work/nerdery/mypurina-screens.webp",
     gradient: "from-red-500/20 to-orange-500/20",
@@ -48,12 +41,50 @@ export const projects: Project[] = [
     tags: [
       "React Native",
       "TypeScript",
-      "Apollo GraphQL",
       "Jest",
-      "Detox",
+      "GitHub Actions",
       "Swift",
       "Kotlin",
+      "AIDLC",
     ],
+  },
+  {
+    slug: "nestle-purina-contract",
+    company: "Nestlé Purina",
+    role: "Software Engineer (contract)",
+    period: "Jun 2022 — Mar 2024",
+    location: "Remote · Mexico City",
+    summary:
+      "Joined myPurina as a contractor to help define the architecture and ship the foundations of the app, working alongside the Tech Lead.",
+    highlights: [
+      "Partnered closely with the Tech Lead to define application architecture, state management, and foundational engineering patterns.",
+      "Implemented authentication and identity management using AWS Cognito.",
+      "Integrated Firebase (remote config, Crashlytics) and Google Analytics (GTM) services for analytics and platform tooling.",
+      "Set up core infrastructure including environment configuration (dotenv), React Navigation, internationalization (i18n), and build/release pipelines using Expo EAS.",
+      "Extensive collaboration with stakeholders and designers using Jira and Figma agile workflows.",
+    ],
+    image: "/images/work/nerdery/mypurina-screens.webp",
+    gradient: "from-red-500/20 to-orange-500/20",
+    aspect: "landscape",
+    tags: ["React Native", "AWS Cognito", "Firebase", "Expo EAS", "i18n"],
+  },
+  {
+    slug: "goodlook",
+    company: "GoodLook",
+    role: "Mobile and Web Tech Lead (contract)",
+    period: "Mar 2022 — Aug 2022",
+    location: "Remote · San Pedro Garza García",
+    summary:
+      "Tech lead for the MVP of GoodLook, a beauty services marketplace, coordinating delivery across React and React Native.",
+    highlights: [
+      "Served as Web & Mobile Tech Lead during the MVP development of GoodLook, a beauty services marketplace, coordinating technical delivery across React and React Native.",
+      "Designed the Redux state management strategy for the app.",
+      "Led technical planning, backlog grooming, and feature estimation with product stakeholders, designers, and backend engineers.",
+      "Mentored junior developers through architecture discussions, code reviews, and day-to-day technical guidance, enabling them to independently deliver production features.",
+    ],
+    gradient: "from-sky-500/20 to-cyan-500/20",
+    aspect: "landscape",
+    tags: ["React Native", "React", "Redux", "Tech Lead"],
   },
   {
     slug: "dreambox-learning",
@@ -62,13 +93,11 @@ export const projects: Project[] = [
     period: "Dec 2021 — Jun 2022",
     location: "Remote · Mexico City",
     summary:
-      "Worked on DreamBox Math, an adaptive, game-based mathematics learning platform operated by DreamBox Learning (part of Discovery Education), used by schools across the United States.",
+      "Worked on DreamBox Math, an adaptive learning platform used by schools across the U.S., including a replay system for reviewing student sessions.",
     highlights: [
-      "Worked on DreamBox Math, an adaptive, game-based mathematics learning platform operated by DreamBox Learning, part of Discovery Education, and used by schools across the United States.",
-      "Implemented a replay feature enabling educators to review student gameplay sessions and identify learning challenges.",
-      "Developed systems allowing teachers to visualize student problem-solving paths for targeted classroom intervention.",
+      "Developed features for DreamBox Math, an adaptive learning platform used by schools across the U.S.",
+      "Built a replay system that helped educators review student sessions and identify learning challenges through gameplay analysis.",
       "Built features using TypeScript and a custom in-house game engine built on CreateJS.",
-      "Applied object-oriented programming (OOP) principles to design reusable and maintainable gameplay systems.",
     ],
     image: "/images/work/encora/dreambox-002.png",
     gradient: "from-green-500/20 to-emerald-500/20",
@@ -82,13 +111,10 @@ export const projects: Project[] = [
     period: "Dec 2020 — Dec 2021",
     location: "Mexico City, Mexico",
     summary:
-      "Greenfield development of Obtén Más, a consumer-facing digital wallet application within Banco PagaTodo's financial services ecosystem.",
+      "Greenfield development of Obtén Más, Banco PagaTodo's digital wallet.",
     highlights: [
-      "Worked on the greenfield development of Obtén Más, a consumer-facing digital wallet application within Banco PagaTodo's financial services ecosystem.",
-      "Built and maintained mobile features using React Native and TypeScript, with Redux for scalable state management.",
-      "Implemented core wallet functionality supporting financial transactions, balance visualization, and account flows.",
-      "Collaborated with design, QA, backend, and product teams to deliver reliable, user-friendly mobile experiences.",
-      "Participated in structured Agile development workflows, contributing to sprint planning and incremental delivery.",
+      "Contributed to the greenfield development of Obtén Más, Banco PagaTodo's digital wallet, building React Native features with TypeScript and Redux for account management, balance visualization, and financial transactions.",
+      "Collaborated closely with design, QA, backend, and product teams in an Agile environment, contributing to sprint planning and delivering reliable, user-focused mobile features.",
     ],
     image: "/images/work/pagatodo/obtenmas-appstore-1.png",
     gradient: "from-blue-500/20 to-indigo-500/20",
@@ -98,56 +124,55 @@ export const projects: Project[] = [
   {
     slug: "yofio",
     company: "YoFio",
-    role: "Mobile Application Developer",
-    period: "Jan 2020 — Dec 2020",
+    role: "Full Stack Engineer",
+    period: "Apr 2020 — Dec 2020",
     location: "Mexico City, Mexico",
     summary:
-      "Built consumer and merchant mobile apps for an early-stage fintech startup delivering digital credit and lending solutions. Owned the full mobile lifecycle from native module development to production releases.",
+      "Built consumer and merchant React Native apps for an early-stage fintech startup, and owned QA coordination and production releases.",
     highlights: [
-      "Built and maintained consumer-facing mobile applications for an early-stage fintech startup delivering digital credit and lending solutions.",
-      "Developed the primary customer mobile app using React Native and TypeScript, enabling loan requests, repayment flows, account visibility, and payment tracking.",
-      "Designed and implemented a merchant-facing mobile application, sharing a common core codebase and reusable UI components to support multiple user roles efficiently.",
-      "Built a web-based back-office administration panel using React, enabling internal teams to manage user properties, transactions, and operational workflows.",
-      "Established and maintained a shared front-end architecture to support multiple applications while minimizing duplication and improving maintainability.",
+      "Built and maintained consumer and merchant React Native applications for an early-stage fintech startup, implementing digital lending features including loan requests, repayment flows, account management, and payment tracking.",
       "Implemented and maintained native Android modules using Java and Kotlin to access device-level capabilities required for risk analysis and credit modeling.",
       "Integrated third-party platforms including Firebase, Twilio, Branch, Mixpanel, and Segment to support authentication, messaging, deep linking, analytics, and user behavior tracking.",
-      "Implemented secure data collection and transmission workflows to a machine-learning backend hosted on Google Cloud Platform (GCP).",
+      "Supported the backend developer in building and maintaining NestJS services, contributing to REST API endpoints, request validation, and business logic for lending and account management features.",
       "Owned QA coordination, release preparation, and production deployments, managing submissions through App Store Connect and Google Play Console in a fast-paced startup environment.",
     ],
     image: "/images/work/paloit/yofio-001.png",
     gradient: "from-violet-500/20 to-purple-500/20",
     aspect: "landscape",
-    tags: ["React Native", "Java", "Kotlin", "Firebase", "React", "GCP"],
+    tags: ["React Native", "Java", "Kotlin", "NestJS", "Firebase"],
   },
   {
     slug: "frik-in",
     company: "Frik-in",
     role: "Full Stack Engineer",
-    period: "Jan 2019 — Dec 2019",
+    period: "Jan 2019 — Mar 2020",
     location: "Mexico City, Mexico",
     summary:
-      "Joined an early-stage startup building Frik-in, a mobile and web platform for content and community engagement. Worked across mobile app, web application, and CMS systems.",
+      "Early-stage startup building Frik-in, a content and community platform spanning mobile, web, and CMS applications.",
     highlights: [
-      "Joined an early-stage startup building Frik-in, a mobile and web platform for content and community engagement.",
-      "Worked across mobile app, web application, and CMS systems, contributing to a unified product ecosystem.",
-      "Helped build the mobile application using React Native, supporting dynamic content delivery.",
-      "Contributed to the web application using React and Next.js, adopting serverless and static rendering patterns.",
-      "Developed WordPress-based content panels and implemented a headless REST API powering mobile and web clients.",
-      "Applied Redux and client–server architecture principles to manage state and data flow.",
-      "Integrated backend services using PHP, JavaScript, HTTP APIs, and Firebase.",
-      "Rapidly ramped up on a modern full-stack ecosystem, applying engineering fundamentals to real-world product challenges.",
+      "Joined an early-stage startup building Frik-in, a content and community platform spanning mobile, web, and CMS applications.",
+      "Worked across the full stack, developing the React Native mobile app, the React/Next.js web application, and a headless WordPress CMS with REST APIs powering both clients.",
+      "Integrated backend services using PHP, Firebase, and HTTP APIs while applying Redux and client-server architecture principles to build a cohesive, scalable product ecosystem.",
     ],
     image: "/images/work/presicionqa/frikin-creadores.webp",
     gradient: "from-fuchsia-500/20 to-pink-500/20",
     aspect: "portrait",
-    tags: [
-      "React Native",
-      "Next.js",
-      "WordPress",
-      "PHP",
-      "Redux",
-      "Firebase",
+    tags: ["React Native", "Next.js", "WordPress", "PHP", "Redux", "Firebase"],
+  },
+  {
+    slug: "radar-magazine",
+    company: "Radar Magazine",
+    role: "Co-Founder & WordPress Developer",
+    period: "2017 — 2018",
+    location: "Mexico City, Mexico",
+    summary:
+      "Co-founded a digital media outlet and led the end-to-end technical implementation of its WordPress platform.",
+    highlights: [
+      "Co-founded a digital media outlet, leading the end-to-end technical implementation of a WordPress platform, including infrastructure, site customization, SEO optimization, and publishing workflows in collaboration with a team of editors and writers.",
     ],
+    gradient: "from-slate-500/20 to-zinc-500/20",
+    aspect: "landscape",
+    tags: ["WordPress", "SEO", "Infrastructure"],
   },
 ];
 
@@ -170,27 +195,57 @@ export const skillCategories: SkillCategory[] = [
     color: "amber",
     items: ["Redux", "Apollo GraphQL"],
   },
-  { category: "Web", color: "blue", items: ["React", "Next.js", "WordPress"] },
+  {
+    category: "Web",
+    color: "blue",
+    items: ["React", "Next.js", "WordPress (headless)", "HTML", "CSS"],
+  },
+  {
+    category: "Backend",
+    color: "emerald",
+    items: ["PHP (WordPress REST API)", "Node", "NestJS", "Supabase", "Firestore"],
+  },
   {
     category: "CI/CD & Release",
     color: "orange",
     items: [
       "Expo EAS",
+      "Bitbucket pipelines",
       "GitHub Actions",
       "App Store Connect",
       "Google Play Console",
     ],
   },
-  { category: "Testing", color: "lime", items: ["Jest", "Detox"] },
+  { category: "Testing & Quality", color: "lime", items: ["Jest", "Detox"] },
+  {
+    category: "Observability & Analytics",
+    color: "cyan",
+    items: ["Firebase Crashlytics", "Google Analytics tags", "New Relic"],
+  },
   {
     category: "Integrations",
     color: "rose",
-    items: ["Firebase", "Twilio", "Branch", "Mixpanel", "Segment"],
+    items: [
+      "Twilio",
+      "Branch",
+      "Mixpanel",
+      "Segment",
+      "AppsFlyer",
+      "LaunchDarkly",
+      "Auth0",
+    ],
   },
   {
-    category: "AI Tools",
+    category: "AI",
     color: "fuchsia",
-    items: ["Claude Code", "GitHub Copilot", "Figma MCP", "Jira MCP"],
+    items: [
+      "Jira MCP",
+      "Figma MCP",
+      "Context engineering",
+      "AIDLC",
+      "Claude Code",
+      "Open Claw agents",
+    ],
   },
 ];
 
@@ -198,13 +253,13 @@ export const education = [
   {
     school: "School of Engineering, UNAM",
     degree: "Computer Engineering",
-    period: "2014 — 2018",
+    period: "Aug 2014 — Dec 2018",
   },
-  {
-    school: "SODVI",
-    degree: "Game Development — Unity Engine & C#",
-    period: "2018 — 2020",
-  },
+];
+
+export const languages = [
+  { name: "Spanish", level: "Native speaker" },
+  { name: "English", level: "Highly proficient" },
 ];
 
 /** Social links used in navbar and footer */
