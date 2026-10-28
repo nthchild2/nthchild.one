@@ -36,7 +36,11 @@ The backbone is made of tools any team recognizes: Jira for work and open questi
 
 Storing information is the easy part. The hard part is moving it between people who think in different languages: legal, business, design and code. That is the work I gave to AI. Claude connects to each of those tools through MCP, the Model Context Protocol, so the same agent can read a meeting transcript, update a ticket, write a Confluence page and check a Figma frame.
 
-## How it fits together
+## The layer in between
+
+Looking back at October, the most technical thing I built isn't in the repository.
+
+The work has three layers. Product is where questions come from: conversations, constraints from lawyers and accountants, my co-founder's read on the market. Engineering is where the answers end up: architecture, designs, tickets, code. Between them sits a layer of Claude routines and agents, with Loom, Jira, Confluence, Figma and GitHub at the other end of each MCP connection.
 
 <SystemMap caption="Questions enter on the product side; buildable work leaves on the engineering side.">
 <Lane title="Product">
@@ -62,6 +66,10 @@ Storing information is the easy part. The hard part is moving it between people 
 
 </Lane>
 </SystemMap>
+
+A good part of my month went into that middle layer: deciding where each kind of information lives, writing the conventions that turn a ticket into a decision, and tuning the routines until an hour-long call could become tickets without anyone taking notes.
+
+That middle layer is where the translating actually happens. A decision only matters once it reaches code in a form someone can build from, so what comes out of the middle is exactly what engineering needs: an ADR for every technical choice, designs tied to the tickets that shaped them, build tickets that carry their own context, and a repository that tells coding agents how to work in it. When an engineer or an agent picks up a ticket, the reasoning is already waiting there.
 
 Step by step, a conversation moves through six stages before it becomes code:
 
@@ -106,7 +114,7 @@ Documentation works the other way around. I don't write the Confluence pages or 
 </Side>
 </Split>
 
-The same thinking reaches the code. The repository carries an `AGENTS.md` file that tells coding agents how the project is organized, which documentation to trust and which checks to run before calling something done, so an agent can pick up a ticket with the same context an engineer would get.
+The repository carries an `AGENTS.md` file that tells coding agents how the project is organized, which documentation to trust and which checks to run before calling something done.
 
 ## Working with people who don't write code
 
