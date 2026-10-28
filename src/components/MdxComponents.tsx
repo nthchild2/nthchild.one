@@ -3,6 +3,104 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 /* ── Case-study building blocks ── */
 
+const heroQuotes = [
+  "What if the technician doesn't show up?",
+  "Is the commission on labor or on the full price?",
+  "Customers should be able to send photos of the problem.",
+];
+
+const heroOutputs = ["Decision", "ADR", "Figma frame", "Build ticket"];
+
+function HeroArrow() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="w-5 h-5 rotate-90 lg:rotate-0 text-emerald-600 dark:text-emerald-400"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+      />
+    </svg>
+  );
+}
+
+/** Opening graphic: meeting talk on the left, the AI layer in the middle, the product on the right */
+function ConversationHero({ image, alt }: { image: string; alt: string }) {
+  return (
+    <figure className="my-12 -mx-6 sm:mx-0 sm:rounded-3xl overflow-hidden border-y sm:border border-[hsl(var(--border))] bg-gradient-to-br from-emerald-500/10 via-[hsl(var(--background))] to-teal-500/10">
+      <div className="grid lg:grid-cols-[1fr_auto_auto_auto_1fr] items-center gap-5 lg:gap-4 px-6 py-8 sm:p-8">
+        {/* Conversation */}
+        <div className="flex flex-col gap-3 min-w-0">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
+            Recorded call
+          </p>
+          {heroQuotes.map((quote, i) => (
+            <p
+              key={quote}
+              className={`max-w-[17rem] rounded-2xl rounded-bl-md px-4 py-2.5 text-sm leading-snug bg-[hsl(var(--card))] border border-[hsl(var(--border))] shadow-sm text-[hsl(var(--foreground))] ${
+                i === 1 ? "lg:ml-6" : ""
+              }`}
+            >
+              {quote}
+            </p>
+          ))}
+        </div>
+
+        <div className="flex justify-center">
+          <HeroArrow />
+        </div>
+
+        {/* AI layer */}
+        <div className="flex flex-col items-center gap-3">
+          <span className="px-4 py-2 rounded-full bg-emerald-600 text-white text-sm font-display font-semibold shadow-lg shadow-emerald-600/25">
+            Claude + MCP
+          </span>
+          <div className="flex flex-wrap lg:flex-col justify-center gap-1.5">
+            {heroOutputs.map((output) => (
+              <span
+                key={output}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[hsl(var(--card))] border border-[hsl(var(--border))] text-[hsl(var(--muted-foreground))]"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="w-3 h-3 text-orange-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  strokeWidth={3}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+                {output}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+          <HeroArrow />
+        </div>
+
+        {/* Product */}
+        <div className="flex justify-center lg:justify-end min-w-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={image}
+            alt={alt}
+            className="w-[240px] sm:w-[260px] rounded-2xl shadow-2xl shadow-black/20"
+          />
+        </div>
+      </div>
+    </figure>
+  );
+}
+
 /** Row of headline figures */
 function Stats({ children }: { children: ReactNode }) {
   return (
@@ -307,6 +405,7 @@ export const mdxComponents = {
       {...props}
     />
   ),
+  ConversationHero,
   Stats,
   Stat,
   Timeline,
