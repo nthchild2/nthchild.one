@@ -85,7 +85,7 @@ export const projects: Project[] = [
       "Claude Code",
       "Jira MCP",
     ],
-    caseStudy: "decisions-as-the-unit-of-work",
+    caseStudy: "conversation-in-code-out",
   },
   {
     slug: "nestle-purina",

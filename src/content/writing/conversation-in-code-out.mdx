@@ -1,0 +1,154 @@
+---
+title: "Conversation in, code out: the product workflow I built with Claude and MCP"
+summary: "How I designed a way for non-technical co-founders and advisors to shape a product just by talking, built it from the tools every team already knows with Claude as the connective tissue, and turned five weeks of conversations into a real product."
+date: "2026-10-28"
+type: "Case study"
+series: "Building Project Handyman"
+part: 1
+tags: ["AI-assisted development", "Product workflow", "Claude", "MCP", "Architecture"]
+---
+
+In September I started building a product with people who don't write code. My business co-founder knows the market. Our legal advisor knows what we can and can't promise a technician. A few weeks later a marketing lead joined. Between us we had plenty of judgment and almost no shared vocabulary, and the product we wanted to build depended on all of it: Project Handyman (working name), a marketplace where people in Mexico describe a home repair and certified plumbers, electricians and HVAC technicians nearby send offers.
+
+There are two usual ways to handle a team like that. You ask everyone to learn the engineering team's tools, which never really happens. Or one person becomes the human router who sits in every meeting and turns it into tickets, specs and diagrams. That person was going to be me, and it doesn't hold up for more than a few weeks.
+
+So before writing much code, I designed the process we would build the product with. This post is about that design: what I optimized for, how I put it together, and what it has produced so far.
+
+<Stats>
+  <Stat value="5 weeks" label="from the first meeting to an approved architecture and a working prototype" />
+  <Stat value="115" label="questions, decisions and tasks tracked, each traceable to the conversation it came from" />
+  <Stat value="11" label="architecture decision records, each with its alternatives and its cost" />
+</Stats>
+
+## Three design constraints
+
+### People talk; they don't fill in forms
+
+Non-technical stakeholders do their best thinking out loud. Our meetings are long calls in Spanish where we walk through the product screen by screen and argue about how it should behave. I didn't want to change that, so the only process I asked of anyone was to record the call. Everything after that is the system's job.
+
+### Standard tools, nothing exotic
+
+The backbone is made of tools any team recognizes: Jira for work and open questions, Confluence for what people need to read, Figma for screens, GitHub for code and Loom for meetings. A new engineer, advisor or investor can find their way around on day one, and nothing important lives in my head or in a tool only I understand.
+
+### AI does the translating
+
+Storing information is the easy part. The hard part is moving it between people who think in different languages: legal, business, design and code. That is the work I gave to AI. Claude connects to each of those tools through MCP, the Model Context Protocol, so the same agent can read a meeting transcript, update a ticket, write a Confluence page and check a Figma frame.
+
+## How it fits together
+
+<SystemMap caption="Questions enter on the product side; buildable work leaves on the engineering side.">
+<Lane title="Product">
+
+- Recorded conversations
+- Open questions and decisions
+- Legal and business constraints
+
+</Lane>
+<Lane title="AI layer" accent>
+
+- Routines that triage every meeting
+- Agents that write the docs and ADRs
+- MCP links across every tool we use
+
+</Lane>
+<Lane title="Engineering">
+
+- Architecture decision records
+- Figma frames tied to their tickets
+- Build tickets that carry their context
+- A repository ready for coding agents
+
+</Lane>
+</SystemMap>
+
+### The backbone
+
+Jira holds everything that changes. I split it into four epics: open product decisions, legal and business questions, changes to the prototype, and architecture. Every ticket created from a meeting carries a label with that meeting's date, so any piece of work can be traced back to the conversation that produced it.
+
+Confluence holds what people need to read: the product vision, the business model, a dated decision log and the architecture. Its pages pull open items live from Jira instead of copying them, so a list of pending legal questions is never out of date. Figma frames list the tickets that shaped them, and the tickets link back.
+
+One rule holds it together: every kind of information has exactly one home. Early on, our product documents lived in both the repository and Confluence. Rather than keep two copies in sync, I deleted the ones in the repository, about a thousand lines, and left a README that points to Confluence.
+
+### The AI layer
+
+Meeting triage is the most automated part. A Claude routine pulls each transcript from Loom through MCP, writes a summary and action items, and updates or opens Jira tickets on its own. I barely supervise it, and that's a deliberate trade: a ticket that's slightly off is cheap to fix, and a conversation nobody wrote down is gone.
+
+Documentation works the other way around. I don't write the Confluence pages or the architecture records, but nothing reaches them without a long working session first: I argue through the problem with an agent, make each call, and the agent turns the result into the page. The prose is the agent's; the decisions in it are ours.
+
+<Split>
+<Side title="Agents do" accent>
+
+- Turn each recorded meeting into a summary, action items and ticket updates
+- Write the decision log, the Confluence pages and the architecture records
+- Cross-link tickets, pages, frames and code
+
+</Side>
+<Side title="People do">
+
+- Make every decision, in writing
+- Argue through the reasoning before anything is written down
+- Own the open questions in their area
+- Say when a decision is ready for design and code
+
+</Side>
+</Split>
+
+The same thinking reaches the code. The repository carries an `AGENTS.md` file that tells coding agents how the project is organized, which documentation to trust and which checks to run before calling something done, so an agent can pick up a ticket with the same context an engineer would get.
+
+## Working with people who don't write code
+
+A process like this lives or dies on whether the non-technical side actually uses it. A few things made the difference.
+
+- **Walkthroughs instead of specs.** We review the prototype screen by screen on calls. On the first walkthrough with our legal advisor, we found that you couldn't actually choose a technician on the offers screen, the kind of problem that only shows up when someone tries to use the thing.
+- **Decisions in their own words.** My business co-founder never has to learn Jira's query language. A decision written in plain Spanish in the ticket is enough, and the rest of the chain follows from it.
+- **Trade-offs in pesos.** Technical options come with a monthly cost in pesos. Once we priced a text message for every sign-in, nobody needed a technical argument to see why we chose passwords over one-time codes.
+- **History, not just answers.** When a decision changes, the old one stays in the log, struck through, with the date and the reason it was replaced.
+
+<Callout>
+When someone asks why something works the way it does, the answer includes what we tried first. That history is what stops a small team from reopening the same question every other meeting.
+</Callout>
+
+## One decision, end to end
+
+Here is a single question making the full trip. While comparing the business model with the prototype, we found they calculated the platform's commission differently. Nobody had decided which was right.
+
+<Timeline>
+  <Moment date="Oct 6" where="Jira" title="The question gets a ticket">It's filed under open product decisions.</Moment>
+  <Moment date="Oct 15" where="Loom · Claude" title="It comes up in a meeting">The meeting routine notes on the ticket that it still needs a decision, with a link to the recording.</Moment>
+  <Moment date="Oct 27" where="Jira" title="It's decided, in writing">My business co-founder writes the decision in the ticket.</Moment>
+  <Moment date="Oct 27" where="Confluence" title="It's recorded and closed">An agent adds it to the decision log and the business model, and the ticket closes with links to both.</Moment>
+  <Moment date="Oct 27" where="Figma · App" title="It becomes work">One ticket updates the affected screens; another updates the app once the designs are ready.</Moment>
+</Timeline>
+
+Nobody had to chase it or remember what was said on the 15th, and whoever builds that screen will find the reasoning attached.
+
+## What it produced
+
+Five weeks after the first meeting, the process has turned conversations into things you can open and use.
+
+<Screens>
+  <Screen src="/images/work/obelisk/handyman-client-home.png" caption="Customer home" />
+  <Screen src="/images/work/obelisk/handyman-client-offers.png" caption="Offers from technicians" />
+  <Screen src="/images/work/obelisk/handyman-tech-board.png" caption="Technician job board" />
+  <Screen src="/images/work/obelisk/handyman-tech-schedule.png" caption="Scheduling a visit" />
+</Screens>
+
+- **A designed product.** Customer and technician flows in Figma, with frames tied to the decisions behind them.
+- **A working prototype.** Our first screens came out of an AI design tool as a single 3,000-line web app. I used it as a reference and rebuilt it as a native Expo app covering both sides of the marketplace.
+- **An approved architecture.** One Expo app with separate customer and technician experiences; three NestJS services on Cloud Run, split by security boundary rather than by entity; Firestore and Cloud Storage behind the API; domain events on Pub/Sub from day one. Every choice has an ADR with the alternatives we rejected and what it costs, with scale-to-zero services and free tiers wherever they would do.
+- **A team building from tickets.** The backend repository is set up, and implementation work now goes to another engineer as tickets that already carry their decisions and designs.
+
+## What hasn't worked yet
+
+- **Everything still goes through me.** Almost every ticket and every architecture record passed through my hands. That was fast at the start and is a bottleneck now, and many legal and financial questions still have no owner.
+- **Alignment happens on demand.** Tickets, Confluence, Figma and the prototype drift apart between meetings, and today we realign them when someone notices. It works at our size, but it needs a structured process.
+- **Design runs ahead of code.** The latest decisions are in Figma, but the prototype hasn't caught up.
+- **Code hygiene came last.** Early commits went straight to the main branch with no pull requests or CI. That was acceptable with one developer and isn't with a team.
+
+## What's next
+
+Next is giving every ticket an owner, getting app builds and CI running so the whole team can install the prototype, standing up the first backend services, and closing the legal and tax questions that stand between us and a pilot. Once the product is more mature, I want to bring the same discipline to the code itself, with a spec, research, plan, execute and verify pipeline for coding agents that I've been developing as an [open framework](https://github.com/nthchild2/agentic-software-development-framework).
+
+When we started, the people who understood the business and the people who would build it didn't share a vocabulary. They still don't, and they don't need to. That gap is where the system lives.
+
+If you're building something similar for your team, or want to compare notes on using AI beyond writing code, [I'd like to hear from you](mailto:nthchild1@gmail.com).
