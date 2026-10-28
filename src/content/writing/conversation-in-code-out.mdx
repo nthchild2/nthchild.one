@@ -12,7 +12,7 @@ tags: ["AI-assisted development", "Product workflow", "Claude", "MCP", "Architec
 
 In September I started building a product with people who don't write code. My business co-founder knows the market, our legal advisor knows what we can promise a technician, and a few weeks in, a marketing lead joined. Lots of judgment, very little shared vocabulary.
 
-The product is Project Handyman (working name), a home-repair marketplace for Mexico. The hard side is supply. Most plumbers, electricians and HVAC technicians here work informally and find jobs by word of mouth, so one month is packed and the next is empty. We want the work to come to them, along with a verified profile and a reputation that grows over time. That raises questions about labor law, payments and trust long before it raises questions about code.
+The product is Project Handyman (working name), a home-repair marketplace for Mexico. The hard side is supply. Most plumbers, electricians and HVAC technicians here work informally and find jobs by word of mouth, so one month is packed and the next is empty. We want the work to come to them, along with a verified profile and a reputation that grows over time. That raises questions about labor law, payments and trust long before it raises questions about code. Is a technician a contractor or an employee? How long can we hold a customer's money? Can people pay in cash? None of those had an answer when we started.
 
 Teams like this usually end up with one person who sits in every meeting and turns it into tickets and specs. That person was going to be me, and it stops working after a few weeks. So before writing much code, I designed how we would work.
 
@@ -93,7 +93,7 @@ Operational and short-lived.
 </Side>
 </Split>
 
-Jira tickets are disposable. Once the outcome lands in Confluence, Figma or the code, the ticket is done, and nobody has to dig through old ones to learn how the product works. The reference side has one rule: every piece of information lives in exactly one place. When our product docs existed in both the repo and Confluence, I deleted the thousand lines in the repo and left a README pointing to Confluence.
+Jira has four epics: open product decisions, legal and business questions, prototype changes and architecture. Its tickets are disposable. Once the outcome lands in Confluence, Figma or the code, the ticket is done, and nobody has to dig through old ones to learn how the product works. The reference side has one rule: every piece of information lives in exactly one place. When our product docs existed in both the repo and Confluence, I deleted the thousand lines in the repo and left a README pointing to Confluence.
 
 ### Agents write, people decide
 
@@ -105,10 +105,12 @@ Documentation is the opposite. Agents write every Confluence page and architectu
 
 **Walkthroughs over specs.** We review the prototype screen by screen, so feedback lands on something concrete. On one call someone mentioned, almost as an aside, that you couldn't pick a technician on the offers screen. Nobody wrote it down. It still ended up as a bug ticket tagged with that meeting, headed for Figma and the code.
 
-**Costs in pesos.** Every technical option comes with a monthly price. Once we priced a text message for every sign-in, nobody needed a technical argument to drop one-time codes for passwords.
+**Costs in pesos.** Every technical option comes with a monthly price. Once we priced a text message for every sign-in, nobody needed a technical argument to drop one-time codes for passwords. I put the same numbers together for infrastructure and for each completed job, and they went straight into our margin model.
+
+**Engineering at the business table.** Some business rules came out of technical constraints. A card payment can only be held for a limited time, so we cut the window for filing a claim from 72 to 48 hours, which keeps every dispute inside the hold. That's the kind of call that's easy to miss when the people writing the policy and the people building the payments flow never talk.
 
 <Callout>
-When a decision changes, the old version stays in the log, crossed out, with the date and the reason. It keeps a small team from reopening the same argument every other meeting.
+When a decision changes, the old version stays in the log, crossed out, with the date and the reason. We've reversed ourselves on accounts, sign-in and the commission split, and every reversal is still there to read. It keeps a small team from reopening the same argument every other meeting.
 </Callout>
 
 ## One decision, end to end
@@ -134,7 +136,8 @@ On October 6 we noticed that the business model and the prototype calculated the
 
 - **A designed product.** Customer and technician flows in Figma.
 - **A working prototype.** Our first screens came out of an AI design tool as a 3,000-line web app. I used it as a reference and rebuilt it as a native Expo app for both sides of the marketplace, with an `AGENTS.md` that tells coding agents how the project works.
-- **An approved architecture.** One Expo app, three NestJS services on Cloud Run, Firestore and Cloud Storage behind the API, and domain events on Pub/Sub. Each choice has an ADR with the alternatives we rejected and what it costs.
+- **An approved architecture.** One Expo app, three NestJS services on Cloud Run split by security boundary, Firestore and Cloud Storage behind the API, and domain events on Pub/Sub. It's designed to cost close to nothing until there's real traffic, and each choice has an ADR with the alternatives we rejected and what it costs.
+- **A business backlog.** Labor, tax, payments and privacy questions, written up as tickets and ranked by urgency, ready for the lawyer and the accountant.
 - **A team building from tickets.** Another engineer now picks up work with the decisions and designs already attached.
 
 ## What's still rough
