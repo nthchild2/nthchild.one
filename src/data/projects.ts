@@ -44,8 +44,8 @@ export const projects: Project[] = [
       "Co-founded a software studio whose first product, Project Handyman (working name), is a two-sided marketplace connecting homeowners in Mexico with certified plumbing, electrical and HVAC technicians. I lead architecture, product definition and the team's delivery workflow.",
     highlights: [
       "Took the product from a first round of founder, legal and business meetings to an approved architecture and a navigable mobile prototype in about five weeks.",
-      "Designed an AI-assisted workflow that turns meeting transcripts into Jira tickets, tracks every open question as a decision, records the outcome in Confluence and carries it through Figma into code.",
-      "Wrote eleven Architecture Decision Records covering the mobile client, backend services, data, real-time events, notifications, identity, AI, payments, hosting and observability, with cost treated as a hard constraint.",
+      "Designed an AI-assisted workflow where Claude routines turn recorded meetings into Jira updates, every open question is tracked as a decision, and agents document each outcome in Confluence before it moves through Figma into code.",
+      "Led eleven Architecture Decision Records covering the mobile client, backend services, data, real-time events, notifications, identity, AI, payments, hosting and observability, with cost treated as a hard constraint.",
       "Rebuilt an AI-generated web mockup as a native Expo / Expo Router prototype covering both the customer and technician flows, structured for AI coding agents.",
       "Own the Figma screens and break features into implementation-ready tickets for the rest of the engineering team.",
     ],

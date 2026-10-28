@@ -14,9 +14,9 @@ Three weeks later it had been decided, logged and turned into work for design an
 
 <Timeline>
   <Moment date="Oct 6" where="Jira" title="The question gets a ticket">The mismatch between the business model and the prototype is filed under open product decisions.</Moment>
-  <Moment date="Oct 15" where="Recorded call" title="It comes up in a meeting">My business co-founder asks for it to be settled. An agent reading the recording adds that to the ticket, with a link to the video.</Moment>
+  <Moment date="Oct 15" where="Recorded call" title="It comes up in a meeting">My business co-founder asks for it to be settled. A Claude routine that reads the Loom transcript adds that to the ticket, with a link to the video.</Moment>
   <Moment date="Oct 27" where="Jira" title="It's decided, in writing">My co-founder writes the decision in the ticket: how the commission is split, and what it applies to.</Moment>
-  <Moment date="Oct 27" where="Confluence" title="It's logged and closed">The decision goes into the dated decision log and the business model page, and the ticket closes with links to both.</Moment>
+  <Moment date="Oct 27" where="Confluence" title="It's logged and closed">An agent records it in the dated decision log and the business model page, and the ticket closes with links to both.</Moment>
   <Moment date="Oct 27" where="Figma · App" title="It becomes work">One task updates the affected screens in Figma; another updates the prototype once the designs are ready.</Moment>
 </Timeline>
 
@@ -35,7 +35,7 @@ At this stage there is little code to write and a lot to decide. Is a technician
 
 The people deciding are a mix: two co-founders, only one of them technical, a legal advisor, a marketing lead and an engineer. Most of the thinking happens out loud, in long calls. Left alone, that produces what it always produces: decisions scattered across recordings, chat threads and documents that slowly stop agreeing with each other, and the same questions argued again a few weeks later.
 
-So I stopped treating code as the unit of work and started treating decisions that way. A decision gets what a code change gets: a place to live, a status, an owner, a review, and a history anyone can read later.
+So I stopped treating code as the unit of work and started treating decisions that way. A decision gets what a code change gets: a place to live, a status, an owner, and a history anyone can read later.
 
 <Stats>
   <Stat value="115" label="questions, decisions and tasks tracked in the first three weeks" />
@@ -47,9 +47,9 @@ So I stopped treating code as the unit of work and started treating decisions th
 
 <Workflow>
   <Step n="1" title="Conversation" tool="Recording">Calls are recorded. The recording is raw material, not the record.</Step>
-  <Step n="2" title="Triage" tool="AI agent">An agent reads the transcript, adds what was said to the tickets it touches, opens tickets for new topics, and tags everything with the meeting it came from.</Step>
+  <Step n="2" title="Triage" tool="Claude + Loom">A Claude routine pulls the transcript through MCP, writes a summary and action items, and updates or opens tickets tagged with the meeting they came from.</Step>
   <Step n="3" title="Decision" tool="Jira">Every open question is a ticket. Whoever owns it writes the outcome there and closes it.</Step>
-  <Step n="4" title="Record" tool="Confluence">The outcome goes into a dated decision log with a link back to its ticket. Architecture decisions also get an ADR.</Step>
+  <Step n="4" title="Record" tool="Confluence">An agent writes the outcome into a dated decision log, linked to its ticket. Architecture decisions also get an ADR.</Step>
   <Step n="5" title="Design" tool="Figma">If a decision changes a screen, it opens a design task, and each frame lists the tickets that shaped it.</Step>
   <Step n="6" title="Build" tool="Repo">Implementation tickets reach engineers or coding agents with the decision and the design already linked.</Step>
 </Workflow>
@@ -72,23 +72,26 @@ Decisions change, and in five weeks many of ours did. We went from one account t
 When someone asks why something works the way it does, the answer includes what we tried first. That history is what stops a small team from reopening the same question every other meeting.
 </Callout>
 
-### Agents keep the books, people decide
+### Agents write, people decide
 
-This kind of process usually dies because keeping it up by hand is tedious. So the tedious parts belong to agents, and the judgment stays with people. I run most of it through Claude Code, connected to Jira, Confluence, Figma and GitHub through MCP servers.
+This kind of process usually dies because keeping it up by hand is tedious. So agents do the writing and people do the deciding. All of it runs through Claude, connected to Loom, Jira, Confluence, Figma and GitHub through MCP servers.
+
+Meeting triage is the most automated part. A routine pulls each transcript from Loom, writes the summary and action items, and updates or opens tickets on its own. I barely supervise it, and that's a deliberate trade: a ticket that's slightly off is cheap to fix, and a conversation nobody wrote down is gone.
+
+Documentation works the other way around. I don't write the Confluence pages or the architecture records, but nothing reaches them without a long working session first: I argue through the problem with the agent, make each call, and the agent turns the result into the page. The prose is the agent's; the decisions in it are ours.
 
 <Split>
 <Side title="Agents do" accent>
 
-- Turn an hour of conversation into precise updates on the right tickets
+- Turn each recorded meeting into a summary, action items and ticket updates, almost unsupervised
+- Write the decision log, the Confluence pages and the architecture records
 - Cross-link tickets, pages, frames and code
-- Keep the decision log and the live pages current
-- Point out where two documents, or a document and the prototype, disagree
 
 </Side>
 <Side title="People do">
 
-- Decide, in writing, in the ticket
-- Review everything an agent writes before it's final
+- Make every decision, in writing, in the ticket
+- Argue through the reasoning before anything gets written down
 - Own the open questions in their area
 - Say when a decision is ready to reach design and code
 
@@ -99,7 +102,7 @@ My business co-founder never needs to learn Jira's query language: a decision wr
 
 ### Technical decisions get the same treatment
 
-Architecture questions are tickets too, and each one closes with an Architecture Decision Record: what we chose, which alternatives we rejected and why, and what it costs. Over two days in October I wrote eleven of them, covering the mobile client, backend services, data, real-time events, notifications, identity, AI, payments, hosting and observability. The short version:
+Architecture questions are tickets too, and each one closes with an Architecture Decision Record: what we chose, which alternatives we rejected and why, and what it costs. Over two days in October I worked through eleven of them with an agent, covering the mobile client, backend services, data, real-time events, notifications, identity, AI, payments, hosting and observability. The short version:
 
 - **One Expo app** with separate customer and technician experiences, instead of a web app.
 - **Three NestJS services on Cloud Run**, split by security boundary and how they run rather than one service per entity.
@@ -116,13 +119,16 @@ The structure is simple on purpose: thin route files, one folder per screen with
 
 ## What hasn't worked yet
 
-- **Everything goes through me.** I wrote almost every ticket and every architecture record. That was fast at the start and is a bottleneck now. Many legal and financial tickets still have no owner.
+- **Everything goes through me.** Almost every ticket and every architecture record passed through my hands. That was fast at the start and is a bottleneck now. Many legal and financial tickets still have no owner.
+- **Alignment happens on demand.** Tickets, Confluence, Figma and the prototype drift apart between meetings, and today we realign them when someone notices. That works at our size, but it needs a structured process that keeps everything current without anyone having to remember to ask.
 - **Design runs ahead of code.** The latest decisions are in Figma, but the prototype hasn't caught up. That's fine for a few days and risky for a few weeks.
 - **The meeting log fell behind.** The first meetings are summarized in detail; later ones only show up through the tickets and decisions they produced.
 - **Code hygiene came last.** Early commits went straight to the main branch with no pull requests or CI. That was acceptable with one developer and isn't with a team.
 
 ## What's next
 
-Next is giving every ticket an owner, getting app builds and CI running so the whole team can install the prototype, standing up the first backend services, and closing the legal and tax questions that stand between us and a pilot. The next part of this series covers how the backend is taking shape and how we split implementation work between engineers and coding agents.
+Next is giving every ticket an owner, getting app builds and CI running so the whole team can install the prototype, standing up the first backend services, and closing the legal and tax questions that stand between us and a pilot. The next parts of this series will cover how we design that alignment process, how the backend is taking shape, and how we split implementation work between engineers and coding agents.
+
+Once the product is more mature, I want to bring the same discipline to the code itself, with a spec, research, plan, execute and verify pipeline for coding agents that I've been developing as an [open framework](https://github.com/nthchild2/agentic-software-development-framework).
 
 If you're setting up something similar for your team, or want to compare notes on working with AI agents beyond writing code, [I'd like to hear from you](mailto:nthchild1@gmail.com).
