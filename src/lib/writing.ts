@@ -12,6 +12,8 @@ export type PostMeta = {
   series?: string;
   part?: number;
   tags: string[];
+  /** Image under /public used for the share card */
+  image?: string;
   readingMinutes: number;
 };
 
@@ -42,6 +44,7 @@ function readPost(file: string): Post {
     series: data.series,
     part: data.part,
     tags: data.tags ?? [],
+    image: data.image,
     readingMinutes: Math.max(1, Math.round(words / 230)),
     content,
   };

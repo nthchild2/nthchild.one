@@ -17,9 +17,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
+  const title = `${project.company} — ${project.role} | Carlos Cortes`;
   return {
-    title: `${project.company} — ${project.role} | Carlos Cortes`,
+    title,
     description: project.summary,
+    openGraph: {
+      title,
+      description: project.summary,
+      url: `/work/${project.slug}`,
+      siteName: "Carlos Cortes",
+      images: [{ url: "/images/carlos.jpg", width: 800, height: 800 }],
+    },
+    twitter: { card: "summary", title, description: project.summary },
   };
 }
 

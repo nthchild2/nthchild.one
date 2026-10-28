@@ -2,10 +2,20 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { formatDate, getPosts, getSeries } from "@/lib/writing";
 
+const description =
+  "Case studies and notes on building products: architecture, team workflows, and working with AI agents.";
+
 export const metadata: Metadata = {
   title: "Writing | Carlos Cortes",
-  description:
-    "Case studies and notes on building products: architecture, team workflows, and working with AI agents.",
+  description,
+  openGraph: {
+    title: "Writing | Carlos Cortes",
+    description,
+    url: "/writing",
+    siteName: "Carlos Cortes",
+    images: [{ url: "/images/carlos.jpg", width: 800, height: 800 }],
+  },
+  twitter: { card: "summary", title: "Writing | Carlos Cortes", description },
 };
 
 function shortDate(date: string) {
