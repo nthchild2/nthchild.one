@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { projects, socialLinks } from "@/data/projects";
+import { formatDate, getPosts } from "@/lib/writing";
 
 const highlights = [
   { value: "9+", label: "Years of Experience" },
@@ -9,6 +10,8 @@ const highlights = [
 ];
 
 export default function Home() {
+  const posts = getPosts().slice(0, 3);
+
   return (
     <main className="max-w-4xl mx-auto px-6 py-16 sm:py-24">
       {/* ── Hero ── */}
@@ -153,6 +156,40 @@ export default function Home() {
                   d="M8.25 4.5l7.5 7.5-7.5 7.5"
                 />
               </svg>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Writing ── */}
+      <section id="writing" className="section-fade mb-20 scroll-mt-24">
+        <div className="flex items-baseline justify-between mb-6">
+          <h3 className="section-heading">Writing</h3>
+          <Link
+            href="/writing"
+            className="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:underline underline-offset-4"
+          >
+            All writing →
+          </Link>
+        </div>
+        <div className="card rounded-2xl divide-y divide-[hsl(var(--border))]">
+          {posts.map((post) => (
+            <Link
+              href={`/writing/${post.slug}`}
+              key={post.slug}
+              className="group block p-5 lg:p-6 first:rounded-t-2xl last:rounded-b-2xl transition-colors hover:bg-[hsl(var(--muted))]"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+                <h4 className="font-display font-semibold text-[hsl(var(--foreground))] group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                  {post.title}
+                </h4>
+                <span className="text-xs text-[hsl(var(--muted-foreground))] shrink-0 font-medium">
+                  {formatDate(post.date)}
+                </span>
+              </div>
+              <p className="text-sm text-[hsl(var(--muted-foreground))] leading-relaxed line-clamp-2">
+                {post.summary}
+              </p>
             </Link>
           ))}
         </div>

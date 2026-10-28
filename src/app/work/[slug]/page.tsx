@@ -99,6 +99,37 @@ export default async function ProjectPage({ params }: Props) {
         </p>
       </section>
 
+      {project.caseStudy && (
+        <section className="section-fade mb-16">
+          <Link
+            href={`/writing/${project.caseStudy}`}
+            className="group flex items-center justify-between gap-4 p-5 rounded-xl border border-emerald-500/30 bg-emerald-500/5 hover:border-emerald-500/60 transition-colors"
+          >
+            <div>
+              <p className="text-xs uppercase tracking-widest font-medium text-emerald-600 dark:text-emerald-400 mb-1">
+                Case study
+              </p>
+              <p className="font-display font-semibold text-[hsl(var(--foreground))]">
+                Read how we built the workflow behind it
+              </p>
+            </div>
+            <svg
+              className="w-5 h-5 text-emerald-600 dark:text-emerald-400 transition-transform group-hover:translate-x-0.5 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+              />
+            </svg>
+          </Link>
+        </section>
+      )}
+
       {/* Key Contributions */}
       <section className="section-fade mb-16">
         <h2 className="section-heading mb-6">Key Contributions</h2>

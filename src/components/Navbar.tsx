@@ -119,7 +119,7 @@ export default function Navbar() {
             href="https://github.com/nthchild2"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2.5 rounded-lg text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors"
+            className="hidden sm:inline-flex p-2.5 rounded-lg text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors"
             aria-label="GitHub"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -130,7 +130,7 @@ export default function Navbar() {
             href="https://www.linkedin.com/in/nthchild1"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2.5 rounded-lg text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors"
+            className="hidden sm:inline-flex p-2.5 rounded-lg text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors"
             aria-label="LinkedIn"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

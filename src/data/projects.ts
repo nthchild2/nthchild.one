@@ -23,6 +23,8 @@ export type Project = {
   gradient: string;
   tags: string[];
   links?: ProjectLink[];
+  /** Slug of a related post under /writing */
+  caseStudy?: string;
 };
 
 export type SkillCategory = {
@@ -32,6 +34,33 @@ export type SkillCategory = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "obelisk-software",
+    company: "Obelisk Software",
+    role: "Technical Co-founder",
+    period: "2026 — Present",
+    location: "Mexico City",
+    summary:
+      "Co-founded a software studio whose first product, Project Handyman (working name), is a two-sided marketplace connecting homeowners in Mexico with certified plumbing, electrical and HVAC technicians. I lead architecture, product definition and the team's delivery workflow.",
+    highlights: [
+      "Took the product from a first round of founder, legal and business meetings to an approved architecture and a navigable mobile prototype in about five weeks.",
+      "Designed an AI-assisted workflow that turns meeting transcripts into Jira tickets, tracks every open question as a decision, records the outcome in Confluence and carries it through Figma into code.",
+      "Wrote eleven Architecture Decision Records covering the mobile client, backend services, data, real-time events, notifications, identity, AI, payments, hosting and observability, with cost treated as a hard constraint.",
+      "Rebuilt an AI-generated web mockup as a native Expo / Expo Router prototype covering both the customer and technician flows, structured for AI coding agents.",
+      "Own the Figma screens and break features into implementation-ready tickets for the rest of the engineering team.",
+    ],
+    gradient: "from-amber-500/20 to-yellow-500/20",
+    tags: [
+      "React Native",
+      "Expo",
+      "NestJS",
+      "Google Cloud",
+      "Architecture",
+      "Claude Code",
+      "Jira MCP",
+    ],
+    caseStudy: "building-project-handyman-part-1",
+  },
   {
     slug: "nestle-purina",
     company: "Nestlé Purina",
@@ -410,4 +439,5 @@ export const socialLinks = [
 export const navItems = [
   { label: "Home", href: "/" },
   { label: "Experience", href: "/#experience" },
+  { label: "Writing", href: "/writing" },
 ];
