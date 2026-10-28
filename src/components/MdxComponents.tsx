@@ -137,7 +137,7 @@ function Side({
       <p className="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3">
         {title}
       </p>
-      <div className="text-sm [&_ul]:my-0 [&_ul]:space-y-2.5 [&_p]:my-0">
+      <div className="text-sm [&_ul]:my-0 [&_ul]:space-y-2.5 [&_p]:my-0 [&_ul+p]:mt-4 [&_ul+p]:text-[hsl(var(--muted-foreground))]">
         {children}
       </div>
     </div>

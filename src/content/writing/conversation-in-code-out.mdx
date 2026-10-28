@@ -26,7 +26,7 @@ So before writing much code, I designed the process we would build the product w
 
 ### People talk; they don't fill in forms
 
-Non-technical stakeholders do their best thinking out loud. Our meetings are long calls in Spanish where we walk through the product screen by screen and argue about how it should behave. I didn't want to change that, so I asked for only two habits: record the call, and write decisions down where they belong. Everything else is the system's job.
+Non-technical stakeholders do their best thinking out loud. Our meetings are long calls in Spanish where we walk through the product screen by screen and argue about how it should behave. I didn't want to change that. Every call is recorded and interpreted, and nobody on the team types into Jira by hand. Talking is the interface; everything else is the system's job.
 
 ### Standard tools, nothing exotic
 
@@ -76,19 +76,40 @@ Step by step, a conversation moves through six stages before it becomes code:
 <Workflow>
   <Step n="1" title="Conversation" tool="Loom">Calls are recorded. The recording is raw material, not the record.</Step>
   <Step n="2" title="Triage" tool="Claude + MCP">A Claude routine pulls the transcript, writes a summary and action items, and updates or opens tickets tagged with the meeting they came from.</Step>
-  <Step n="3" title="Decision" tool="Jira">Every open question is a ticket. Whoever owns it writes the outcome there and closes it.</Step>
+  <Step n="3" title="Decision" tool="Jira">Every open question is a ticket. Its owner settles it in a call or in a conversation with Claude, which records the outcome and closes it.</Step>
   <Step n="4" title="Record" tool="Confluence">An agent writes the outcome into a dated decision log, linked to its ticket. Architecture decisions also get an ADR.</Step>
   <Step n="5" title="Design" tool="Figma">If a decision changes a screen, it opens a design task, and each frame lists the tickets that shaped it.</Step>
   <Step n="6" title="Build" tool="GitHub">Implementation tickets reach engineers or coding agents with the decision and the design already linked.</Step>
 </Workflow>
 
-### The backbone
+### Two kinds of tools
 
-Jira holds everything that changes. I split it into four epics: open product decisions, legal and business questions, changes to the prototype, and architecture. Every ticket created from a meeting carries a label with that meeting's date, so any piece of work can be traced back to the conversation that produced it.
+The tools split into two groups, and keeping them apart is what holds everything else together.
 
-Confluence holds what people need to read: the product vision, the business model, a dated decision log and the architecture. Its pages pull open items live from Jira instead of copying them, so a list of pending legal questions is never out of date. Figma frames list the tickets that shaped them, and the tickets link back.
+<Split>
+<Side title="State of truth" accent>
 
-One rule holds it together: every kind of information has exactly one home. Early on, our product documents lived in both the repository and Confluence. Rather than keep two copies in sync, I deleted the ones in the repository, about a thousand lines, and left a README that points to Confluence.
+- **Confluence** for the product, the business model, the decision log and the architecture
+- **Figma** for every screen
+- **GitHub** for the code
+
+What these say is what's true about the project right now. They are the reference.
+
+</Side>
+<Side title="Glue">
+
+- **Loom** captures every conversation
+- **Claude** interprets it and acts on it through MCP
+- **Jira** carries the work in between
+
+These turn what stakeholders decide into results. What lives here is operational and short-lived.
+
+</Side>
+</Split>
+
+That distinction changes how Jira gets used. A ticket is a conduit, not a record: once its outcome has landed in Confluence, Figma or the code, its job is done, and nobody should have to read old tickets to find out how the product works. The structure stays simple: four epics (open product decisions, legal and business questions, changes to the prototype, and architecture), and a label on every ticket with the date of the meeting it came from.
+
+The state of truth follows one rule: every kind of information has exactly one home. Early on, our product documents lived in both the repository and Confluence. Rather than keep two copies in sync, I deleted the ones in the repository, about a thousand lines, and left a README that points to Confluence. Confluence pages pull open items live from Jira instead of copying them, and Figma frames list the tickets that shaped them.
 
 ### The AI layer
 
@@ -100,13 +121,14 @@ Documentation works the other way around. I don't write the Confluence pages or 
 <Side title="Agents do" accent>
 
 - Turn each recorded meeting into a summary, action items and ticket updates
+- Keep Jira current for everyone, so nobody updates it by hand
 - Write the decision log, the Confluence pages and the architecture records
 - Cross-link tickets, pages, frames and code
 
 </Side>
 <Side title="People do">
 
-- Make every decision, in writing
+- Make every decision, out loud or through Claude
 - Argue through the reasoning before anything is written down
 - Own the open questions in their area
 - Say when a decision is ready for design and code
@@ -120,8 +142,8 @@ The repository carries an `AGENTS.md` file that tells coding agents how the proj
 
 A process like this lives or dies on whether the non-technical side actually uses it. A few things made the difference.
 
-- **Walkthroughs instead of specs.** We review the prototype screen by screen on calls. On the first walkthrough with our legal advisor, we found that you couldn't actually choose a technician on the offers screen, the kind of problem that only shows up when someone tries to use the thing.
-- **Decisions in their own words.** My business co-founder never has to learn Jira's query language. A decision written in plain Spanish in the ticket is enough, and the rest of the chain follows from it.
+- **Walkthroughs instead of specs.** We review the prototype screen by screen on calls, so feedback lands on something concrete instead of on a document nobody finishes reading.
+- **Tools that speak their language.** My partners never type into Jira. They connect to it through Claude over MCP, ask in plain Spanish what's on their plate, and tell it what they've decided. Claude updates the tickets.
 - **Trade-offs in pesos.** Technical options come with a monthly cost in pesos. Once we priced a text message for every sign-in, nobody needed a technical argument to see why we chose passwords over one-time codes.
 - **History, not just answers.** When a decision changes, the old one stays in the log, struck through, with the date and the reason it was replaced.
 
@@ -136,7 +158,7 @@ Here is a single question making the full trip. While comparing the business mod
 <Timeline>
   <Moment date="Oct 6" where="Jira" title="The question gets a ticket">It's filed under open product decisions.</Moment>
   <Moment date="Oct 15" where="Loom · Claude" title="It comes up in a meeting">The meeting routine notes on the ticket that it still needs a decision, with a link to the recording.</Moment>
-  <Moment date="Oct 27" where="Jira" title="It's decided, in writing">My business co-founder writes the decision in the ticket.</Moment>
+  <Moment date="Oct 27" where="Jira" title="It's decided">My business co-founder records the decision on the ticket through Claude.</Moment>
   <Moment date="Oct 27" where="Confluence" title="It's recorded and closed">An agent adds it to the decision log and the business model, and the ticket closes with links to both.</Moment>
   <Moment date="Oct 27" where="Figma · App" title="It becomes work">One ticket updates the affected screens; another updates the app once the designs are ready.</Moment>
 </Timeline>
