@@ -1,0 +1,128 @@
+---
+title: "Decisions as the unit of work: how we build Project Handyman with AI agents"
+summary: "Before launch, most of a startup's work isn't code. It's decisions. This is the AI-assisted workflow I built so that every decision at Obelisk Software has one home, one owner and a history, and travels on its own from conversation to code."
+date: "2026-10-28"
+type: "Case study"
+series: "Building Project Handyman"
+part: 1
+tags: ["AI-assisted development", "Product workflow", "Architecture", "Claude Code"]
+---
+
+On October 6, while comparing our business model with our prototype, we found that they disagreed about how the platform's commission was calculated. The model applied it to labor only; the prototype applied it to the whole price. Nobody had decided which was right, so the question became a ticket.
+
+Three weeks later it had been decided, logged and turned into work for design and engineering, and nobody had to remember it along the way:
+
+<Timeline>
+  <Moment date="Oct 6" where="Jira" title="The question gets a ticket">The mismatch between the business model and the prototype is filed under open product decisions.</Moment>
+  <Moment date="Oct 15" where="Recorded call" title="It comes up in a meeting">My business co-founder asks for it to be settled. An agent reading the recording adds that to the ticket, with a link to the video.</Moment>
+  <Moment date="Oct 27" where="Jira" title="It's decided, in writing">My co-founder writes the decision in the ticket: how the commission is split, and what it applies to.</Moment>
+  <Moment date="Oct 27" where="Confluence" title="It's logged and closed">The decision goes into the dated decision log and the business model page, and the ticket closes with links to both.</Moment>
+  <Moment date="Oct 27" where="Figma · App" title="It becomes work">One task updates the affected screens in Figma; another updates the prototype once the designs are ready.</Moment>
+</Timeline>
+
+That is the workflow this post is about. It's how we're building Project Handyman (working name), the first product of Obelisk Software, the studio I co-founded this year: a two-sided marketplace where people in Mexico describe a home repair and certified plumbers, electricians and HVAC technicians nearby send offers.
+
+<Screens>
+  <Screen src="/images/work/obelisk/handyman-client-home.png" caption="Customer home" />
+  <Screen src="/images/work/obelisk/handyman-client-offers.png" caption="Offers from technicians" />
+  <Screen src="/images/work/obelisk/handyman-tech-board.png" caption="Technician job board" />
+  <Screen src="/images/work/obelisk/handyman-tech-schedule.png" caption="Scheduling a visit" />
+</Screens>
+
+## Before launch, the work is mostly decisions
+
+At this stage there is little code to write and a lot to decide. Is a technician a contractor or an employee? How long do we hold a payment before releasing it? Can customers pay in cash? Can one person be both a customer and a technician? Each answer shapes the screens, the data model and the contracts, and many of them depend on lawyers and accountants rather than engineers.
+
+The people deciding are a mix: two co-founders, only one of them technical, a legal advisor, a marketing lead and an engineer. Most of the thinking happens out loud, in long calls. Left alone, that produces what it always produces: decisions scattered across recordings, chat threads and documents that slowly stop agreeing with each other, and the same questions argued again a few weeks later.
+
+So I stopped treating code as the unit of work and started treating decisions that way. A decision gets what a code change gets: a place to live, a status, an owner, a review, and a history anyone can read later.
+
+<Stats>
+  <Stat value="115" label="questions, decisions and tasks tracked in the first three weeks" />
+  <Stat value="11" label="architecture decision records, written in two days" />
+  <Stat value="1" label="home for each kind of information" />
+</Stats>
+
+## The pipeline
+
+<Workflow>
+  <Step n="1" title="Conversation" tool="Recording">Calls are recorded. The recording is raw material, not the record.</Step>
+  <Step n="2" title="Triage" tool="AI agent">An agent reads the transcript, adds what was said to the tickets it touches, opens tickets for new topics, and tags everything with the meeting it came from.</Step>
+  <Step n="3" title="Decision" tool="Jira">Every open question is a ticket. Whoever owns it writes the outcome there and closes it.</Step>
+  <Step n="4" title="Record" tool="Confluence">The outcome goes into a dated decision log with a link back to its ticket. Architecture decisions also get an ADR.</Step>
+  <Step n="5" title="Design" tool="Figma">If a decision changes a screen, it opens a design task, and each frame lists the tickets that shaped it.</Step>
+  <Step n="6" title="Build" tool="Repo">Implementation tickets reach engineers or coding agents with the decision and the design already linked.</Step>
+</Workflow>
+
+None of these steps needs a meeting about the process. The only thing people have to do differently is write the decision where it belongs.
+
+## The rules that make it work
+
+### Every kind of information has exactly one home
+
+Jira holds what changes: open questions, decisions in progress, work to do. Confluence holds what people need to read: the product vision, the decision log, the business model, the architecture. Figma holds the screens and the repository holds the code. Confluence pages pull open items live from Jira instead of copying them, so a list is never stale.
+
+The rule cost something. Early on, our product documents lived both in the repository and in Confluence. Rather than keep two copies in sync, I deleted the ones in the repository, about a thousand lines, and left a README that points to Confluence.
+
+### Decisions are versioned, not overwritten
+
+Decisions change, and in five weeks many of ours did. We went from one account that could switch between customer and technician to two separate accounts. We replaced one-time codes with passwords for signing in. We restructured how the commission is split and shortened the window for filing a claim. Each time, the old decision stays in the log, struck through, with the date and the reason it was replaced.
+
+<Callout>
+When someone asks why something works the way it does, the answer includes what we tried first. That history is what stops a small team from reopening the same question every other meeting.
+</Callout>
+
+### Agents keep the books, people decide
+
+This kind of process usually dies because keeping it up by hand is tedious. So the tedious parts belong to agents, and the judgment stays with people. I run most of it through Claude Code, connected to Jira, Confluence, Figma and GitHub through MCP servers.
+
+<Split>
+<Side title="Agents do" accent>
+
+- Turn an hour of conversation into precise updates on the right tickets
+- Cross-link tickets, pages, frames and code
+- Keep the decision log and the live pages current
+- Point out where two documents, or a document and the prototype, disagree
+
+</Side>
+<Side title="People do">
+
+- Decide, in writing, in the ticket
+- Review everything an agent writes before it's final
+- Own the open questions in their area
+- Say when a decision is ready to reach design and code
+
+</Side>
+</Split>
+
+My business co-founder never needs to learn Jira's query language: a decision written in plain Spanish in the ticket is enough, and the rest of the chain follows from it.
+
+### Technical decisions get the same treatment
+
+Architecture questions are tickets too, and each one closes with an Architecture Decision Record: what we chose, which alternatives we rejected and why, and what it costs. Over two days in October I wrote eleven of them, covering the mobile client, backend services, data, real-time events, notifications, identity, AI, payments, hosting and observability. The short version:
+
+- **One Expo app** with separate customer and technician experiences, instead of a web app.
+- **Three NestJS services on Cloud Run**, split by security boundary and how they run rather than one service per entity.
+- **Firestore and Cloud Storage behind the API**, never accessed directly from the phone.
+- **Domain events on Pub/Sub from day one**, so real-time features can be added later without rewiring.
+
+Cost was a hard constraint, and it settled several debates quickly. Services scale to zero. The diagnostic assistant runs on a free AI tier in development, behind a provider that can be swapped through configuration. And we dropped one-time login codes once we priced a text message for every sign-in and every switch between a customer and a technician account. Putting a monthly cost next to each option let the non-technical side of the team weigh technical trade-offs in business terms.
+
+## A prototype built to be read by agents
+
+Our first screens came out of an AI design tool as a single 3,000-line web app. It was useful for agreeing on what we were building and useless as the base for a native app, so I used it as a reference and rebuilt it in Expo and Expo Router, covering both the customer and the technician flows.
+
+The structure is simple on purpose: thin route files, one folder per screen with the components only that screen uses, a shared folder for the rest, and an `AGENTS.md` file that tells coding agents how the project is organized, which SDK documentation to trust, and which checks to run before calling something done. Every decision that reaches the code arrives as a ticket with its context attached, which is exactly what an agent, or a new engineer, needs to start.
+
+## What hasn't worked yet
+
+- **Everything goes through me.** I wrote almost every ticket and every architecture record. That was fast at the start and is a bottleneck now. Many legal and financial tickets still have no owner.
+- **Design runs ahead of code.** The latest decisions are in Figma, but the prototype hasn't caught up. That's fine for a few days and risky for a few weeks.
+- **The meeting log fell behind.** The first meetings are summarized in detail; later ones only show up through the tickets and decisions they produced.
+- **Code hygiene came last.** Early commits went straight to the main branch with no pull requests or CI. That was acceptable with one developer and isn't with a team.
+
+## What's next
+
+Next is giving every ticket an owner, getting app builds and CI running so the whole team can install the prototype, standing up the first backend services, and closing the legal and tax questions that stand between us and a pilot. The next part of this series covers how the backend is taking shape and how we split implementation work between engineers and coding agents.
+
+If you're setting up something similar for your team, or want to compare notes on working with AI agents beyond writing code, [I'd like to hear from you](mailto:nthchild1@gmail.com).

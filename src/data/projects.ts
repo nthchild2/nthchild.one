@@ -49,6 +49,32 @@ export const projects: Project[] = [
       "Rebuilt an AI-generated web mockup as a native Expo / Expo Router prototype covering both the customer and technician flows, structured for AI coding agents.",
       "Own the Figma screens and break features into implementation-ready tickets for the rest of the engineering team.",
     ],
+    gallery: [
+      {
+        src: "/images/work/obelisk/handyman-client-home.png",
+        width: 390,
+        height: 844,
+        alt: "Project Handyman customer home",
+      },
+      {
+        src: "/images/work/obelisk/handyman-client-offers.png",
+        width: 390,
+        height: 844,
+        alt: "Project Handyman offers from technicians",
+      },
+      {
+        src: "/images/work/obelisk/handyman-tech-board.png",
+        width: 780,
+        height: 1850,
+        alt: "Project Handyman technician job board",
+      },
+      {
+        src: "/images/work/obelisk/handyman-tech-schedule.png",
+        width: 780,
+        height: 1688,
+        alt: "Project Handyman visit scheduling",
+      },
+    ],
     gradient: "from-amber-500/20 to-yellow-500/20",
     tags: [
       "React Native",
@@ -59,7 +85,7 @@ export const projects: Project[] = [
       "Claude Code",
       "Jira MCP",
     ],
-    caseStudy: "building-project-handyman-part-1",
+    caseStudy: "decisions-as-the-unit-of-work",
   },
   {
     slug: "nestle-purina",

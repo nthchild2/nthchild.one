@@ -3,7 +3,13 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { mdxComponents } from "@/components/MdxComponents";
-import { formatDate, getPost, getPosts } from "@/lib/writing";
+import {
+  formatDate,
+  getPost,
+  getPosts,
+  getSeries,
+  postLabel,
+} from "@/lib/writing";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -27,6 +33,10 @@ export default async function PostPage({ params }: Props) {
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) notFound();
+
+  const series = post.series
+    ? getSeries().find((s) => s.name === post.series)
+    : undefined;
 
   return (
     <main className="max-w-3xl mx-auto px-6 py-16 sm:py-24">
@@ -52,8 +62,8 @@ export default async function PostPage({ params }: Props) {
 
       <header className="section-fade mb-12">
         <p className="text-xs text-[hsl(var(--muted-foreground))] uppercase tracking-widest mb-3 font-medium">
-          {formatDate(post.date)}
-          {post.series && <> &middot; {post.series}</>}
+          {formatDate(post.date)} &middot; {postLabel(post)} &middot;{" "}
+          {post.readingMinutes} min read
         </p>
         <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-5 text-balance">
           {post.title}
@@ -76,6 +86,48 @@ export default async function PostPage({ params }: Props) {
       <article className="section-fade">
         <MDXRemote source={post.content} components={mdxComponents} />
       </article>
+
+      {series && (
+        <aside className="section-fade mt-16 card rounded-2xl p-5 lg:p-6">
+          <p className="text-xs uppercase tracking-widest font-medium text-emerald-600 dark:text-emerald-400 mb-1">
+            Series
+          </p>
+          <p className="font-display font-semibold text-lg text-[hsl(var(--foreground))] mb-4">
+            {series.name}
+          </p>
+          <ol className="space-y-1">
+            {series.posts.map((part) => {
+              const current = part.slug === post.slug;
+              return (
+                <li key={part.slug}>
+                  <Link
+                    href={`/writing/${part.slug}`}
+                    aria-current={current ? "page" : undefined}
+                    className={`flex gap-3 -mx-2 px-2 py-1.5 rounded-lg transition-colors ${
+                      current
+                        ? "bg-emerald-500/10"
+                        : "hover:bg-[hsl(var(--muted))]"
+                    }`}
+                  >
+                    <span className="font-display font-bold text-sm text-emerald-600 dark:text-emerald-400 tabular-nums w-5 shrink-0">
+                      {part.part}
+                    </span>
+                    <span
+                      className={`text-sm leading-snug ${
+                        current
+                          ? "font-semibold text-[hsl(var(--foreground))]"
+                          : "text-[hsl(var(--muted-foreground))]"
+                      }`}
+                    >
+                      {part.title}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ol>
+        </aside>
+      )}
 
       <footer className="section-fade pt-12 mt-12">
         <div className="gradient-divider mb-8" />
