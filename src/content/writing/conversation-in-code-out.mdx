@@ -26,7 +26,7 @@ So before writing much code, I designed the process we would build the product w
 
 ### People talk; they don't fill in forms
 
-Non-technical stakeholders do their best thinking out loud. Our meetings are long calls in Spanish where we walk through the product screen by screen and argue about how it should behave. I didn't want to change that, so the only process I asked of anyone was to record the call. Everything after that is the system's job.
+Non-technical stakeholders do their best thinking out loud. Our meetings are long calls in Spanish where we walk through the product screen by screen and argue about how it should behave. I didn't want to change that, so I asked for only two habits: record the call, and write decisions down where they belong. Everything else is the system's job.
 
 ### Standard tools, nothing exotic
 
@@ -62,6 +62,17 @@ Storing information is the easy part. The hard part is moving it between people 
 
 </Lane>
 </SystemMap>
+
+Step by step, a conversation moves through six stages before it becomes code:
+
+<Workflow>
+  <Step n="1" title="Conversation" tool="Loom">Calls are recorded. The recording is raw material, not the record.</Step>
+  <Step n="2" title="Triage" tool="Claude + MCP">A Claude routine pulls the transcript, writes a summary and action items, and updates or opens tickets tagged with the meeting they came from.</Step>
+  <Step n="3" title="Decision" tool="Jira">Every open question is a ticket. Whoever owns it writes the outcome there and closes it.</Step>
+  <Step n="4" title="Record" tool="Confluence">An agent writes the outcome into a dated decision log, linked to its ticket. Architecture decisions also get an ADR.</Step>
+  <Step n="5" title="Design" tool="Figma">If a decision changes a screen, it opens a design task, and each frame lists the tickets that shaped it.</Step>
+  <Step n="6" title="Build" tool="GitHub">Implementation tickets reach engineers or coding agents with the decision and the design already linked.</Step>
+</Workflow>
 
 ### The backbone
 
