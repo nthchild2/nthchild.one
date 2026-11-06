@@ -3,9 +3,7 @@ import path from "node:path";
 import { ImageResponse } from "next/og";
 import { getPost, getPosts, postLabel } from "@/lib/writing";
 
-export const alt = "Article by Carlos Cortes";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+const size = { width: 1200, height: 630 };
 
 export function generateStaticParams() {
   return getPosts().map((post) => ({ slug: post.slug }));
@@ -16,6 +14,25 @@ function publicDataUrl(src: string) {
   const file = fs.readFileSync(path.join(process.cwd(), "public", src));
   const type = src.endsWith(".png") ? "image/png" : "image/jpeg";
   return `data:${type};base64,${file.toString("base64")}`;
+}
+
+/** Gives each post's share card its own description */
+export function generateImageMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const post = getPost(params.slug);
+  return [
+    {
+      id: "card",
+      size,
+      contentType: "image/png",
+      alt:
+        post?.imageAlt ??
+        (post ? `${post.title}, by Carlos Cortes` : "Article by Carlos Cortes"),
+    },
+  ];
 }
 
 export default async function Image({ params }: { params: { slug: string } }) {

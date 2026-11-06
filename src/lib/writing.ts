@@ -14,6 +14,8 @@ export type PostMeta = {
   tags: string[];
   /** Image under /public used for the share card */
   image?: string;
+  /** Describes the share card for people using screen readers */
+  imageAlt?: string;
   readingMinutes: number;
 };
 
@@ -45,6 +47,7 @@ function readPost(file: string): Post {
     part: data.part,
     tags: data.tags ?? [],
     image: data.image,
+    imageAlt: data.imageAlt,
     readingMinutes: Math.max(1, Math.round(words / 230)),
     content,
   };

@@ -18,12 +18,12 @@ export const metadata: Metadata = {
   title: "Carlos Cortes — Senior Software Engineer",
   description:
     "Senior Software Engineer with 9+ years building mobile and web applications across fintech, education, and consumer platforms. Specialized in React Native and TypeScript.",
-  metadataBase: new URL("https://nthchild.one"),
+  metadataBase: new URL("https://www.nthchild.one"),
   openGraph: {
     title: "Carlos Cortes — Senior Software Engineer",
     description:
       "Senior Software Engineer with 9+ years building mobile and web applications across fintech, education, and consumer platforms.",
-    url: "https://nthchild.one",
+    url: "https://www.nthchild.one",
     siteName: "Carlos Cortes",
     type: "website",
     images: [{ url: "/images/carlos.jpg", width: 800, height: 800 }],
