@@ -1,0 +1,126 @@
+---
+title: "Open data said $7,800: building a Mexico City rent map that gets closer to reality"
+summary: "I wanted a public rent map of Mexico City built on data anyone can use. The official numbers were free, careful and far from what listings cost. Here's how Claude and I closed most of that gap."
+date: "2026-11-06"
+type: "Case study"
+tags: ["Open data", "Maps", "Data modeling", "Claude", "WebGL"]
+image: "/images/writing/mexico-city-rent-map-share.png"
+---
+
+<Figure src="/images/writing/mexico-city-rent-map-hero.png" alt="Map of Mexico City's colonias shaded in six tones of blue by estimated monthly rent, darkest in the center and west. Callouts show Polanco III at 31 to 63 thousand pesos, Roma Norte at 25 to 47 thousand, Narvarte Oriente at 15 to 26 thousand and Santo Domingo at 6 to 13 thousand." />
+
+I'm moving soon, and I wanted to compare Mexico City neighborhoods properly. Rents live in one place, crime reports in another and building data in a third, and none of it sits on a map you can cross-reference. So I asked Claude to help me build one.
+
+By the next evening it had rent, reported crime, building age, floors, street activity, amenities, photos, side-by-side comparison and a 3D view for about 1,500 colonias. It worked well enough that I stopped thinking of it as a personal tool and started thinking about publishing it. That raised the bar. A public map should stand on sources anyone can use and check, without asking anyone for permission. Most layers already did. Rent was the hard one, and it became the real project.
+
+<Stats>
+  <Stat value="~26 hours" label="from the first prompt to the live site" />
+  <Stat value="1,478" label="colonias with a rent estimate built from public sources" />
+  <Stat value="12–34%" label="typical error, down from 30–72% at the official survey's scale" />
+</Stats>
+
+## The map was the easy part
+
+The map is [MapLibre](https://maplibre.org) packed into a single HTML file, with custom WebGL layers so that points, lines and labels sit on top of each 3D block and get hidden by taller ones. Most of this work followed one loop. I described what looked wrong, Claude measured it, changed the code and measured again.
+
+The 3D orbit is a good example. I said it stuttered. Claude found that each camera step fired an end-of-move event, so the map was recalculating its labels 665 times per orbit, with frames as long as 174 ms. After the fix it recalculated 11 times, and no frame took more than 12 ms. I never had to find that myself, but I did have to notice it and say so.
+
+<Figure src="/images/writing/mexico-city-rent-map-3d.jpg" alt="Three-dimensional view of Mexico City's colonias extruded by estimated rent, with Metro lines and place names resting on the blocks." caption="The 3D view uses rent for both height and color. Every label and icon sits on its colonia's roof." />
+
+## What open data actually says
+
+I couldn't find an open dataset of rents by colonia. The closest official source is INEGI's national household survey, ENIGH 2024, which has 225 rented apartments in the city and a median of $7,000 pesos a month. It's free, careful and official, and my first model built on it put Roma Norte at about $7,800.
+
+Listings there cost several times that. The survey measures what households pay today, including contracts signed years ago, and a listing shows what the next tenant will pay. In a neighborhood that's changing fast, those are two different markets.
+
+I judged each attempt the same way, against a set of market reference figures that stayed out of the public model. Each dot below shows how far an attempt landed from one of those checks.
+
+<Figure src="/images/writing/mexico-city-rent-map-attempts.png" alt="Dot plot of five modeling attempts against three reference checks. Reference figures divided by the model estimate: official survey 1.5 to 3.6 times, typical error 35 to 72 percent. Airbnb plus free index 0.3 to 0.8 times, error 31 to 222 percent. Midpoint of both 0.8 to 2 times, error 23 to 51 percent. Airbnb plus survey 1.4 to 3.6 times, error 30 to 72 percent. Official averages 0.85 to 1.5 times, error 12 to 34 percent." />
+
+**Attempt 2** brought in [Inside Airbnb](https://insideairbnb.com/get-the-data/), which publishes a snapshot of every listing in the city under a Creative Commons license. Nightly prices aren't rents, but they rank neighborhoods well: across 13,333 active apartments, the ranking of colonias improved sharply in two of the three checks. The pesos came from a free market index with one median for the whole city. That overshot badly, and the index didn't say where part of its inventory came from, so I dropped it.
+
+**Attempt 3** split the difference. It was less wrong and impossible to defend.
+
+**Attempt 4** went back to the survey scale, with the map labeling its numbers a "conservative reference." It was honest and useless. Roma Norte came out at $9,000 to $16,000. My message was short: these numbers are too far from reality to be useful, find a way.
+
+## Two sources that were already there
+
+Claude went back to files we already had and searched for official figures it hadn't tried yet. Both turned up something.
+
+**Monthly quotes were hiding in the Airbnb file.** A few listings have a real monthly price in a raw quote field, discount included. That gave 163 apartments with an actual monthly rate. They showed something the nightly data couldn't: rent differences between colonias are steeper than nightly price differences, by a factor of about 1.6 within the same borough. That one number fixed the way the old model squeezed everything toward the middle.
+
+**The city had already published borough averages.** In November 2025, Mexico City's housing ministry reported an average apartment rent of $14,958, with figures for seven of the 16 boroughs. I couldn't find the original document, so I took the numbers from [El Universal](https://www.eluniversal.com.mx/metropoli/en-cinco-alcaldiaslas-rentas-mas-caras-de-la-ciudad-de-mexico/) and El Gráfico, which agree. The ministry says it analyzed listing portals, so this isn't independent of the market, and the map's sources panel says so.
+
+The cross-check I liked most needed neither me nor the reference figures. The Airbnb-based index and those seven official numbers come from different places, and they still correlate at 0.94 across those boroughs. Seven points isn't much, but it's a good sign.
+
+<SystemMap caption="The official figures set the level. Airbnb and public data set the differences inside each borough.">
+<Lane title="Level">
+
+- Housing ministry averages for 7 boroughs
+- A fitted line for the other 9, kept within the report's ranking
+
+</Lane>
+<Lane title="Differences" accent>
+
+- Nightly prices from 13,333 apartments
+- A 1.6× gradient from 163 monthly quotes
+- Land value, income and location where listings are thin
+
+</Lane>
+<Lane title="On the map">
+
+- A range for every colonia, never one exact price
+- "More data" or "less data" based on listing count
+- What current renters pay next to it, from the survey
+
+</Lane>
+</SystemMap>
+
+Roma Norte now reads $25,000 to $47,000, Narvarte Oriente $15,000 to $26,000 and Santo Domingo $6,000 to $13,000. Those are ranges you can start a search with, and the typical error against the checks fell to 12–34% with no rescaling.
+
+<Callout>
+Claude wrote down each formula before comparing it, then reported the result without tuning. After the first attempt it also kept reminding me that this was no longer a clean test, since every comparison spends a little of the check's independence. That's why the chart has a footnote. I'd rather publish the caveat than a number that looks better than it is.
+</Callout>
+
+## Where the human still mattered
+
+- **Refusing a good-enough answer.** Claude's analysis of why the survey fell short was correct, and it would have shipped the honest version. Pushing back is what sent it looking again, and the useful field had been in our files the whole time.
+- **Looking at the thing.** Partway through I asked whether it was just me or the rent colors had stopped saying anything. It wasn't me: an old constant was still applying 55% opacity to every estimated colonia, and 71% of colonias fell into two tones. Every automated check had passed, because none of them looks at a map the way a person does.
+- **Deciding what's acceptable.** Using figures from a ministry that read the portals is a judgment call, and so was dropping an index with unclear sourcing. Claude laid out both and left them to me.
+
+It worked the other way too. When I asked Claude to deploy, it stopped to point out that running the command from my project folder could also upload working files that weren't meant to go online. It deployed from a clean clone instead.
+
+## Publishing only what should be public
+
+A project like this collects plenty that shouldn't go online: raw downloads, experiments and working files. So the public build is kept apart from all of it.
+
+<Split>
+<Side title="On GitHub and online" accent>
+
+- The map and its public data
+- A clean map template
+- The model's formula and its output
+
+</Side>
+<Side title="Only on my laptop">
+
+- The raw downloads, including Airbnb's file
+- The comparison scripts and reference figures
+- Earlier experiments and working notes
+
+</Side>
+</Split>
+
+The repository's `.gitignore` is an allow-list, so nothing gets committed unless it's named there. A rebuild in a clean environment came out byte-identical to the published map. On Vercel, I confirmed that the site serves only its publish folder by requesting 14 paths that shouldn't exist online. All of them returned 404.
+
+The last obstacle was small and very real. The Vercel connector could read my account but wasn't allowed to create a project, and the browser inside the app wasn't signed in. So Claude started a device login, I approved it in a browser, and it published and logged out.
+
+## What's still rough
+
+- **Expensive colonias come out low.** In the check that focuses on the priciest areas, the reference figures run about 1.5 times the estimate.
+- **Cheap colonias are harder to rank.** Only 224 colonias have five or more Airbnb listings, and they're mostly not the affordable ones. Elsewhere the model leans on land value and neighbors.
+- **Nine boroughs are estimates.** The official numbers cover seven, are from 2025, and reached me through press coverage.
+- **The test isn't clean.** I looked at the same checks several times, and my choices were informed by what I saw.
+- **I'm not a lawyer.** I read the terms of each source I use, and that's not the same as legal advice.
+
+The map is live at [mapa-colonias-cdmx.vercel.app](https://mapa-colonias-cdmx.vercel.app), in Spanish. If you know a better open source for rents in Mexico City, or you see a colonia that looks wrong, [tell me](mailto:nthchild1@gmail.com).

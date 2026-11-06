@@ -346,6 +346,30 @@ function Screen({ src, caption }: { src: string; caption: string }) {
   );
 }
 
+function Figure({
+  src,
+  alt,
+  caption,
+}: {
+  src: string;
+  alt: string;
+  caption?: string;
+}) {
+  return (
+    <figure className="my-10 -mx-6 sm:mx-0">
+      <div className="overflow-hidden border-y sm:border sm:rounded-2xl border-[hsl(var(--border))]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} loading="lazy" className="block w-full h-auto" />
+      </div>
+      {caption && (
+        <figcaption className="mt-3 px-6 sm:px-0 text-sm text-[hsl(var(--muted-foreground))]">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
 function Callout({ children }: { children: ReactNode }) {
   return (
     <aside className="relative my-10 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6 pl-14 text-lg leading-relaxed [&_p]:my-0">
@@ -418,5 +442,6 @@ export const mdxComponents = {
   Lane,
   Screens,
   Screen,
+  Figure,
   Callout,
 };
