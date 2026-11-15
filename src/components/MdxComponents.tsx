@@ -101,18 +101,12 @@ function ConversationHero({ image, alt }: { image: string; alt: string }) {
   );
 }
 
-/** Opening illustration for a post, framed like the other heroes. */
+/** Wide opening illustration for a post. */
 function PostHero({ image, alt }: { image: string; alt: string }) {
   return (
-    <figure className="my-12 -mx-6 sm:mx-0 sm:rounded-3xl overflow-hidden border-y sm:border border-[hsl(var(--border))] bg-gradient-to-br from-emerald-500/10 via-[hsl(var(--background))] to-teal-500/10">
-      <div className="flex justify-center px-6 py-8 sm:p-10">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={image}
-          alt={alt}
-          className="w-full max-w-[340px] rounded-2xl shadow-2xl shadow-black/20"
-        />
-      </div>
+    <figure className="my-12 -mx-6 sm:mx-0 overflow-hidden sm:rounded-3xl">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={image} alt={alt} className="block w-full h-auto" />
     </figure>
   );
 }
@@ -370,12 +364,15 @@ function Screen({ src, caption }: { src: string; caption: string }) {
   );
 }
 
+/** `darkSrc` swaps in a dark-theme version of the same picture when the site is dark. */
 function Figure({
   src,
+  darkSrc,
   alt,
   caption,
 }: {
   src: string;
+  darkSrc?: string;
   alt: string;
   caption?: string;
 }) {
@@ -383,7 +380,16 @@ function Figure({
     <figure className="my-10 -mx-6 sm:mx-0">
       <div className="overflow-hidden border-y sm:border sm:rounded-2xl border-[hsl(var(--border))]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} loading="lazy" className="block w-full h-auto" />
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className={`block w-full h-auto${darkSrc ? " dark:hidden" : ""}`}
+        />
+        {darkSrc && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={darkSrc} alt={alt} loading="lazy" className="hidden dark:block w-full h-auto" />
+        )}
       </div>
       {caption && (
         <figcaption className="mt-3 px-6 sm:px-0 text-sm text-[hsl(var(--muted-foreground))]">

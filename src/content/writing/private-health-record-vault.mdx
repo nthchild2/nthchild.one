@@ -4,13 +4,11 @@ summary: "My health data was spread across phone exports, lab PDFs, imaging stud
 date: "2026-11-14"
 type: "Case study"
 tags: ["Health data", "SQLite", "TypeScript", "Data provenance", "Claude", "Refactoring"]
-image: "/images/writing/private-health-record-hero.jpg"
+image: "/images/writing/private-health-record-share.jpg"
 imageAlt: "A clay-style 3D illustration on a dark blue background: an open blue vault with an orange wheel on its door. Inside sit cream folders marked with orange icons for a heart with a pulse line, footprints, a test tube, a calendar and a watch. Paper documents and a memory card fly toward it, with check marks and a padlock floating above."
 ---
 
-<PostHero image="/images/writing/private-health-record-hero.jpg" alt="A clay-style 3D illustration on a dark blue background: an open blue vault with an orange wheel on its door. Inside sit cream folders marked with orange icons for a heart with a pulse line, footprints, a test tube, a calendar and a watch. Paper documents and a memory card fly toward it, with check marks and a padlock floating above." />
-
-<Figure src="/images/writing/private-health-record-trends.jpg" alt="Three lanes on one time axis from 10 Nov 2023 to 7 Nov 2026. Steps, daily with a 30-day average: latest 4,413, average 8,234, low 40, high 39,600. The average runs around 8,000–14,000 through 2024 and mostly 4,000–9,000 in 2025 and 2026, ending at 6,631. Resting heart rate in beats per minute, daily with a 30-day average, with data from mid 2024: latest 79, average 71, low 47, high 100, ending at an average of 76. Kidney filtration (eGFR), 10 results, all inside a shaded range: latest 109.06, average 99.69, low 81.00, high 118.23." caption="Each measure gets its own lane and scale on one shared time axis. Faint marks are daily readings, the bold line is a 30-day average, each kidney dot is one lab result and the green band is the lab's range." />
+<PostHero image="/images/writing/private-health-record-hero.jpg" alt="A clay-style 3D illustration on a dark blue background: an open blue vault with an orange wheel on its swung-open door. Inside, two shelves of cream folders carry orange icons for a heart with a pulse line, footprints, a test tube, a calendar and a watch. From the left, paper documents, a memory card and a phone fly toward it along orange trails, with check marks and a padlock floating above." />
 
 I wanted all my health data in one place I control. Nothing in particular set it off. The data was spread across 28 sources, among them my phone and watch, a Google Fit export, a medical device's memory card, lab reports, insurer letters and invoices, results that arrived by email, 13 imaging studies as DICOM files, a booking site's appointment history, plus a drawer of paper at home.
 
@@ -73,7 +71,7 @@ What I remember and what the documents show are kept apart. Every fact carries a
 
 The labels show on screen too. In the lab panel below, the kidney filtration value the record works out is tagged calculated, and the value the lab reported keeps its own row.
 
-<Figure src="/images/writing/private-health-record-labs.jpg" alt="The Kidney panel on the Labs screen, seven tests with columns for the test, the latest value, a bar against its range, the result before, a small history and the date. BUN/creatinine ratio 11.0 (range 6.0 to 25.0). Blood urea nitrogen 10.4 mg/dL (6.0 to 20.0). Creatinine 0.95 mg/dL (0.70 to 1.20). Kidney filtration (eGFR), tagged calculated, 109.06 (60.00 or more). Urea 22.3 mg/dL (16.6 to 48.5). Urine specific gravity 1.017 (1.016 to 1.022). eGFR as reported by the lab, 97.7 (60.0 or more). Every latest result sits inside its range. Five are dated 22 Sep 2026, one 14 Sep 2025 and one 8 Mar 2024." caption="The green part of each bar is that test's reference range, and the dot is the latest result. An arrow beside the earlier result shows whether the latest is higher or lower, and a red dot in the history is a result that was outside its range at the time." />
+<Figure src="/images/writing/private-health-record-labs.jpg" darkSrc="/images/writing/private-health-record-labs-dark.jpg" alt="The Kidney panel on the Labs screen, seven tests with columns for the test, the latest value, a bar against its range, the result before, a small history and the date. BUN/creatinine ratio 11.0 (range 6.0 to 25.0). Blood urea nitrogen 10.4 mg/dL (6.0 to 20.0). Creatinine 0.95 mg/dL (0.70 to 1.20). Kidney filtration (eGFR), tagged calculated, 109.06 (60.00 or more). Urea 22.3 mg/dL (16.6 to 48.5). Urine specific gravity 1.017 (1.016 to 1.022). eGFR as reported by the lab, 97.7 (60.0 or more). Every latest result sits inside its range. Five are dated 22 Sep 2026, one 14 Sep 2025 and one 8 Mar 2024." caption="The green part of each bar is that test's reference range, and the dot is the latest result. An arrow beside the earlier result shows whether the latest is higher or lower, and a red dot in the history is a result that was outside its range at the time." />
 
 When my account and a document disagreed, Claude logged the conflict and put it to me. There were 21. My answers settled 19. The other 2 are lab results the record expects and nobody found, and I don't remember whether they were done. They stay on screen as open questions.
 
@@ -102,7 +100,9 @@ The second was about charts: "lets not make up data." The app's charts follow si
 - **Every chart has a table.**
 - **Light and dark are each designed on their own.**
 
-The trends screen at the top of this post shows two of these rules at work: each measure has its own lane and scale, and resting heart rate starts in mid 2024, where its readings start.
+The trends screen shows two of these rules at work: each measure has its own lane and scale, and resting heart rate starts in mid 2024, where its readings start.
+
+<Figure src="/images/writing/private-health-record-trends.jpg" darkSrc="/images/writing/private-health-record-trends-dark.jpg" alt="Three lanes on one time axis from 10 Nov 2023 to 7 Nov 2026. Steps, daily with a 30-day average: latest 4,413, average 8,234, low 40, high 39,600. The average runs around 8,000–14,000 through 2024 and mostly 4,000–9,000 in 2025 and 2026, ending at 6,631. Resting heart rate in beats per minute, daily with a 30-day average, with data from mid 2024: latest 79, average 71, low 47, high 100, ending at an average of 76. Kidney filtration (eGFR), 10 results, all inside a shaded range: latest 109.06, average 99.69, low 81.00, high 118.23." caption="Each measure gets its own lane and scale on one shared time axis. Faint marks are daily readings, the bold line is a 30-day average, each kidney dot is one lab result and the green band is the lab's range." />
 
 ## A shared kit, proven identical
 
@@ -132,11 +132,11 @@ Bitácora pins the kit at a tag, and versions 0.2.0 and 0.3.0 each went through 
 
 Once the app worked, the thing that surprised me was in the steps lane. My daily average was 10,511 steps in 2024. In 2025 it was 7,185. So far in 2026 it's 6,319, about 40% below 2024.
 
-Across 1,296 days with data since April 2023, only 399 reached 10,000 steps, and the biggest day was 22 April 2024, at 39,600. On one time axis the slide is plain: in the steps lane of the first chart, the 30-day average runs around 8,000 to 14,000 through 2024 and mostly 4,000 to 9,000 in 2025 and 2026.
+Across 1,296 days with data since April 2023, only 399 reached 10,000 steps, and the biggest day was 22 April 2024, at 39,600. On one time axis the slide is plain: in the steps lane of the trends screen above, the 30-day average runs around 8,000 to 14,000 through 2024 and mostly 4,000 to 9,000 in 2025 and 2026.
 
 The share of days I met my activity goals drops over the same stretch.
 
-<Figure src="/images/writing/private-health-record-activity.jpg" alt="Dark-theme line chart titled Goals met by month, from April 2023 to November 2026, on a scale from 0 to 100 percent. Move, in pink, starts in April 2023 between 25 and 70 percent and reaches 100 percent in mid 2024. Exercise, in green, and stand, in blue, start in mid 2024. Exercise stays at or below 40 percent and touches 0 in several months. All three are lower in 2026 than in mid 2024." caption="Each point is the share of days that month on which the goal was met." />
+<Figure src="/images/writing/private-health-record-activity-light.jpg" darkSrc="/images/writing/private-health-record-activity.jpg" alt="Line chart titled Goals met by month, from April 2023 to November 2026, on a scale from 0 to 100 percent. Move, in pink, starts in April 2023 between 25 and 70 percent and reaches 100 percent in mid 2024. Exercise, in green, and stand, in blue, start in mid 2024. Exercise stays at or below 40 percent and touches 0 in several months. All three are lower in 2026 than in mid 2024." caption="Each point is the share of days that month on which the goal was met." />
 
 ## What's still rough
 
