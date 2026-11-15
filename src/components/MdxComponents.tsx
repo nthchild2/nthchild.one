@@ -343,7 +343,7 @@ function Screens({ children }: { children: ReactNode }) {
   );
 }
 
-function Screen({ src, caption }: { src: string; caption: string }) {
+function Screen({ src, caption, alt }: { src: string; caption: string; alt?: string }) {
   return (
     <figure className="snap-center shrink-0 w-[180px] sm:w-[164px] sm:even:translate-y-8 transition-transform duration-300 hover:-translate-y-1 sm:even:hover:translate-y-7">
       <div className="rounded-[1.75rem] p-1.5 bg-[hsl(224_14%_10%)] shadow-xl shadow-black/15 ring-1 ring-black/5 dark:ring-white/10">
@@ -351,7 +351,7 @@ function Screen({ src, caption }: { src: string; caption: string }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
-            alt={caption}
+            alt={alt ?? caption}
             loading="lazy"
             className="w-full h-full object-cover object-top"
           />

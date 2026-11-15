@@ -9,11 +9,13 @@ tags: ["AI-assisted development", "Product workflow", "Claude", "MCP", "Architec
 image: "/images/writing/conversation-in-code-out-hero.jpg"
 ---
 
-<ConversationHero image="/images/writing/conversation-in-code-out-hero.jpg" alt="A hand holding a wrench bursts out of a phone running a home-repair app, surrounded by completed tasks" />
+<ConversationHero image="/images/writing/conversation-in-code-out-hero.jpg" alt="A hand holding a wrench breaks out through a phone screen of home-repair service icons, with check marks floating around the phone" />
 
 In September I started building a product with people who don't write code. My business co-founder knows the market, our legal advisor knows what we can promise a technician, and a few weeks in, a marketing lead joined. Lots of judgment, very little shared vocabulary.
 
-The product is Project Handyman (working name), a home-repair marketplace for Mexico. The hard side is supply. Most plumbers, electricians and HVAC technicians here work informally and find jobs by word of mouth, so one month is packed and the next is empty. We want the work to come to them, along with a verified profile and a reputation that grows over time. That raises questions about labor law, payments and trust long before it raises questions about code. Is a technician a contractor or an employee? How long can we hold a customer's money? Can people pay in cash? None of those had an answer when we started.
+The product is Project Handyman (working name), a home-repair marketplace for Mexico. The hard side is supply. Most plumbers, electricians and HVAC technicians here work informally and find jobs by word of mouth, so one month is packed and the next is empty. We want the work to come to them, along with a verified profile and a reputation that grows over time.
+
+A marketplace like this raises questions about labor law, payments and trust long before it raises questions about code. Is a technician a contractor or an employee? How long can we hold a customer's money? Can people pay in cash? None of those had an answer when we started.
 
 Teams like this usually end up with one person who sits in every meeting and turns it into tickets and specs. That person was going to be me, and it stops working after a few weeks. So before writing much code, I designed how we would work.
 
@@ -25,7 +27,7 @@ Teams like this usually end up with one person who sits in every meeting and tur
 
 ## Three rules
 
-**People talk.** Our best thinking happens on long calls where we walk through the product screen by screen. Every call is recorded and processed, and nobody types into Jira by hand. Talking is the interface.
+**People talk.** Our best thinking happens on long calls where we walk through the product screen by screen. Every call is recorded, and a routine turns it into Jira tickets. Talking is the interface.
 
 **Standard tools.** Jira, Confluence, Figma, GitHub and Loom. A new engineer, advisor or investor can find their way around on day one, and nothing important depends on me remembering it.
 
@@ -62,25 +64,25 @@ Most of my October went into the layer between product and engineering: deciding
 
 A conversation goes through six steps before it becomes code:
 
-<Workflow>
+<Workflow note="">
   <Step n="1" title="Conversation" tool="Loom">The call is recorded.</Step>
   <Step n="2" title="Triage" tool="Claude + MCP">A routine reads the transcript, writes a summary and action items, and updates or opens tickets tagged with the meeting date.</Step>
-  <Step n="3" title="Decision" tool="Jira">Each open question is a ticket. Its owner settles it on a call or by telling Claude, which records the outcome and closes it.</Step>
-  <Step n="4" title="Record" tool="Confluence">An agent adds the outcome to a dated decision log. Technical choices also get an ADR.</Step>
-  <Step n="5" title="Design" tool="Figma">If a decision changes a screen, it opens a design task. Each frame lists the tickets behind it.</Step>
+  <Step n="3" title="Decision" tool="Jira">Each open question is a ticket. Its owner settles it on a call or by telling Claude, which records the outcome on the ticket.</Step>
+  <Step n="4" title="Record" tool="Confluence">An agent adds the outcome to a dated decision log and closes the ticket with a link to it. Technical choices also get an ADR.</Step>
+  <Step n="5" title="Design" tool="Figma">A decision that changes a screen gets a design task. Each frame lists the tickets behind it.</Step>
   <Step n="6" title="Build" tool="GitHub">Engineers and coding agents get tickets with the decision and the design already linked.</Step>
 </Workflow>
 
 ### Two kinds of tools
 
 <Split>
-<Side title="State of truth" accent>
+<Side title="Source of truth" accent>
 
 - **Confluence** for the product, the business model, the decision log and the architecture
 - **Figma** for every screen
 - **GitHub** for the code
 
-This is the reference. If it's here, it's current.
+This is the reference.
 
 </Side>
 <Side title="Glue">
@@ -94,19 +96,21 @@ Operational and short-lived.
 </Side>
 </Split>
 
-Jira has four epics: open product decisions, legal and business questions, prototype changes and architecture. Its tickets are disposable. Once the outcome lands in Confluence, Figma or the code, the ticket is done, and nobody has to dig through old ones to learn how the product works. The reference side has one rule: every piece of information lives in exactly one place. When our product docs existed in both the repo and Confluence, I deleted the thousand lines in the repo and left a README pointing to Confluence.
+Jira has four epics: open product decisions, legal and business questions, prototype changes and architecture. Its tickets are disposable. Once the outcome lands in Confluence, Figma or the code, the ticket is done, and nobody has to dig through old ones to learn how the product works.
+
+The reference side has one rule: every piece of information lives in exactly one place. When our product docs existed in both the repo and Confluence, I deleted the five docs in the repo, about a thousand lines, and left a README that points to Confluence.
 
 ### Agents write, people decide
 
 The meeting routine runs almost unsupervised, and I'm fine with that. A slightly wrong ticket takes a minute to fix. A conversation nobody wrote down is gone for good.
 
-Documentation is the opposite. Agents write every Confluence page and architecture record, but only after long working sessions where I argue the problem through and make each call. My partners work the same way with Jira: they ask Claude what's on their plate, tell it what they decided, and Claude updates the tickets.
+Documentation is the opposite. Agents write every Confluence page and architecture record, but only after long working sessions where I argue the problem through and make each call. My partners use Claude with Jira too: they ask Claude what's on their plate, tell it what they decided, and Claude updates the tickets.
 
 ## Working with people who don't write code
 
-**Walkthroughs over specs.** We review the prototype screen by screen, so feedback lands on something concrete. On one call someone mentioned, almost as an aside, that you couldn't pick a technician on the offers screen. Nobody wrote it down. It still ended up as a bug ticket tagged with that meeting, headed for Figma and the code.
+**Walkthroughs on the prototype.** We review the prototype screen by screen, so feedback lands on something concrete. On one call someone mentioned, almost as an aside, that you couldn't pick a technician on the offers screen. The meeting routine turned that remark into a bug ticket tagged with that meeting, headed for Figma and the code.
 
-**Costs in pesos.** Every technical option comes with a monthly price. Once we priced a text message for every sign-in, nobody needed a technical argument to drop one-time codes for passwords. I put the same numbers together for infrastructure and for each completed job, and they went straight into our margin model.
+**Costs in pesos.** Every technical option comes with a monthly price. Once we priced a text message for every sign-in, nobody needed a technical argument to replace one-time codes with passwords. I priced infrastructure and each completed job the same way, and those numbers went straight into our margin model.
 
 **Engineering at the business table.** Some business rules came out of technical constraints. A card payment can only be held for a limited time, so we cut the window for filing a claim from 72 to 48 hours, which keeps every dispute inside the hold. That's the kind of call that's easy to miss when the people writing the policy and the people building the payments flow never talk.
 
@@ -116,7 +120,7 @@ When a decision changes, the old version stays in the log, crossed out, with the
 
 ## One decision, end to end
 
-On October 6 we noticed that the business model and the prototype calculated the commission differently. Here's how that question made the trip.
+On October 6 we noticed that the business model and the prototype calculated the commission differently. Here's the path that question took.
 
 <Timeline>
   <Moment date="Oct 6" where="Jira" title="The question gets a ticket">It's filed under open product decisions.</Moment>
@@ -129,21 +133,22 @@ On October 6 we noticed that the business model and the prototype calculated the
 ## What it produced
 
 <Screens>
-  <Screen src="/images/work/obelisk/handyman-client-home.png" caption="Customer home" />
-  <Screen src="/images/work/obelisk/handyman-client-offers.png" caption="Offers from technicians" />
-  <Screen src="/images/work/obelisk/handyman-tech-board.png" caption="Technician job board" />
-  <Screen src="/images/work/obelisk/handyman-tech-schedule.png" caption="Scheduling a visit" />
+  <Screen src="/images/work/obelisk/handyman-client-home.png" caption="Customer home" alt="Customer home screen in Spanish: six service categories from plumbing to cleaning, an electrical job in progress with the technician about 12 minutes away, and two recent services with their ratings" />
+  <Screen src="/images/work/obelisk/handyman-client-offers.png" caption="Offers from technicians" alt="A customer's request for a kitchen water leak with three offers from technicians, each showing price, rating, distance and availability, one marked best price" />
+  <Screen src="/images/work/obelisk/handyman-tech-board.png" caption="Technician job board" alt="Technician home screen in Spanish: the week's earnings, jobs and rating, the next visit at 16:30, and nearby job requests with price ranges, filterable by trade" />
+  <Screen src="/images/work/obelisk/handyman-tech-schedule.png" caption="Scheduling a visit" alt="After an accepted offer, a screen to pick the day and time of the visit, with a job summary, the scheduling terms and a Confirm appointment button" />
 </Screens>
 
 - **A designed product.** Customer and technician flows in Figma.
-- **A working prototype.** Our first screens came out of an AI design tool as a 3,000-line web app. I used it as a reference and rebuilt it as a native Expo app for both sides of the marketplace, with an `AGENTS.md` that tells coding agents how the project works.
+- **A working prototype.** Our first screens came out of an AI design tool, Figma Make, as a 3,000-line web app. I used it as a reference and rebuilt it as a native Expo app on mock data for both sides of the marketplace. An `AGENTS.md` tells coding agents how the project works.
 - **An approved architecture.** One Expo app, three NestJS services on Cloud Run split by security boundary, Firestore and Cloud Storage behind the API, and domain events on Pub/Sub. It's designed to cost close to nothing until there's real traffic, and each choice has an ADR with the alternatives we rejected and what it costs.
 - **A business backlog.** Labor, tax, payments and privacy questions, written up as tickets and ranked by urgency, ready for the lawyer and the accountant.
 - **A team building from tickets.** Another engineer now picks up work with the decisions and designs already attached.
 
 ## What's still rough
 
-- **Everything goes through me.** Fast at the start, a bottleneck now. Plenty of legal and financial questions still have no owner.
+- **Documentation still goes through me.** The meeting routine turns calls into tickets, but every new Confluence page and ADR still waits for a working session with me. Fast at the start, a bottleneck now.
+- **Some questions have no owner.** Plenty of them are legal and financial.
 - **Alignment is manual.** Tickets, docs, designs and the prototype drift apart between meetings, and we fix it when someone notices. That needs a real process.
 - **Design is ahead of code.** The latest decisions are in Figma; the prototype hasn't caught up.
 - **Code hygiene came last.** Early commits went straight to main with no pull requests or CI. Fine solo, a problem with a team.
