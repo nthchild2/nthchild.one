@@ -400,15 +400,10 @@ function Figure({
   );
 }
 
+/** A highlighted point in the author's own words, marked by an accent bar. */
 function Callout({ children }: { children: ReactNode }) {
   return (
-    <aside className="relative my-10 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6 pl-14 text-lg leading-relaxed [&_p]:my-0">
-      <span
-        aria-hidden="true"
-        className="absolute left-5 top-3 font-display text-5xl leading-none text-emerald-500/60"
-      >
-        “
-      </span>
+    <aside className="my-10 rounded-2xl border border-emerald-500/30 border-l-4 border-l-emerald-500 bg-emerald-500/5 p-6 text-lg leading-relaxed [&_p]:my-0">
       {children}
     </aside>
   );
