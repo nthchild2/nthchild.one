@@ -1,0 +1,148 @@
+---
+title: "28 sources, 10 million rows, one vault for life: building a private health record with Claude"
+summary: "My health data was spread across phone exports, lab PDFs, imaging studies and a drawer of paper. Here's how Claude and I turned it into one private record meant to last the rest of my life, and the rules that make it trustworthy."
+date: "2026-11-14"
+type: "Case study"
+tags: ["Health data", "SQLite", "TypeScript", "Data provenance", "Claude", "Refactoring"]
+image: "/images/writing/private-health-record-hero.jpg"
+imageAlt: "A clay-style 3D illustration on a dark blue background: an open blue vault with an orange wheel on its door. Inside sit cream folders marked with orange icons for a heart with a pulse line, footprints, a test tube, a calendar and a watch. Paper documents and a memory card fly toward it, with check marks and a padlock floating above."
+---
+
+<PostHero image="/images/writing/private-health-record-hero.jpg" alt="A clay-style 3D illustration on a dark blue background: an open blue vault with an orange wheel on its door. Inside sit cream folders marked with orange icons for a heart with a pulse line, footprints, a test tube, a calendar and a watch. Paper documents and a memory card fly toward it, with check marks and a padlock floating above." />
+
+<Figure src="/images/writing/private-health-record-trends.jpg" alt="Three lanes on one time axis from 10 Nov 2023 to 7 Nov 2026. Steps, daily with a 30-day average: latest 4,413, average 8,234, low 40, high 39,600. The average runs around 8,000–14,000 through 2024 and mostly 4,000–9,000 in 2025 and 2026, ending at 6,631. Resting heart rate in beats per minute, daily with a 30-day average, with data from mid 2024: latest 79, average 71, low 47, high 100, ending at an average of 76. Kidney filtration (eGFR), 10 results, all inside a shaded range: latest 109.06, average 99.69, low 81.00, high 118.23." caption="Each measure gets its own lane and scale on one shared time axis. Faint marks are daily readings, the bold line is a 30-day average, each kidney dot is one lab result and the green band is the lab's range." />
+
+I wanted all my health data in one place I control. Nothing in particular set it off. The data was spread across 28 sources, among them my phone and watch, a Google Fit export, a medical device's memory card, lab reports, insurer letters and invoices, results that arrived by email, 13 imaging studies as DICOM files, a booking site's appointment history, plus a drawer of paper at home.
+
+So I asked Claude to help me build a vault: a folder on my computer where my health data will live for as long as I'm alive. Any app I put on top of it will get replaced at some point. The vault has to outlast all of them.
+
+The vault and its pipeline started on 7 November. Six days and 32 commits later there was an app that reads it, and its design had moved into a kit of its own.
+
+<Stats>
+  <Stat value="10.4 M" label="rows in one SQLite file, rebuilt from originals that are never edited" />
+  <Stat value="569 of 569" label="facts from my documents found word for word in their own pages" />
+  <Stat value="132 of 132" label="screen snapshots identical after the design moved into a shared kit" />
+</Stats>
+
+## Originals stay frozen
+
+Two of my instructions were about scope and loss: "we want every piece of data" and "Just remember we can't lose data." For something meant to last the rest of my life, those two sentences decided the design.
+
+The original files are zipped into 12 archive collections, 26,956 files in all. Each collection is checksummed and made read-only, and nothing downstream writes to it. A Python pipeline of about 3,600 lines reads them and builds one SQLite database: 88 tables, 17 views, 10,417,122 rows and 1.7 GB.
+
+That database is disposable on purpose. When a loader improves or a bug turns up, it gets rebuilt from the originals. SQLite keeps it in one plain file that whatever tool comes next can open.
+
+"Can't lose data" also became a routine around every change:
+
+<Workflow note="">
+  <Step n="1" title="Checkpoint" tool="SQLite">The write-ahead log is folded into the database file.</Step>
+  <Step n="2" title="Back up" tool="Checksum">A copy is made, checked against the live file and made read-only.</Step>
+  <Step n="3" title="Change" tool="Python">The pipeline applies the change or rebuilds from the originals.</Step>
+  <Step n="4" title="Compare" tool="Hash per table">Every table is hashed and compared with the build before.</Step>
+</Workflow>
+
+The hashes show exactly which tables a change touched, and that every other one came out identical.
+
+## Every timestamp says how it's known
+
+I also asked for "universal timestamps for all data." A device reading carries an exact UTC time. A lab report may print only a local date.
+
+So a small `time_basis` table records, for 37 table and column pairs, how that time is known: UTC from a device, a local date printed on a report and so on. A heart rate reading and a lab result can share an axis without losing which of them knows the exact minute.
+
+Years from now, the record will still say which clock each source kept.
+
+## Reading what the documents say
+
+Partway through I noticed the PDFs and scans were archived, but what they said wasn't in the database. I told Claude: "We don't just want to store the files."
+
+Claude wrote small Swift tools on macOS's Vision text recognition and PDFKit to read them. Of the 219 files in the document catalog, 205 now have extracted text. The other 14 are copies of documents already on file.
+
+From that text came 569 dated facts: a test ordered, a referral, a contact and so on. Each fact keeps the exact words it came from. The build marks a fact verified only if those words appear in its document's own text, so a fact whose quote can't be found stays unverified. All 569 pass.
+
+Two more sources fed the record. A separate personal database project of mine added 89 items. I also photographed 32 paper documents from the drawer, and they became 25 new documents and 7 copies of ones already on file.
+
+<Callout>
+One batch of photos included someone else's prescription. I said "if it is not my name and my date of birth, then it's not mine," and from then on every document was checked for both. A record I'll keep for life has to keep other people's history out of it.
+</Callout>
+
+Some things stayed out by design. Claude never typed a password or opened my ID documents. Bank, tax and payment details were kept out of the record, amounts included. One imaging viewer link had credentials embedded in it, so Claude left it out. I chose not to store the content of my chat messages at all.
+
+## What I said and what the papers said
+
+What I remember and what the documents show are kept apart. Every fact carries a label for how it's known: Documented, Device, You said, Calculated or Generated. Anything that rests only on my word is marked You said. Generated marks text an assistant wrote from my data, to be checked before I rely on it.
+
+The labels show on screen too. In the lab panel below, the kidney filtration value the record works out is tagged calculated, and the value the lab reported keeps its own row.
+
+<Figure src="/images/writing/private-health-record-labs.jpg" alt="The Kidney panel on the Labs screen, seven tests with columns for the test, the latest value, a bar against its range, the result before, a small history and the date. BUN/creatinine ratio 11.0 (range 6.0 to 25.0). Blood urea nitrogen 10.4 mg/dL (6.0 to 20.0). Creatinine 0.95 mg/dL (0.70 to 1.20). Kidney filtration (eGFR), tagged calculated, 109.06 (60.00 or more). Urea 22.3 mg/dL (16.6 to 48.5). Urine specific gravity 1.017 (1.016 to 1.022). eGFR as reported by the lab, 97.7 (60.0 or more). Every latest result sits inside its range. Five are dated 22 Sep 2026, one 14 Sep 2025 and one 8 Mar 2024." caption="The green part of each bar is that test's reference range, and the dot is the latest result. An arrow beside the earlier result shows whether the latest is higher or lower, and a red dot in the history is a result that was outside its range at the time." />
+
+When my account and a document disagreed, Claude logged the conflict and put it to me. There were 21. My answers settled 19. The other 2 are lab results the record expects and nobody found, and I don't remember whether they were done. They stay on screen as open questions.
+
+During a long round of questions about my history I got impatient and said "don't know, do your best." Claude stopped asking, decided the rest with stated defaults and wrote down what it had assumed.
+
+## An app that can only read
+
+The app is called Bitácora (Spanish for a ship's logbook). Apps are the part of this I expect to replace, so this one gets as little power over the vault as possible. Its server binds to 127.0.0.1, answers GET requests only and opens the vault read-only.
+
+During the build, Claude read my documents, the database and my answers. The finished app keeps everything on my computer. Its one outside request is for street-map tiles to draw a workout route. Map tiles are off until I switch them on, and they come from OpenStreetMap through the local server, which caches them.
+
+The server keeps a cache of daily summaries outside the vault and rebuilds it whenever the vault file changes. Before reopening the vault it waits until the file has been still for a few seconds and honors a "building" marker the pipeline sets, so it never reads half a rebuild.
+
+The server is Node 26 running TypeScript directly, with type stripping and no build step, on the built-in `node:sqlite`: 42 routes in about 2,000 lines of TypeScript. The front end is React 19 with Vite: 18 screens, about 5,800 lines, charts drawn by hand in SVG on d3 scales.
+
+## What the screens show
+
+Two more of my instructions were about the screens. The first was "We want basic display of every piece of data, we don't want data to just rot on the database and forget about it." An All data screen lists every table and view and flags the ones no screen reads yet. It works that out by scanning the server's own SQL.
+
+The second was about charts: "lets not make up data." The app's charts follow six design rules.
+
+- **One unit per lane.** Measures with different units get separate lanes on one shared time axis.
+- **A color belongs to its measure.** It stays the same wherever the measure appears.
+- **Gaps stay gaps.** Lines stop where readings stop, and an average is never carried across a gap.
+- **Out of range always has a mark and a word.** Color is paired with a word: ▲ High or ▼ Low.
+- **Every chart has a table.**
+- **Light and dark are each designed on their own.**
+
+The trends screen at the top of this post shows two of these rules at work: each measure has its own lane and scale, and resting heart rate starts in mid 2024, where its readings start.
+
+## A shared kit, proven identical
+
+A second app is on the way: a viewer for the rest of my personal data, from search history to email, across ten SQLite files. It should look and behave like Bitácora and live in its own repository. So on 13 November Claude moved every shared part into one npm package, vault-kit.
+
+`vault-kit/ui` holds the shell, controls, charts and table browser. `vault-kit/server` holds the read-only server core: the vault opener, the local HTTP server, table routes and map tiles. A gallery page shows every shared component in both themes, filled with made-up data. A `prepare` script compiles the kit to JavaScript with type declarations on install, because Node won't run TypeScript from inside `node_modules`. The health-specific parts stayed in Bitácora, whose diff came out at 226 lines added and 1,697 removed.
+
+Then Claude had to prove Bitácora looked and answered exactly as before. A script walked 33 screens and states in light and dark, at 1280×800 and 390×844, and recorded every element's markup, about 70 computed style values and its exact box. That's 132 snapshots and about 160,000 elements compared one by one. Another script hashed 84 API responses byte for byte, including files, refusals and wrong methods. Every style rule was compared too, and any two rules that swapped order were checked on the elements they share.
+
+The comparison caught three things.
+
+**A back link 0.008 px wider.** A JSX change had split its text into two text nodes. Writing it as one template string made it a single node again.
+
+**Fonts that quietly stopped loading.** While the kit was linked from a local folder, the dev server refused to serve files from outside its own folder, and the page fell back to system fonts with no error. Checking which fonts the page had actually loaded found it. Letting the dev server read the kit's folder fixed it.
+
+**A greeting that follows the clock.** The home screen greets by time of day, so for that screen the page clock was frozen to the baseline's capture time.
+
+With those three handled, it came out 132 of 132 identical and 84 of 84.
+
+<Figure src="/images/writing/private-health-record-both-themes.jpg" alt="The kit's gallery Charts page twice, light theme on the left and dark on the right, both set to 3 months. Four tiles with made-up data: greenhouse temperature 17.1 °C, up 3.4 against the three months before; pages read 26, up 8; walks 4.4 km as a daily average with daily bars, highest 6.8 km; and kiln firings, which says nothing was recorded in the last 3 months." caption="The same gallery page in the light theme on the left and the dark theme on the right." />
+
+Before the kit went to a private GitHub repository, it was searched for names, paths, emails and real coordinates. The gallery's map sits at a made-up spot in the Atlantic.
+
+Bitácora pins the kit at a tag, and versions 0.2.0 and 0.3.0 each went through the same comparison. When the browser Claude was driving hung during one of them, Claude captured both versions again in headless Chrome with a throwaway profile, so the comparison stayed like for like.
+
+## A slide I hadn't noticed
+
+Once the app worked, the thing that surprised me was in the steps lane. My daily average was 10,511 steps in 2024. In 2025 it was 7,185. So far in 2026 it's 6,319, about 40% below 2024.
+
+Across 1,296 days with data since April 2023, only 399 reached 10,000 steps, and the biggest day was 22 April 2024, at 39,600. On one time axis the slide is plain: in the steps lane of the first chart, the 30-day average runs around 8,000 to 14,000 through 2024 and mostly 4,000 to 9,000 in 2025 and 2026.
+
+The share of days I met my activity goals drops over the same stretch.
+
+<Figure src="/images/writing/private-health-record-activity.jpg" alt="Dark-theme line chart titled Goals met by month, from April 2023 to November 2026, on a scale from 0 to 100 percent. Move, in pink, starts in April 2023 between 25 and 70 percent and reaches 100 percent in mid 2024. Exercise, in green, and stand, in blue, start in mid 2024. Exercise stays at or below 40 percent and touches 0 in several months. All three are lower in 2026 than in mid 2024." caption="Each point is the share of days that month on which the goal was met." />
+
+## What's still rough
+
+- **The pipeline is mine.** It reads my sources in my formats. The app and the kit are generic.
+- **Testing is mostly snapshots.** There are few unit tests, and hover states and print were checked only through the style-rule comparison.
+- **Two expected lab results are still missing.** They stay open on screen.
+- **The second app is still being built.** It follows the kit from a local folder for now.
+
+Right before this project I built [a rent map of Mexico City from open data](/writing/mexico-city-rent-map-open-data) with Claude, on data anyone can check. If you're keeping your own records for the long run, or thinking about it, [write to me](mailto:nthchild1@gmail.com).

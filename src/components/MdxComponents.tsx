@@ -101,6 +101,22 @@ function ConversationHero({ image, alt }: { image: string; alt: string }) {
   );
 }
 
+/** Opening illustration for a post, framed like the other heroes. */
+function PostHero({ image, alt }: { image: string; alt: string }) {
+  return (
+    <figure className="my-12 -mx-6 sm:mx-0 sm:rounded-3xl overflow-hidden border-y sm:border border-[hsl(var(--border))] bg-gradient-to-br from-emerald-500/10 via-[hsl(var(--background))] to-teal-500/10">
+      <div className="flex justify-center px-6 py-8 sm:p-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={image}
+          alt={alt}
+          className="w-full max-w-[340px] rounded-2xl shadow-2xl shadow-black/20"
+        />
+      </div>
+    </figure>
+  );
+}
+
 /** Row of headline figures */
 function Stats({ children }: { children: ReactNode }) {
   return (
@@ -166,15 +182,23 @@ function Moment({
   );
 }
 
-/** Numbered pipeline; steps flow left to right, top to bottom */
-function Workflow({ children }: { children: ReactNode }) {
+/** Numbered pipeline; steps flow left to right, top to bottom. `note` replaces the line under the steps; an empty note leaves it out. */
+function Workflow({
+  children,
+  note = "One direction: each step links back to the one before it.",
+}: {
+  children: ReactNode;
+  note?: string;
+}) {
   return (
     <div className="my-10 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.5)] p-3 sm:p-4">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{children}</div>
-      <p className="mt-3 px-1 text-xs text-[hsl(var(--muted-foreground))] flex items-center gap-2">
-        <span className="inline-block w-6 h-px bg-emerald-500" />
-        One direction: each step links back to the one before it.
-      </p>
+      {note && (
+        <p className="mt-3 px-1 text-xs text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+          <span className="inline-block w-6 h-px bg-emerald-500" />
+          {note}
+        </p>
+      )}
     </div>
   );
 }
@@ -430,6 +454,7 @@ export const mdxComponents = {
     />
   ),
   ConversationHero,
+  PostHero,
   Stats,
   Stat,
   Timeline,
