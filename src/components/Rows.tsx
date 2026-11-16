@@ -9,18 +9,17 @@ export function initial(company: string) {
   return company.replace(/^Banco /, "").charAt(0);
 }
 
-export function RoleRow({ project, prefix }: { project: Project; prefix?: string }) {
+export function RoleRow({ project }: { project: Project }) {
   return (
     <Link className="rowlink" href={`/work/${project.slug}`}>
       <span className="mono">{initial(project.company)}</span>
       <div>
-        <b>
-          {prefix ? `${prefix} · ` : ""}
-          {project.company}
-        </b>
-        <p>
-          {project.role} · {project.period}
-        </p>
+        <span className="rowtop">
+          <b>{project.company}</b>
+          <span>{project.period}</span>
+        </span>
+        <span className="rowrole">{project.role}</span>
+        <p>{project.summary}</p>
       </div>
       <em aria-hidden="true">›</em>
     </Link>
@@ -32,10 +31,11 @@ export function PostRow({ post }: { post: PostMeta }) {
     <Link className="rowlink" href={`/writing/${post.slug}`}>
       <Badge icon="doc" color="var(--brand)" large />
       <div>
-        <b>{post.title}</b>
-        <p>
-          {post.type} · {formatDate(post.date)} · {post.readingMinutes} min read
-        </p>
+        <span className="rowtop">
+          <b>{post.title}</b>
+          <span>{formatDate(post.date)}</span>
+        </span>
+        <p>{post.summary}</p>
       </div>
       <em aria-hidden="true">›</em>
     </Link>

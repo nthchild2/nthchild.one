@@ -1,7 +1,6 @@
 // The site's versions of vault-kit's small parts. The kit's React components need React 19 and this site runs React 18,
 // so these draw the same markup the kit's components draw, and the kit's ui.css styles them.
 import type { CSSProperties, ReactNode } from "react";
-import ThemeButton from "./ThemeButton";
 
 const PATHS = {
   // from the kit's icon set
@@ -82,22 +81,6 @@ export function Badge({ icon, color, large }: { icon: IconName; color: string; l
 }
 
 export const CALL_URL = "https://calendar.app.google/5k2gNrEZK8haq1nK9";
-
-/** A screen's header: its title, one line of facts, its own controls, then the theme button every screen carries. */
-export function PageHead({ title, sub, children }: { title: ReactNode; sub?: ReactNode; children?: ReactNode }) {
-  return (
-    <div className="topbar">
-      <div>
-        <h1>{title}</h1>
-        {sub && <p className="sub">{sub}</p>}
-      </div>
-      <div className="tools">
-        {children}
-        <ThemeButton />
-      </div>
-    </div>
-  );
-}
 
 /** A link out of the site, as one of the kit's chip buttons. */
 export function ExternalChip({ href, children }: { href: string; children: ReactNode }) {

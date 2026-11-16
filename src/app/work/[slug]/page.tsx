@@ -1,11 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ExternalChip, Icon, PageHead } from "@/components/kit";
-import { PostRow, RoleRow } from "@/components/Rows";
+import ImageCarousel from "@/components/ImageCarousel";
+import { Badge, Icon } from "@/components/kit";
+import ProjectLinks from "@/components/ProjectLinks";
 import { projects } from "@/data/projects";
-import { getPost } from "@/lib/writing";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -36,91 +35,88 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
-  const index = projects.findIndex((p) => p.slug === slug);
-  if (index === -1) notFound();
+  const projectIndex = projects.findIndex((p) => p.slug === slug);
+  if (projectIndex === -1) notFound();
 
-  const project = projects[index];
-  const newer = index > 0 ? projects[index - 1] : null;
-  const older = index < projects.length - 1 ? projects[index + 1] : null;
-  const caseStudy = project.caseStudy ? getPost(project.caseStudy) : null;
+  const project = projects[projectIndex];
+  const prevProject = projectIndex > 0 ? projects[projectIndex - 1] : null;
+  const nextProject = projectIndex < projects.length - 1 ? projects[projectIndex + 1] : null;
 
   return (
-    <>
-      <Link className="chipbtn ghost back" href="/experience">
+    <main className="page-col">
+      <Link href="/" className="chipbtn ghost back">
         <Icon name="back" />
-        Experience
+        Back to home
       </Link>
-      <PageHead title={project.company} sub={`${project.role} · ${project.period} · ${project.location}`}>
-        {project.links?.map((l) => (
-          <ExternalChip key={l.href} href={l.href}>
-            {l.label}
-          </ExternalChip>
-        ))}
-      </PageHead>
 
-      <div className="grid split">
-        <section className="surface">
-          <div className="surface-head">
-            <h2>What I did</h2>
-          </div>
-          <p className="lede">{project.summary}</p>
-          <ul className="points">
-            {project.highlights.map((h) => (
-              <li key={h}>{h}</li>
-            ))}
-          </ul>
-        </section>
-
-        <div className="aside-stack">
-          <section className="surface">
-            <div className="surface-head">
-              <h3>Stack</h3>
-            </div>
-            <div className="factchips">
-              {project.tags.map((t) => (
-                <span key={t} className="factchip">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </section>
-
-          {caseStudy && (
-            <section className="surface">
-              <div className="surface-head">
-                <h3>Case study</h3>
-              </div>
-              <PostRow post={caseStudy} />
-            </section>
-          )}
+      {/* Header */}
+      <header className="page-header">
+        <h3>
+          {project.period} · {project.location}
+        </h3>
+        <h1>{project.company}</h1>
+        <p className="role">{project.role}</p>
+        <div className="factchips">
+          {project.tags.map((tag) => (
+            <span key={tag} className="factchip">
+              {tag}
+            </span>
+          ))}
         </div>
-      </div>
+        {project.links && <ProjectLinks links={project.links} />}
+      </header>
 
-      {project.gallery && (
-        <section className="surface">
-          <div className="surface-head">
-            <h2>Screens</h2>
+      {/* Screenshots */}
+      {project.gallery && <ImageCarousel images={project.gallery} label={project.company} />}
+
+      {/* Overview */}
+      <section className="block">
+        <h3>Overview</h3>
+        <p className="lede">{project.summary}</p>
+      </section>
+
+      {project.caseStudy && (
+        <Link href={`/writing/${project.caseStudy}`} className="rowlink casestudy">
+          <Badge icon="doc" color="var(--brand)" large />
+          <div>
+            <span className="rowrole">Case study</span>
+            <b>Read how we built the workflow behind it</b>
           </div>
-          <div className="gallery">
-            {project.gallery.map((g) => (
-              <Image
-                key={g.src}
-                className={g.width > g.height ? "wide" : undefined}
-                src={g.src}
-                alt={g.alt}
-                width={g.width}
-                height={g.height}
-                sizes="(max-width: 900px) 70vw, 360px"
-              />
-            ))}
-          </div>
-        </section>
+          <em aria-hidden="true">›</em>
+        </Link>
       )}
 
-      <nav className="grid g2" aria-label="More roles" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
-        {newer ? <RoleRow project={newer} prefix="Newer" /> : <span />}
-        {older && <RoleRow project={older} prefix="Older" />}
+      {/* Key Contributions */}
+      <section className="block">
+        <h3>Key Contributions</h3>
+        <ul className="points">
+          {project.highlights.map((highlight) => (
+            <li key={highlight}>{highlight}</li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Navigation */}
+      <nav className="prevnext" aria-label="More roles">
+        {prevProject ? (
+          <Link href={`/work/${prevProject.slug}`} className="surface">
+            <span>‹ Previous</span>
+            <b>{prevProject.company}</b>
+            <small>{prevProject.role}</small>
+          </Link>
+        ) : (
+          <div />
+        )}
+        {nextProject ? (
+          <Link href={`/work/${nextProject.slug}`} className="surface next">
+            <span>Next ›</span>
+            <b>{nextProject.company}</b>
+            <small>{nextProject.role}</small>
+          </Link>
+        ) : (
+          <div />
+        )}
       </nav>
-    </>
+    </main>
   );
 }

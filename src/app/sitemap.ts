@@ -13,5 +13,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}/work/${project.slug}`,
   }));
 
-  return [{ url: baseUrl }, { url: `${baseUrl}/experience` }, { url: `${baseUrl}/writing` }, ...posts, ...work];
+  return [{ url: baseUrl }, { url: `${baseUrl}/writing` }, ...posts, ...work];
 }

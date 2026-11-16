@@ -1,16 +1,10 @@
-import type { CSSProperties } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Icon } from "@/components/kit";
 import { mdxComponents } from "@/components/MdxComponents";
-import {
-  formatDate,
-  getPost,
-  getPosts,
-  getSeries,
-} from "@/lib/writing";
+import { formatDate, getPost, getPosts, getSeries, postLabel } from "@/lib/writing";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -51,32 +45,21 @@ export default async function PostPage({ params }: Props) {
   const post = getPost(slug);
   if (!post) notFound();
 
-  const series = post.series
-    ? getSeries().find((s) => s.name === post.series && s.posts.length > 1)
-    : undefined;
+  const series = post.series ? getSeries().find((s) => s.name === post.series) : undefined;
 
   return (
-    <div className="post-page">
-      <Link className="chipbtn ghost back" href="/writing">
+    <main className="page-col post-page">
+      <Link href="/writing" className="chipbtn ghost back">
         <Icon name="back" />
         All writing
       </Link>
 
-      <header>
-        <div className="meta">
-          <span className="tagline" style={{ "--c": "var(--brand)" } as CSSProperties}>
-            {post.type}
-          </span>
-          <span className="num">{formatDate(post.date)}</span>
-          <span>· {post.readingMinutes} min read</span>
-          {post.series && post.part && (
-            <span>
-              · {post.series}, part {post.part}
-            </span>
-          )}
-        </div>
+      <header className="page-header">
+        <h3>
+          {formatDate(post.date)} · {postLabel(post)} · {post.readingMinutes} min read
+        </h3>
         <h1>{post.title}</h1>
-        <p>{post.summary}</p>
+        <p className="intro">{post.summary}</p>
         <div className="factchips">
           {post.tags.map((tag) => (
             <span key={tag} className="factchip">
@@ -92,10 +75,8 @@ export default async function PostPage({ params }: Props) {
 
       {series && (
         <aside className="surface">
-          <div className="surface-head">
-            <h2>{series.name}</h2>
-            <span>Series</span>
-          </div>
+          <span className="rowrole">Series</span>
+          <h2>{series.name}</h2>
           <ol className="series-list">
             {series.posts.map((part) => (
               <li key={part.slug}>
@@ -109,10 +90,9 @@ export default async function PostPage({ params }: Props) {
         </aside>
       )}
 
-      <Link className="chipbtn back" href="/writing">
-        <Icon name="back" />
-        More writing
-      </Link>
-    </div>
+      <footer className="site-footer">
+        <Link href="/writing">← More writing</Link>
+      </footer>
+    </main>
   );
 }

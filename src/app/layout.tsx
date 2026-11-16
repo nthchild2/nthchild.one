@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
-import Rail from "@/components/Rail";
+import TopNav from "@/components/TopNav";
 import { themeScript } from "@/components/ThemeButton";
 // Tailwind first, then vault-kit, then the site's own styles: each layer can rely on the one before it.
 import "./globals.css";
@@ -48,10 +48,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <div id="root">
-          <div className="shell">
-            <Rail />
-            <main className="view">{children}</main>
-          </div>
+          <TopNav />
+          {children}
         </div>
       </body>
     </html>
