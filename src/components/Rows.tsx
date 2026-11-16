@@ -1,9 +1,13 @@
 // Rows that open one thing: a role or a post, drawn as the kit's row links.
 import Link from "next/link";
 import type { Project } from "@/data/projects";
-import { initial } from "@/lib/career";
 import { formatDate, type PostMeta } from "@/lib/writing";
 import { Badge } from "./kit";
+
+/** The first letter of a company, for its mark. */
+export function initial(company: string) {
+  return company.replace(/^Banco /, "").charAt(0);
+}
 
 export function RoleRow({ project, prefix }: { project: Project; prefix?: string }) {
   return (

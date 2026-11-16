@@ -1,17 +1,15 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Career from "@/components/Career";
 import { Badge, CALL_URL, Icon, PageHead } from "@/components/kit";
-import { PostRow, RoleRow } from "@/components/Rows";
+import { initial, PostRow, RoleRow } from "@/components/Rows";
 import { projects } from "@/data/projects";
-import { initial } from "@/lib/career";
 import { getPosts } from "@/lib/writing";
 
 const highlights = [
-  { value: "9+", label: "Years of experience", foot: "Since 2017", icon: "clock", role: "var(--years)" },
-  { value: "3", label: "Greenfield products", foot: "Built from the first commit", icon: "play", role: "var(--launches)" },
-  { value: "4M+", label: "Users reached", foot: "myPurina, Nestlé Purina", icon: "user", role: "var(--reach)" },
+  { value: "9+", label: "Years of experience", icon: "clock", role: "var(--years)" },
+  { value: "3", label: "Greenfield products", icon: "play", role: "var(--launches)" },
+  { value: "4M+", label: "Users reached", icon: "user", role: "var(--reach)" },
 ] as const;
 
 export default function Home() {
@@ -95,12 +93,9 @@ export default function Home() {
               {h.label}
             </span>
             <div className="figure">{h.value}</div>
-            <span className="stat-foot">{h.foot}</span>
           </div>
         ))}
       </div>
-
-      <Career />
 
       <div className="grid split">
         <section className="surface">

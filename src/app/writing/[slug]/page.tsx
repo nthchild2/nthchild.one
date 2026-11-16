@@ -52,7 +52,7 @@ export default async function PostPage({ params }: Props) {
   if (!post) notFound();
 
   const series = post.series
-    ? getSeries().find((s) => s.name === post.series)
+    ? getSeries().find((s) => s.name === post.series && s.posts.length > 1)
     : undefined;
 
   return (

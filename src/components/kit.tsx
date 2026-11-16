@@ -83,7 +83,7 @@ export function Badge({ icon, color, large }: { icon: IconName; color: string; l
 
 export const CALL_URL = "https://calendar.app.google/5k2gNrEZK8haq1nK9";
 
-/** A screen's header: its title, one line of facts, its own controls, then the tools every screen carries. */
+/** A screen's header: its title, one line of facts, its own controls, then the theme button every screen carries. */
 export function PageHead({ title, sub, children }: { title: ReactNode; sub?: ReactNode; children?: ReactNode }) {
   return (
     <div className="topbar">
@@ -93,10 +93,6 @@ export function PageHead({ title, sub, children }: { title: ReactNode; sub?: Rea
       </div>
       <div className="tools">
         {children}
-        <a className="button" href={CALL_URL} target="_blank" rel="noopener noreferrer">
-          <Icon name="visit" />
-          Schedule a call
-        </a>
         <ThemeButton />
       </div>
     </div>

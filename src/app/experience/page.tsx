@@ -1,10 +1,7 @@
-import type { CSSProperties } from "react";
 import type { Metadata } from "next";
-import Career from "@/components/Career";
 import { PageHead } from "@/components/kit";
 import { RoleRow } from "@/components/Rows";
 import { education, languages, projects, skillCategories } from "@/data/projects";
-import { span } from "@/lib/career";
 
 const description = "Every role since 2017: what I worked on, where, and with which tools.";
 
@@ -22,30 +19,15 @@ export const metadata: Metadata = {
   twitter: { card: "summary", title: "Experience | Carlos Cortes", description },
 };
 
-/** Tools named on more than one role, counted from each role's tags. */
-function sharedTools() {
-  const counts = new Map<string, number>();
-  for (const p of projects) for (const t of p.tags) counts.set(t, (counts.get(t) ?? 0) + 1);
-  return [...counts]
-    .filter(([, n]) => n > 1)
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-}
-
 export default function ExperiencePage() {
-  const first = Math.floor(Math.min(...projects.map((p) => span(p).from.t)));
-  const tools = sharedTools();
-  const max = Math.max(1, ...tools.map(([, n]) => n));
-
   return (
     <>
-      <PageHead title="Experience" sub={`${projects.length} roles · ${first} to today`} />
-      <Career />
+      <PageHead title="Experience" sub="Every role since 2017, newest first" />
 
       <div className="grid split">
         <section className="surface">
           <div className="surface-head">
             <h2>Roles</h2>
-            <span>Newest first</span>
           </div>
           <div className="stack">
             {projects.map((p) => (
@@ -55,28 +37,6 @@ export default function ExperiencePage() {
         </section>
 
         <div className="aside-stack">
-          <section className="surface">
-            <div className="surface-head">
-              <h2>Used in more than one role</h2>
-            </div>
-            <ol className="rank" aria-label="Tools by number of roles" style={{ "--c": "var(--brand)" } as CSSProperties}>
-              {tools.map(([label, n]) => (
-                <li key={label}>
-                  <span className="rank-name" title={label}>
-                    {label}
-                  </span>
-                  <span className="rank-track">
-                    <i style={{ width: `${Math.max(0.4, (n / max) * 86)}%` }} />
-                    <b>{n}</b>
-                  </span>
-                </li>
-              ))}
-            </ol>
-            <p className="small muted" style={{ margin: "14px 0 0" }}>
-              Counted from the tags on each role.
-            </p>
-          </section>
-
           <section className="surface">
             <div className="surface-head">
               <h2>Education</h2>

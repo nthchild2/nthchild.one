@@ -9,7 +9,6 @@
   --years: var(--s1);
   --launches: var(--s3);
   --reach: var(--s7);
-  --career: var(--brand);
 
   /* the kit's brand colours as channels, for Tailwind's opacity steps in the post building blocks */
   --brand-rgb: 79 70 229; --brand-text-rgb: 67 56 202; --brand-2-rgb: 124 58 237;
@@ -21,8 +20,6 @@
 #root { min-height: 100vh; }
 
 /* ── rail ── */
-.railcard .avail { display: inline-flex; align-items: center; gap: 8px; }
-.railcard a.mail { font-weight: 600; font-size: 13px; overflow-wrap: anywhere; }
 .avail .dot { background: var(--ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 20%, transparent); }
 
 /* ── home: hero and the current role ── */
@@ -50,26 +47,9 @@
 /* stat tiles without a plot: the figure is the point */
 .figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 22px; }
 .stat .figure { margin-top: 18px; }
-.stat .stat-foot { margin-top: 8px; font-size: 12.5px; }
-
-/* ── career on one time axis: one row per role ── */
-.career-rows { position: relative; display: grid; gap: 8px; padding: 2px 0 6px; }
-.career-row { position: relative; height: 22px; }
-.career-row .span-pill { top: 0; }
-.career-row .span-pill:hover { text-decoration: none; }
-.career-label { position: absolute; top: 0; line-height: 22px; font-size: 12.5px; font-weight: 600; color: var(--text-2); white-space: nowrap; pointer-events: none; }
-.career-label em { font-style: normal; color: var(--text-3); font-weight: 500; margin-left: 6px; }
-.career-grid { position: absolute; inset: 0; pointer-events: none; }
-.career-grid i { position: absolute; top: 0; bottom: 0; border-left: 1px dashed var(--line-2); }
-.career-axis { position: relative; height: 18px; margin-top: 6px; font-size: 11px; color: var(--text-3); font-variant-numeric: tabular-nums; }
-.career-axis span { position: absolute; transform: translateX(-50%); }
-.career .legend { margin-top: 12px; }
-.span-key { display: inline-block; width: 22px; height: 10px; border-radius: 4px; background: color-mix(in srgb, var(--career) 24%, transparent); box-shadow: inset 3px 0 0 var(--career); }
-.span-key.outlined { background: transparent; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--career) 70%, transparent), inset 3px 0 0 var(--career); }
 
 /* ── lists and asides ── */
 .aside-stack { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
-.aside-stack .rank { grid-template-columns: minmax(84px, 38%) minmax(0, 1fr); }
 .skills .kv-row { align-items: flex-start; }
 .skills h3 { padding-top: 6px; min-width: 150px; }
 .skills .factchips { justify-content: flex-end; }
@@ -115,7 +95,6 @@
   .rail { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
   .hero { padding: 22px 18px; }
   .gallery img { height: 300px; } .gallery img.wide { height: 190px; }
-  .career-label em { display: none; }
   .skills .kv-row { flex-direction: column; gap: 8px; } .skills .factchips { justify-content: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) { .stat:hover { transform: none; } }

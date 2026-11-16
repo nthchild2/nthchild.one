@@ -5,7 +5,6 @@ import type { Metadata } from "next";
 import { ExternalChip, Icon, PageHead } from "@/components/kit";
 import { PostRow, RoleRow } from "@/components/Rows";
 import { projects } from "@/data/projects";
-import { span } from "@/lib/career";
 import { getPost } from "@/lib/writing";
 
 type Props = {
@@ -44,8 +43,6 @@ export default async function ProjectPage({ params }: Props) {
   const newer = index > 0 ? projects[index - 1] : null;
   const older = index < projects.length - 1 ? projects[index + 1] : null;
   const caseStudy = project.caseStudy ? getPost(project.caseStudy) : null;
-  const { roughly } = span(project);
-  const n = project.highlights.length;
 
   return (
     <>
@@ -65,9 +62,6 @@ export default async function ProjectPage({ params }: Props) {
         <section className="surface">
           <div className="surface-head">
             <h2>What I did</h2>
-            <span>
-              {n} {n === 1 ? "point" : "points"}
-            </span>
           </div>
           <p className="lede">{project.summary}</p>
           <ul className="points">
@@ -78,35 +72,6 @@ export default async function ProjectPage({ params }: Props) {
         </section>
 
         <div className="aside-stack">
-          <section className="surface">
-            <div className="surface-head">
-              <h3>At a glance</h3>
-            </div>
-            <div className="kv-row">
-              <span className="muted">Role</span>
-              <span className="kv-right" style={{ color: "var(--text)", whiteSpace: "normal" }}>
-                {project.role}
-              </span>
-            </div>
-            <div className="kv-row">
-              <span className="muted">When</span>
-              <span className="kv-right num" style={{ color: "var(--text)" }}>
-                {project.period}
-              </span>
-            </div>
-            <div className="kv-row">
-              <span className="muted">Where</span>
-              <span className="kv-right" style={{ color: "var(--text)", whiteSpace: "normal" }}>
-                {project.location}
-              </span>
-            </div>
-            {roughly && (
-              <p className="small muted" style={{ margin: "6px 0 0" }}>
-                Dates known to the year.
-              </p>
-            )}
-          </section>
-
           <section className="surface">
             <div className="surface-head">
               <h3>Stack</h3>
@@ -135,9 +100,6 @@ export default async function ProjectPage({ params }: Props) {
         <section className="surface">
           <div className="surface-head">
             <h2>Screens</h2>
-            <span>
-              {project.gallery.length} {project.gallery.length === 1 ? "image" : "images"}
-            </span>
           </div>
           <div className="gallery">
             {project.gallery.map((g) => (

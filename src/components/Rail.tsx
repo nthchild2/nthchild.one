@@ -49,16 +49,6 @@ export default function Rail() {
           </a>
         </div>
       </nav>
-      <div className="railcard">
-        <span className="avail">
-          <span className="dot" />
-          <b>Available for new projects</b>
-        </span>
-        <span>Write to me at</span>
-        <a className="mail" href={`mailto:${EMAIL}`}>
-          {EMAIL}
-        </a>
-      </div>
     </aside>
   );
 }

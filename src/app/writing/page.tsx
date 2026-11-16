@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function WritingPage() {
   const posts = getPosts();
-  const series = getSeries();
+  const series = getSeries().filter((s) => s.posts.length > 1);
 
   return (
     <>
