@@ -35,6 +35,58 @@ export type SkillCategory = {
 
 export const projects: Project[] = [
   {
+    slug: "wynn-resorts",
+    company: "Wynn Resorts",
+    role: "Senior Mobile Developer",
+    period: "Oct 2026 — Present",
+    location: "Remote · Mexico City",
+    summary:
+      "Joined Wynn Resorts in October 2026 to work on the Wynn Resorts app, the guest app for Wynn and Encore Las Vegas and Encore Boston Harbor. Guests use it to book rooms, dining and shows, open their room with a digital key, and check their Wynn Rewards balance.",
+    highlights: [
+      "Feature work, fixes and releases on the guest app for iOS and Android.",
+    ],
+    gallery: [
+      {
+        src: "/images/work/wynn/wynn-app-rooms.jpg",
+        width: 600,
+        height: 1299,
+        alt: "Wynn Resorts app rooms screen, listing Wynn Tower Suites and Encore rooms with Book buttons",
+      },
+      {
+        src: "/images/work/wynn/wynn-app-dining.jpg",
+        width: 600,
+        height: 1299,
+        alt: "Wynn Resorts app restaurant page for Delilah, with a dinner reservations button",
+      },
+      {
+        src: "/images/work/wynn/wynn-app-shows.jpg",
+        width: 600,
+        height: 1299,
+        alt: "Wynn Resorts app page for the Lake of Dreams show",
+      },
+      {
+        src: "/images/work/wynn/wynn-app-art.jpg",
+        width: 600,
+        height: 1299,
+        alt: "Wynn Resorts app art page for the sculpture Shoe by Stephan Weiss",
+      },
+    ],
+    gradient: "from-stone-500/20 to-amber-700/20",
+    tags: ["Mobile", "iOS", "Android", "Hospitality"],
+    links: [
+      {
+        kind: "ios",
+        label: "App Store",
+        href: "https://apps.apple.com/us/app/wynn-resorts/id1474419728",
+      },
+      {
+        kind: "android",
+        label: "Google Play",
+        href: "https://play.google.com/store/apps/details?id=com.wynn.mobileapp",
+      },
+    ],
+  },
+  {
     slug: "obelisk-software",
     company: "Obelisk Software",
     role: "Technical Co-founder",
@@ -91,7 +143,7 @@ export const projects: Project[] = [
     slug: "nestle-purina",
     company: "Nestlé Purina",
     role: "Software Engineer → Senior Software Engineer",
-    period: "Jun 2022 — Present",
+    period: "Jun 2022 — Oct 2026",
     location: "Remote · Mexico City",
     summary:
       "Joined myPurina as a contractor to help define its architecture, then moved into a full-time Senior Engineer role in April 2024, leading mobile work as the app grew from a small team to a large cross-functional organization and past 4 million users.",
