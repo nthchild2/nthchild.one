@@ -15,7 +15,7 @@ function HeroArrow() {
   return (
     <svg
       aria-hidden="true"
-      className="w-5 h-5 rotate-90 lg:rotate-0 text-emerald-600 dark:text-emerald-400"
+      className="w-5 h-5 rotate-90 lg:rotate-0 text-accent-text"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -33,17 +33,17 @@ function HeroArrow() {
 /** Opening graphic: meeting talk on the left, the AI layer in the middle, the product on the right */
 function ConversationHero({ image, alt }: { image: string; alt: string }) {
   return (
-    <figure className="my-12 -mx-6 sm:mx-0 sm:rounded-3xl overflow-hidden border-y sm:border border-[hsl(var(--border))] bg-gradient-to-br from-emerald-500/10 via-[hsl(var(--background))] to-teal-500/10">
-      <div className="grid lg:grid-cols-[1fr_auto_auto_auto_1fr] items-center gap-5 lg:gap-4 px-6 py-8 sm:p-8">
+    <figure className="my-12 -mx-4 sm:mx-0 sm:rounded-3xl overflow-hidden border-y sm:border border-[color:var(--line-2)] bg-gradient-to-br from-accent/10 via-[color:var(--bg)] to-accent/10">
+      <div className="grid lg:grid-cols-[1fr_auto_auto_auto_1fr] items-center gap-5 lg:gap-4 px-4 py-8 sm:p-8">
         {/* Conversation */}
         <div className="flex flex-col gap-3 min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-[color:var(--text-3)]">
             Recorded call
           </p>
           {heroQuotes.map((quote, i) => (
             <p
               key={quote}
-              className={`max-w-[17rem] rounded-2xl rounded-bl-md px-4 py-2.5 text-sm leading-snug bg-[hsl(var(--card))] border border-[hsl(var(--border))] shadow-sm text-[hsl(var(--foreground))] ${
+              className={`max-w-[17rem] rounded-2xl rounded-bl-md px-4 py-2.5 text-sm leading-snug bg-[color:var(--card-solid)] border border-[color:var(--line-2)] shadow-sm text-[color:var(--text)] ${
                 i === 1 ? "lg:ml-6" : ""
               }`}
             >
@@ -58,14 +58,14 @@ function ConversationHero({ image, alt }: { image: string; alt: string }) {
 
         {/* AI layer */}
         <div className="flex flex-col items-center gap-3">
-          <span className="px-4 py-2 rounded-full bg-emerald-600 text-white text-sm font-display font-semibold shadow-lg shadow-emerald-600/25">
+          <span className="px-4 py-2 rounded-full bg-accent text-white text-sm font-display font-semibold shadow-lg shadow-accent/25">
             Claude + MCP
           </span>
           <div className="flex flex-wrap lg:flex-col justify-center gap-1.5">
             {heroOutputs.map((output) => (
               <span
                 key={output}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[hsl(var(--card))] border border-[hsl(var(--border))] text-[hsl(var(--muted-foreground))]"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[color:var(--card-solid)] border border-[color:var(--line-2)] text-[color:var(--text-3)]"
               >
                 <svg
                   aria-hidden="true"
@@ -104,7 +104,7 @@ function ConversationHero({ image, alt }: { image: string; alt: string }) {
 /** Wide opening illustration for a post. */
 function PostHero({ image, alt }: { image: string; alt: string }) {
   return (
-    <figure className="my-12 -mx-6 sm:mx-0 overflow-hidden sm:rounded-3xl">
+    <figure className="my-12 -mx-4 sm:mx-0 overflow-hidden sm:rounded-3xl">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={image} alt={alt} className="block w-full h-auto" />
     </figure>
@@ -123,10 +123,10 @@ function Stats({ children }: { children: ReactNode }) {
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="card rounded-xl p-5">
-      <div className="text-3xl font-display font-bold text-emerald-600 dark:text-emerald-400 tabular-nums">
+      <div className="text-3xl font-display font-bold text-accent-text tabular-nums">
         {value}
       </div>
-      <div className="text-sm text-[hsl(var(--muted-foreground))] mt-1 leading-snug">
+      <div className="text-sm text-[color:var(--text-3)] mt-1 leading-snug">
         {label}
       </div>
     </div>
@@ -136,7 +136,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 /** Dated trail of one item moving through the system */
 function Timeline({ children }: { children: ReactNode }) {
   return (
-    <ol className="relative my-10 ml-2 border-l border-dashed border-emerald-500/40 space-y-7">
+    <ol className="relative my-10 ml-2 border-l border-dashed border-accent/40 space-y-7">
       {children}
     </ol>
   );
@@ -155,20 +155,20 @@ function Moment({
 }) {
   return (
     <li className="relative pl-7">
-      <span className="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full bg-[hsl(var(--background))] border-2 border-emerald-500" />
+      <span className="absolute -left-[7px] top-1.5 w-3.5 h-3.5 rounded-full bg-[color:var(--bg)] border-2 border-accent" />
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
-        <span className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--muted-foreground))] tabular-nums">
+        <span className="text-xs font-semibold uppercase tracking-widest text-[color:var(--text-3)] tabular-nums">
           {date}
         </span>
-        <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+        <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-accent/10 text-accent-text">
           {where}
         </span>
       </div>
-      <p className="font-display font-semibold text-[hsl(var(--foreground))]">
+      <p className="font-display font-semibold text-[color:var(--text)]">
         {title}
       </p>
       {children && (
-        <div className="text-sm text-[hsl(var(--muted-foreground))] leading-relaxed mt-1 [&_p]:my-0 [&_p]:text-[hsl(var(--muted-foreground))]">
+        <div className="text-sm text-[color:var(--text-3)] leading-relaxed mt-1 [&_p]:my-0 [&_p]:text-[color:var(--text-3)]">
           {children}
         </div>
       )}
@@ -185,11 +185,11 @@ function Workflow({
   note?: string;
 }) {
   return (
-    <div className="my-10 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.5)] p-3 sm:p-4">
+    <div className="my-10 rounded-2xl border border-[color:var(--line-2)] bg-[color:var(--fill)] p-3 sm:p-4">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{children}</div>
       {note && (
-        <p className="mt-3 px-1 text-xs text-[hsl(var(--muted-foreground))] flex items-center gap-2">
-          <span className="inline-block w-6 h-px bg-emerald-500" />
+        <p className="mt-3 px-1 text-xs text-[color:var(--text-3)] flex items-center gap-2">
+          <span className="inline-block w-6 h-px bg-accent" />
           {note}
         </p>
       )}
@@ -211,17 +211,17 @@ function Step({
   return (
     <div className="group relative card rounded-xl p-4 flex flex-col gap-2 min-w-0">
       <div className="flex items-center justify-between gap-2">
-        <span className="font-display text-2xl font-bold text-emerald-600 dark:text-emerald-400 tabular-nums leading-none">
+        <span className="font-display text-2xl font-bold text-accent-text tabular-nums leading-none">
           {n.padStart(2, "0")}
         </span>
-        <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))]">
+        <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-[color:var(--fill)] text-[color:var(--text-3)]">
           {tool}
         </span>
       </div>
-      <p className="font-display font-semibold text-[hsl(var(--foreground))]">
+      <p className="font-display font-semibold text-[color:var(--text)]">
         {title}
       </p>
-      <div className="text-sm leading-relaxed text-[hsl(var(--muted-foreground))] [&_p]:my-0 [&_p]:text-[hsl(var(--muted-foreground))]">
+      <div className="text-sm leading-relaxed text-[color:var(--text-3)] [&_p]:my-0 [&_p]:text-[color:var(--text-3)]">
         {children}
       </div>
     </div>
@@ -246,14 +246,14 @@ function Side({
     <div
       className={`rounded-xl p-5 border ${
         accent
-          ? "border-emerald-500/40 bg-emerald-500/5"
-          : "border-[hsl(var(--border))] bg-[hsl(var(--card))]"
+          ? "border-accent/40 bg-accent/5"
+          : "border-[color:var(--line-2)] bg-[color:var(--card-solid)]"
       }`}
     >
-      <p className="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3">
+      <p className="text-xs font-semibold uppercase tracking-widest text-accent-text mb-3">
         {title}
       </p>
-      <div className="text-sm [&_ul]:my-0 [&_ul]:space-y-2.5 [&_p]:my-0 [&_ul+p]:mt-4 [&_ul+p]:text-[hsl(var(--muted-foreground))]">
+      <div className="text-sm [&_ul]:my-0 [&_ul]:space-y-2.5 [&_p]:my-0 [&_ul+p]:mt-4 [&_ul+p]:text-[color:var(--text-3)]">
         {children}
       </div>
     </div>
@@ -270,14 +270,14 @@ function SystemMap({
 }) {
   const lanes = Children.toArray(children);
   return (
-    <figure className="my-10 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.5)] p-3 sm:p-4">
+    <figure className="my-10 rounded-2xl border border-[color:var(--line-2)] bg-[color:var(--fill)] p-3 sm:p-4">
       <div className="grid gap-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr] items-stretch">
         {lanes.map((lane, i) => (
           <Fragment key={i}>
             {i > 0 && (
               <div
                 aria-hidden="true"
-                className="flex items-center justify-center text-emerald-600 dark:text-emerald-400"
+                className="flex items-center justify-center text-accent-text"
               >
                 <svg
                   className="w-5 h-5 rotate-90 lg:rotate-0"
@@ -298,7 +298,7 @@ function SystemMap({
           </Fragment>
         ))}
       </div>
-      <figcaption className="mt-3 px-1 text-xs text-[hsl(var(--muted-foreground))]">
+      <figcaption className="mt-3 px-1 text-xs text-[color:var(--text-3)]">
         {caption}
       </figcaption>
     </figure>
@@ -318,11 +318,11 @@ function Lane({
     <div
       className={`rounded-xl p-4 min-w-0 ${
         accent
-          ? "border border-emerald-500/50 bg-emerald-500/5 shadow-lg shadow-emerald-500/10"
+          ? "border border-accent/50 bg-accent/5 shadow-lg shadow-accent/10"
           : "card"
       }`}
     >
-      <p className="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3">
+      <p className="text-xs font-semibold uppercase tracking-widest text-accent-text mb-3">
         {title}
       </p>
       <div className="text-sm [&_ul]:my-0 [&_ul]:space-y-2 [&_p]:my-0">
@@ -335,8 +335,8 @@ function Lane({
 /** Phone screens shown in device frames; scrolls sideways on narrow screens */
 function Screens({ children }: { children: ReactNode }) {
   return (
-    <div className="my-12 -mx-6 sm:mx-0 overflow-x-auto">
-      <div className="flex gap-5 px-6 sm:px-0 pb-8 sm:justify-center snap-x snap-mandatory">
+    <div className="my-12 -mx-4 sm:mx-0 overflow-x-auto">
+      <div className="flex gap-5 px-4 sm:px-0 pb-8 sm:justify-center snap-x snap-mandatory">
         {children}
       </div>
     </div>
@@ -347,7 +347,7 @@ function Screen({ src, caption, alt }: { src: string; caption: string; alt?: str
   return (
     <figure className="snap-center shrink-0 w-[180px] sm:w-[164px] sm:even:translate-y-8 transition-transform duration-300 hover:-translate-y-1 sm:even:hover:translate-y-7">
       <div className="rounded-[1.75rem] p-1.5 bg-[hsl(224_14%_10%)] shadow-xl shadow-black/15 ring-1 ring-black/5 dark:ring-white/10">
-        <div className="rounded-[1.4rem] overflow-hidden aspect-[390/844] bg-[hsl(var(--muted))]">
+        <div className="rounded-[1.4rem] overflow-hidden aspect-[390/844] bg-[color:var(--fill)]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
@@ -357,7 +357,7 @@ function Screen({ src, caption, alt }: { src: string; caption: string; alt?: str
           />
         </div>
       </div>
-      <figcaption className="mt-3 text-xs text-center text-[hsl(var(--muted-foreground))]">
+      <figcaption className="mt-3 text-xs text-center text-[color:var(--text-3)]">
         {caption}
       </figcaption>
     </figure>
@@ -377,8 +377,8 @@ function Figure({
   caption?: string;
 }) {
   return (
-    <figure className="my-10 -mx-6 sm:mx-0">
-      <div className="overflow-hidden border-y sm:border sm:rounded-2xl border-[hsl(var(--border))]">
+    <figure className="my-10 -mx-4 sm:mx-0">
+      <div className="overflow-hidden border-y sm:border sm:rounded-2xl border-[color:var(--line-2)]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
@@ -392,7 +392,7 @@ function Figure({
         )}
       </div>
       {caption && (
-        <figcaption className="mt-3 px-6 sm:px-0 text-sm text-[hsl(var(--muted-foreground))]">
+        <figcaption className="mt-3 px-4 sm:px-0 text-sm text-[color:var(--text-3)]">
           {caption}
         </figcaption>
       )}
@@ -403,7 +403,7 @@ function Figure({
 /** A highlighted point in the author's own words, marked by an accent bar. */
 function Callout({ children }: { children: ReactNode }) {
   return (
-    <aside className="my-10 rounded-2xl border border-emerald-500/30 border-l-4 border-l-emerald-500 bg-emerald-500/5 p-6 text-lg leading-relaxed [&_p]:my-0">
+    <aside className="my-10 rounded-2xl border border-accent/30 border-l-4 border-l-accent bg-accent/5 p-6 text-lg leading-relaxed [&_p]:my-0">
       {children}
     </aside>
   );
@@ -414,19 +414,19 @@ function Callout({ children }: { children: ReactNode }) {
 export const mdxComponents = {
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
     <h2
-      className="font-display text-2xl sm:text-3xl font-bold tracking-tight mt-16 mb-4 text-balance text-[hsl(var(--foreground))]"
+      className="font-display text-2xl sm:text-3xl font-bold tracking-tight mt-16 mb-4 text-balance text-[color:var(--text)]"
       {...props}
     />
   ),
   h3: (props: ComponentPropsWithoutRef<"h3">) => (
     <h3
-      className="font-display text-lg font-semibold mt-10 mb-3 text-[hsl(var(--foreground))]"
+      className="font-display text-lg font-semibold mt-10 mb-3 text-[color:var(--text)]"
       {...props}
     />
   ),
   p: (props: ComponentPropsWithoutRef<"p">) => (
     <p
-      className="my-5 leading-relaxed text-[hsl(var(--foreground))]"
+      className="my-5 leading-relaxed text-[color:var(--text)]"
       {...props}
     />
   ),
@@ -435,22 +435,22 @@ export const mdxComponents = {
   ),
   li: ({ children, ...props }: ComponentPropsWithoutRef<"li">) => (
     <li className="flex gap-3 leading-relaxed" {...props}>
-      <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+      <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
       <span className="min-w-0">{children}</span>
     </li>
   ),
   a: (props: ComponentPropsWithoutRef<"a">) => (
     <a
-      className="text-emerald-600 dark:text-emerald-400 underline underline-offset-4 hover:no-underline"
+      className="text-accent-text underline underline-offset-4 hover:no-underline"
       {...props}
     />
   ),
   strong: (props: ComponentPropsWithoutRef<"strong">) => (
-    <strong className="font-semibold text-[hsl(var(--foreground))]" {...props} />
+    <strong className="font-semibold text-[color:var(--text)]" {...props} />
   ),
   code: (props: ComponentPropsWithoutRef<"code">) => (
     <code
-      className="px-1.5 py-0.5 rounded bg-[hsl(var(--muted))] text-[0.9em] font-mono"
+      className="px-1.5 py-0.5 rounded bg-[color:var(--fill)] text-[0.9em] font-mono"
       {...props}
     />
   ),

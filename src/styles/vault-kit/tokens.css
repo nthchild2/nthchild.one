@@ -1,0 +1,67 @@
+/* Copied from vault-kit v0.3.1 (github.com/nthchild2/vault-kit, styles/tokens.css). Do not edit here: change the kit, tag it, and copy again.
+   The kit's font imports are left out; the site loads Outfit and Plus Jakarta Sans with next/font in src/app/layout.tsx.
+   */
+/* vault-kit tokens. Two themes of one design: Daylight (light) and Night (dark). Each is chosen, not inverted from the other.
+   Every colour, shadow and font an app uses comes from here; an app adds tokens for its own subject (roles such as a colour per kind of measure) in its own file. */
+
+:root {
+  color-scheme: light;
+  --font: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --display: "Outfit Variable", "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --bg: #f3f4fb; --card: #ffffff; --card-solid: #ffffff; --fill: #eef0fb; --fill-2: #e2e5f6; --track: #e9ebf8;
+  --text: #12142b; --text-2: #4a4e6a; --text-3: #6b6f8d;
+  --line: rgba(18, 20, 43, 0.08); --line-2: rgba(18, 20, 43, 0.16);
+  --brand: #4f46e5; --brand-2: #7c3aed; --brand-3: #c026d3; --brand-text: #4338ca; --brand-wash: rgba(79, 70, 229, 0.10); --on-brand: #ffffff;
+  --elev: 0 1px 2px rgba(18, 20, 43, 0.04), 0 18px 40px -22px rgba(40, 50, 120, 0.22);
+  --elev-pop: 0 2px 6px rgba(18, 20, 43, 0.08), 0 24px 60px -18px rgba(40, 50, 120, 0.35);
+  --glow: none;
+
+  --ok: #16a34a; --warn: #d97706; --bad: #e5484d; --ok-text: #15803d; --warn-text: #b45309; --bad-text: #c62a2f;
+  --num-w: 650; --title-w: 700;
+  --stat-tint: 9%;
+}
+:root[data-theme="dark"] { color-scheme: dark; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) { color-scheme: dark; } }
+
+/* Night. Written once and applied both to an explicit choice and to the system preference. */
+:root[data-theme="dark"] {
+  --bg: #090a10; --card: rgba(255, 255, 255, 0.045); --card-solid: #14151d; --fill: rgba(255, 255, 255, 0.07); --fill-2: rgba(255, 255, 255, 0.12); --track: rgba(255, 255, 255, 0.08);
+  --text: #f4f5fb; --text-2: #b6b9cc; --text-3: #8d91a9;
+  --line: rgba(255, 255, 255, 0.09); --line-2: rgba(255, 255, 255, 0.18);
+  --brand: #8b7bff; --brand-2: #4cc9f0; --brand-3: #ff5d8f; --brand-text: #b3a8ff; --brand-wash: rgba(139, 123, 255, 0.16); --on-brand: #0b0b14;
+  --elev: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+  --elev-pop: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 30px 70px -20px rgba(0, 0, 0, 0.9);
+  --glow: radial-gradient(760px 460px at 18% -8%, rgba(139, 123, 255, 0.26), transparent 70%), radial-gradient(640px 440px at 100% 28%, rgba(56, 217, 245, 0.13), transparent 70%), radial-gradient(560px 400px at 58% 110%, rgba(255, 93, 143, 0.11), transparent 70%);
+  --ok: #4ade80; --warn: #ffb454; --bad: #ff6b6b; --ok-text: #4ade80; --warn-text: #ffb454; --bad-text: #ff8585;
+  --num-w: 500; --title-w: 550;
+  --stat-tint: 0%;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    --bg: #090a10; --card: rgba(255, 255, 255, 0.045); --card-solid: #14151d; --fill: rgba(255, 255, 255, 0.07); --fill-2: rgba(255, 255, 255, 0.12); --track: rgba(255, 255, 255, 0.08);
+    --text: #f4f5fb; --text-2: #b6b9cc; --text-3: #8d91a9;
+    --line: rgba(255, 255, 255, 0.09); --line-2: rgba(255, 255, 255, 0.18);
+    --brand: #8b7bff; --brand-2: #4cc9f0; --brand-3: #ff5d8f; --brand-text: #b3a8ff; --brand-wash: rgba(139, 123, 255, 0.16); --on-brand: #0b0b14;
+    --elev: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+    --elev-pop: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 30px 70px -20px rgba(0, 0, 0, 0.9);
+    --glow: radial-gradient(760px 460px at 18% -8%, rgba(139, 123, 255, 0.26), transparent 70%), radial-gradient(640px 440px at 100% 28%, rgba(56, 217, 245, 0.13), transparent 70%), radial-gradient(560px 400px at 58% 110%, rgba(255, 93, 143, 0.11), transparent 70%);
+    --ok: #4ade80; --warn: #ffb454; --bad: #ff6b6b; --ok-text: #4ade80; --warn-text: #ffb454; --bad-text: #ff8585;
+    --num-w: 500; --title-w: 550;
+    --stat-tint: 0%;
+  }
+}
+
+/* charts: the eight series colours, the band behind a reference range, and the two ends of a scale that runs either side of a middle */
+:root {
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s7: #6250d6; --s8: #e34948;
+  --band: color-mix(in srgb, var(--ok) 10%, transparent); --band-edge: color-mix(in srgb, var(--ok) 35%, transparent);
+  --div-lo: #2a78d6; --div-mid: var(--fill); --div-hi: #d03b3b;
+}
+:root[data-theme="dark"] { --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) { --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767; } }
+
+/* maps: the heat ramp, from a spot passed once to one passed a hundred times or more. A list of stops, so each theme can have as many as it needs. */
+:root { --map-heat: #d98f00, #ea6a1a, #d2283f, #8f1d6e, #33104f; }
+:root[data-theme="dark"] { --map-heat: #7446d8, #c2318f, #f0562f, #fca326, #fde047, #fffbd6; }
+@media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) { --map-heat: #7446d8, #c2318f, #f0562f, #fca326, #fde047, #fffbd6; } }

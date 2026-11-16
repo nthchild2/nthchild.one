@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
-import ThemeProvider from "@/components/ThemeProvider";
-import Navbar from "@/components/Navbar";
+import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import Rail from "@/components/Rail";
+import { themeScript } from "@/components/ThemeButton";
+// Tailwind first, then vault-kit, then the site's own styles: each layer can rely on the one before it.
 import "./globals.css";
+import "@/styles/vault-kit/tokens.css";
+import "@/styles/vault-kit/ui.css";
+import "./site.css";
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-jakarta",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-outfit",
 });
 
 export const metadata: Metadata = {
@@ -36,44 +40,19 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-/**
- * Inline script to prevent flash of wrong theme (FOUC).
- * Runs synchronously before React hydration to apply the correct
- * class to <html> based on localStorage or device preference.
- */
-const themeScript = `
-  (function() {
-    try {
-      var stored = localStorage.getItem('theme');
-      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (stored === 'dark' || (!stored && prefersDark)) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    } catch(e) {}
-  })();
-`;
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${spaceGrotesk.variable} font-sans`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${jakarta.variable} ${outfit.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen bg-[hsl(var(--background))]">
-        <ThemeProvider>
-          <Navbar />
-          <div className="pt-16">{children}</div>
-        </ThemeProvider>
+      <body>
+        <div id="root">
+          <div className="shell">
+            <Rail />
+            <main className="view">{children}</main>
+          </div>
+        </div>
       </body>
     </html>
   );

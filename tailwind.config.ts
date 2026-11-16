@@ -6,29 +6,17 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
-        display: [
-          "var(--font-space-grotesk)",
-          "system-ui",
-          "-apple-system",
-          "sans-serif",
-        ],
+        sans: ["var(--font)"],
+        display: ["var(--display)"],
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
+      /* vault-kit's brand roles, as channels so Tailwind's opacity steps work (set per theme in src/app/site.css) */
       colors: {
-        brand: {
-          50: "#ecfdf5",
-          100: "#d1fae5",
-          200: "#a7f3d0",
-          300: "#6ee7b7",
-          400: "#34d399",
-          500: "#10b981",
-          600: "#059669",
-          700: "#047857",
-          800: "#065f46",
-          900: "#064e3b",
-          950: "#022c22",
+        accent: {
+          DEFAULT: "rgb(var(--brand-rgb) / <alpha-value>)",
+          text: "rgb(var(--brand-text-rgb) / <alpha-value>)",
         },
+        accent2: "rgb(var(--brand-2-rgb) / <alpha-value>)",
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-out forwards",

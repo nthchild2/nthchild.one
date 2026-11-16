@@ -516,6 +516,6 @@ export const socialLinks = [
 /** Navigation items */
 export const navItems = [
   { label: "Home", href: "/" },
-  { label: "Experience", href: "/#experience" },
+  { label: "Experience", href: "/experience" },
   { label: "Writing", href: "/writing" },
 ];
