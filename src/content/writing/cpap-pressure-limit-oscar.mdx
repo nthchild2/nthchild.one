@@ -1,0 +1,149 @@
+---
+title: "218 nights reaching the limit: checking my CPAP pressure chart against OSCAR"
+summary: "My app's chart and Claude's first analysis said my CPAP machine stayed under its pressure limit. OSCAR, loaded with the same memory card, showed the machine at that limit. Here's how the check ran, which pressure the chart should have drawn, and what the corrected chart shows."
+date: "2026-11-18"
+type: "Case study"
+image: "/images/writing/cpap-pressure-share.jpg"
+imageAlt: "A clay-style 3D illustration on a dark blue background: a cream and navy bedside CPAP machine with a memory card in its side. Above it, two floating screens show the same chart, a blue line low under a dashed orange line and a blue line that rises to run along it, beside an orange magnifying glass."
+series: "Reading my CPAP card"
+part: 1
+tags: ["Health data", "CPAP", "OSCAR", "Data validation", "Claude", "SQLite"]
+---
+
+<PostHero image="/images/writing/cpap-pressure-hero.jpg" alt="A clay-style 3D illustration on a dark blue background: a cream and navy bedside CPAP machine with a coiled hose and a memory card sliding out of its side. Orange trails lead from the card to two floating cream screens with the same line chart. On the left a blue line stays low under a dashed orange line. On the right the blue line rises and runs along the dashed line. An orange magnifying glass and three check-mark tiles float between them." />
+
+I downloaded OSCAR, an open-source program for CPAP data, to see what it would say about a memory card Claude and I had already analyzed. I use a CPAP machine for sleep apnea. It's a ResMed AirSense 10 AutoSet, and its SD card holds 585 nights, from 21 October 2024 to 17 November 2026. My message to Claude began: "I just downloaded OSCAR, it is open, can you give it the info it needs to it's folder and see what it tells us."
+
+Once the card was loaded, Claude's reply began: "OSCAR has all 585 nights now, and it agrees with our numbers. It also showed that I told you something wrong about pressure."
+
+The machine adjusts its own pressure, up to a limit. On mine that limit is 10 cmH₂O, as the card's own files label it.
+
+The wrong statement was "the machine stayed under its limit". Those are the words of Claude's first analysis, and my app's chart drew it the same way. OSCAR, reading the same card, showed the machine at its maximum pressure of 10.0. The machine reached that limit on 218 of the 438 nights since 22 April 2025, the day the card's record of the limit begins.
+
+The card is one of the sources in [the private health record I built with Claude](/writing/private-health-record-vault): a vault built from 28 sources into one SQLite file, with an app called Bitácora that reads it.
+
+This article is about one chart in that app. It covers how a second tool caught the error, what the corrected CPAP pressure chart shows, what I'm taking to my doctor, and the check I'd pass on to anyone charting their own device data. It's one person's machine data, and it gives no advice about anyone's treatment.
+
+## Two pressures on one card
+
+Every 2 seconds the machine writes a set of readings to the card. Among them are three pressures. Two matter here: the pressure the machine is delivering, and the pressure measured at the mask.
+
+On my machine the two differ. A setting called expiratory pressure relief is set to 3, and with it the pressure measured at the mask reads lower than the pressure the machine is delivering.
+
+Bitácora's night chart drew the mask pressure, and Claude's first analysis used it too. Both worked from one value per minute, the average of its readings. Since 22 April 2025 the highest of those was about 8, and the machine's limit is 10. From those two numbers Claude reported that the machine stayed under its limit.
+
+The limit applies to the pressure the machine delivers, so the delivered pressure is the one that shows whether the machine reached it. In every count in this article, at the limit means the delivered pressure was 9.8 or more, that is within 0.2 of the limit of 10.
+
+The chart below draws the night of 8 November 2026 both ways. That night was picked because it is recent and has one long stretch at the limit, and it is one of the heaviest nights on the card. The machine labeled 103 obstructive apneas and hypopneas that night, second among the 438 nights from 22 April 2025, where the median night has 2, and its 46 minutes at the limit compare with a median of 11 on the nights that reached it.
+
+By the minute, the mask pressure peaked at 7.9. Single readings went higher and stayed below 9.8. The delivered pressure was at the limit for those 46 minutes, nearly all of them in one stretch from 4:16 to 5:02 am, and during them the mask pressure averaged 7.5.
+
+<Figure src="/images/writing/cpap-pressure-two-pressures.svg" darkSrc="/images/writing/cpap-pressure-two-pressures-dark.svg" alt="Line chart of one night, 8 November 2026, in cmH₂O on a scale from 4 to 10. Both lines show one value per minute. The orange line is the pressure measured at the mask and peaks at 7.9. The blue line is the pressure the machine delivered. It climbs higher and runs flat along a dashed line at 10, the machine's limit, from 4:16 to 5:02 am." caption="The night of 8 November 2026 drawn two ways, one value per minute. Orange is the pressure measured at the mask, which the app charted. Blue is the pressure the machine delivered, at its limit of 10 for 46 minutes, nearly all of them in one stretch from 4:16 to 5:02 am. It is one of the heaviest nights on the card." />
+
+## Loading the same card into OSCAR
+
+I had OSCAR 2.1.1 open when I sent the message quoted at the top of this article. Its last sentence was "use computer use if necesary". Screen capture failed, so Claude couldn't see OSCAR's window.
+
+Claude used the command line. OSCAR 2.1 accepts an import there and hands it to the app that is already running:
+
+<pre className="doctext">OSCAR20 --import ResMed &lt;folder&gt;</pre>
+
+OSCAR refused the first attempt with the message "No profile is open in the running OSCAR". I created a profile by hand and wrote back "ok done". The import then took about 23 seconds.
+
+OSCAR 2.1 keeps its results in a SQLite database. Claude read that database directly, so the comparison below uses the numbers OSCAR itself stored.
+
+OSCAR and the vault both read the same copy of the card.
+
+## OSCAR against the vault
+
+Here is what each tool reports for the whole card. The machine labels four kinds of breathing event from airflow: obstructive apneas, central apneas, hypopneas, and apneas it leaves unclassified. Mask hours are the hours with the mask on, and the rates are events per hour of that time.
+
+<div className="table-wrap">
+<table>
+<thead><tr><th>Measure</th><th className="num">OSCAR</th><th className="num">Vault</th></tr></thead>
+<tbody>
+<tr><td>Nights</td><td className="num">585</td><td className="num">585</td></tr>
+<tr><td>Mask hours</td><td className="num">2,004</td><td className="num">2,002</td></tr>
+<tr><td>Events per hour</td><td className="num">2.91</td><td className="num">2.94</td></tr>
+<tr><td>Central apneas per hour</td><td className="num">1.03</td><td className="num">1.03</td></tr>
+<tr><td>Obstructive apneas counted</td><td className="num">1,658</td><td className="num">1,685</td></tr>
+</tbody>
+</table>
+</div>
+
+Both tools found 585 nights. Mask hours and events per hour are close, and central apneas per hour match. The vault counts a few more events than OSCAR in every type, 54 out of about 5,900. The obstructive apneas in the table are 27 of them, one on each of 27 nights. The reason for the extra events was not traced.
+
+The disagreement between OSCAR and my app's chart was in pressure, which has no row in that table. OSCAR's pressure channel showed the machine at its maximum of 10.0. For the nights since 22 April 2025, Bitácora's chart showed a line that stayed below 10.
+
+Claude went back to the vault. The delivered pressure was already there, and it agrees with OSCAR. From 22 April 2025, both tools count 218 of 438 nights with a highest delivered pressure of 9.8 or more, and both count 217 at 9.9 or more.
+
+So the pressure data in the vault was correct, and the chart on top of it had drawn the wrong pressure.
+
+If you chart data from your own devices, this is the check I'd pass on. Load the same files into a tool you didn't build and compare its numbers with yours, including its reading of the exact quantity your chart draws, and do it before you act on what your chart says. If your card holds more than one pressure, as mine does, find out which one your chart is drawing.
+
+## The CPAP pressure history against the prescription
+
+With the delivered pressure in use, Claude charted the highest pressure the machine delivered on each night of the card.
+
+My prescription, from October 2024, reads automatic pressure with a minimum of 4 and a maximum of 20.
+
+The nightly highs fall into three periods:
+
+- **Until 11 December 2024.** The machine delivered up to 13.6.
+- **Mid-December 2024 to 9 April 2025.** It never went above 7.8.
+- **From about 10 April 2025.** It never went above 10.0.
+
+<Figure src="/images/writing/cpap-pressure-history.svg" darkSrc="/images/writing/cpap-pressure-history-dark.svg" alt="Dot chart of the highest pressure delivered on each night from October 2024 to November 2026, on a scale from 4 to 20 cmH₂O. Until 11 December 2024 the dots reach up to 13.6. From mid-December 2024 to 9 April 2025 none is above 7.8. From about 10 April 2025 none is above 10.0, and many sit on a dashed line that marks the machine's limit of 10 from 22 April 2025. A second dashed line marks the prescription's maximum of 20." caption="The highest pressure delivered each night. Each dot is one night. The limit of 10 is drawn from 22 April 2025, the first day it is on record." />
+
+The card confirms only part of that history. Its daily summary, where the settings are recorded, begins on 22 April 2025. From that day on the limit of 10 is on record, and every count in the next section starts there. For the months before, the limits are inferred from the nightly highs. The card does not say who changed the limit.
+
+## What happened at the limit
+
+From 22 April 2025 the card has 438 nights. The machine reached its limit on 218 of them, or 50%.
+
+In hours, the limit takes up a small part of that period. The machine spent 63 of about 1,485 mask hours there, about 4%, and OSCAR's stored time-at-pressure table gives the same 63 hours.
+
+Those 63 hours hold 828 of the period's 1,453 obstructive apneas and 984 of its 1,553 hypopneas, with each event placed by the delivered pressure at its timestamp. That is 60% of the two together. As a rate, the two ran at 28.7 an hour at the limit and 0.84 an hour below it.
+
+The chart below splits that rate by type: obstructive apneas ran at 13.1 an hour at the limit and 0.44 below it, hypopneas at 15.6 and 0.40. Central apneas ran at 4.15 an hour at the limit and 1.02 below it, and I'm leaving them for a later part of this series.
+
+<Figure src="/images/writing/cpap-pressure-at-the-limit.svg" darkSrc="/images/writing/cpap-pressure-at-the-limit-dark.svg" alt="Bar chart of events per hour with the machine at its limit of 10 and below it. Obstructive apneas: 13.1 an hour at the limit and 0.44 below it. Hypopneas: 15.6 and 0.40. Central apneas: 4.15 at the limit and 1.02 below it." caption="Events per hour of mask time, 22 April 2025 to 17 November 2026. At the limit means a delivered pressure of 9.8 or more." />
+
+Two cautions belong next to the rates at the limit. The split of events by pressure was computed from the vault alone, and it establishes no cause. The machine raises pressure in response to events, so events and high pressure go together by design.
+
+The next chart is the night of 8 November 2026 again, with the events the machine labeled drawn above the delivered pressure. Of that night's 72 obstructive apneas and 31 hypopneas, 64 and 26 fall inside the stretch from 4:16 to 5:02 am.
+
+<Figure src="/images/writing/cpap-pressure-one-night.svg" darkSrc="/images/writing/cpap-pressure-one-night-dark.svg" alt="The night of 8 November 2026. Three rows of marks show obstructive apneas, central apneas and hypopneas by time of night. Below them a line shows the pressure delivered, in cmH₂O from 4 to 10. It runs flat along a dashed line marking the machine's limit from 4:16 to 5:02 am." caption="The night of 8 November 2026, one of the heaviest on the card. Each mark is one event, and the line is the pressure delivered." />
+
+After the correction I asked Claude: "Ok so what does this data suggest, pressure might be the issue? too high or too low?" Claude said that whether the limit should change is a doctor's decision, and told me not to change settings myself.
+
+## A second, smaller mistake
+
+The second mistake was in the fix for the first. Claude changed Bitácora's night chart to draw the delivered pressure, with a dashed line at the machine's limit and the minutes spent there.
+
+The first version of that fix drew the limit of 10 on every night, including the nights before 22 April 2025, where the card has no setting on record. The pressure history chart showed nights up to 13.6 until 11 December 2024, above that limit.
+
+The fixed chart shows no limit for nights before the first setting on record. The fix is on a branch, still to be merged.
+
+## What I'm taking to the doctor
+
+I asked Claude: "OK, so what do I say to my doctor?"
+
+Claude built a report for the doctor. It has 8 pages, 8 charts and six questions, and it's written in Spanish. The charts include the pressure history against the prescription, the events at the limit against below it and two example nights.
+
+The report is still with me, waiting to go to the doctor, so there is no outcome to write about.
+
+The figures in this article are drawn from the same vault data, in English. The article itself was drafted with Claude, from the record of the session it describes.
+
+## What's still rough
+
+- **One person, one machine.** Every measurement here comes from my own card.
+- **Events are labeled from airflow.** The machine cannot tell sleep from wake, and no oximetry was recorded.
+- **The early limits are inferred.** Before 22 April 2025 they come from the nightly highs, and the card does not say who changed the limit.
+- **54 events are untraced.** The vault counts that many more than OSCAR, spread over every event type, and the reason is still open.
+- **The event split comes from the vault alone.** OSCAR reproduced the nights and the hours at the limit.
+- **Events and high pressure go together by design.** The comparison at the limit establishes no cause.
+- **The chart fix is on a branch.** It's two commits, still to be merged.
+- **Claude is not a doctor, and said so.** Nothing here is medical advice, and the report hasn't been to the doctor yet.
+
+If you read your own CPAP card with OSCAR, with your own code or with both, I'd like to hear how the two compare. [Write to me](mailto:nthchild1@gmail.com).
